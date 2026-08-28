@@ -1,27 +1,33 @@
 # Current State
 
 ## Main
-- state: GitHub repository exists; bootstrap import is being delivered from the prepared local theme
+- state: repository initialized; bootstrap theme import is under review in PR #1
 - repository: `dupless54/discourse-crimson-channels`
-- current remote main SHA before import: `42446403d4ee9f7a5242a1ee5905699e5f313fd8`
+- base branch: `main`
 - last verified: 2026-08-29
 
 ## Active work
-- branch: `bootstrap-import` during repository import
-- PR: create after payload reconstruction
-- changed paths: full current theme + Minimum Token Context v3 + Official Discourse theme CI
+- branch: `bootstrap-import`
+- PR: #1 — `CHORE: bootstrap Crimson Channels theme`
+- changed paths: current Crimson Channels theme + Minimum Token Context v3 + Official Discourse theme tooling/CI
+- Official tooling source: `discourse/discourse-theme-skeleton` pinned at `98cb44f550add3091200664cf8b05ffbfb618ea2` for the bootstrap
 - next development branch after bootstrap: behavior-preserving JavaScript modularization
 
 ## Validation
-- local JSON/YAML/JavaScript syntax checks: GREEN on prepared bootstrap
-- CI workflow: Official reusable Discourse Theme workflow configured
-- exact-head result: pending GitHub bootstrap PR
-- runtime: existing exported theme behavior preserved; no live-instance runtime test performed in this bootstrap
+- prepared bootstrap JSON/YAML/JavaScript syntax checks: GREEN
+- Official Discourse tooling installed: GREEN
+- official Stylelint auto-fix + verification: GREEN
+- official Prettier auto-fix + verification: GREEN
+- official ESLint verification: GREEN
+- Official reusable Discourse Theme workflow configured
+- final exact-head Official Discourse Theme CI: required before merge; a new commit invalidates prior CI evidence
+- runtime: existing exported theme behavior is intended to be preserved; no live-instance runtime test performed in this bootstrap
 
 ## Known blockers
-- none for repository creation; GitHub repository now exists
+- none in repository/tooling setup
+- bootstrap merge remains blocked until the latest exact PR head has Official Discourse Theme CI GREEN
 
 ## Next action
-- Reconstruct the prepared theme on `bootstrap-import`, open PR to `main`, verify exact-head Official Discourse Theme CI, integrate the bootstrap, then begin initializer modularization.
+- Verify PR #1 latest exact-head Official Discourse Theme CI, squash-merge the bootstrap only when GREEN, then create the first development branch to split the large initializer into focused modules without visual/behavior changes.
 
 Rules: no history dump; refresh stale SHA/CI claims; `NO_CI != GREEN`.
