@@ -83,7 +83,7 @@ function backgroundImageUrlFromElement(element) {
   }
 
   const imageSource = normalizeUserImageUrl(
-    element.currentSrc || element.getAttribute?.("src"),
+    element.currentSrc || element.getAttribute?.("src")
   );
 
   if (imageSource) {
@@ -110,8 +110,8 @@ function visibleProfileBannerUrl(username) {
     document.querySelector(
       ".user-main .about .user-profile-image img, " +
         ".user-main .about img.user-profile-image, " +
-        ".user-main .about .user-profile-image",
-    ),
+        ".user-main .about .user-profile-image"
+    )
   );
 }
 
@@ -131,7 +131,7 @@ function profileBannerUrlFromPayload(payload) {
       user?.get?.("profileBackgroundUrl") ||
       payload?.crimson_profile_background_url ||
       payload?.profile_background_upload_url ||
-      payload?.profileBackgroundUploadUrl,
+      payload?.profileBackgroundUploadUrl
   );
 }
 
@@ -162,7 +162,7 @@ function fetchUserProfileBanner(username) {
 
 function renderUserCardProfileBanner(user) {
   const username = String(
-    user?.username_lower || user?.username || user?.get?.("username") || "",
+    user?.username_lower || user?.username || user?.get?.("username") || ""
   )
     .trim()
     .toLowerCase();
@@ -201,7 +201,7 @@ function renderUserCardProfileBanner(user) {
 
     banner.classList.toggle(
       "cn-user-card-profile-banner--custom",
-      Boolean(bannerUrl),
+      Boolean(bannerUrl)
     );
 
     if (bannerUrl) {
@@ -248,7 +248,7 @@ function createMobileCommunityIcon() {
   const group = document.createElementNS("http://www.w3.org/2000/svg", "path");
   group.setAttribute(
     "d",
-    "M4 19c.5-3.2 2.2-4.8 5-4.8s4.5 1.6 5 4.8M9 11.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4ZM14.7 13.8c3.2-.5 5.2 1.2 5.7 4.2M15.8 5.8a2.7 2.7 0 1 1-1 5.2",
+    "M4 19c.5-3.2 2.2-4.8 5-4.8s4.5 1.6 5 4.8M9 11.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4ZM14.7 13.8c3.2-.5 5.2 1.2 5.7 4.2M15.8 5.8a2.7 2.7 0 1 1-1 5.2"
   );
   svg.appendChild(group);
 
@@ -299,7 +299,7 @@ function ensureMobileServersLink() {
     item.appendChild(link);
 
     const hamburger = iconList.querySelector(
-      ".hamburger-dropdown, .header-sidebar-toggle",
+      ".hamburger-dropdown, .header-sidebar-toggle"
     );
     iconList.insertBefore(item, hamburger?.closest("li") || null);
   }
@@ -330,7 +330,7 @@ function ensureMobileCommunityToggle() {
     item.appendChild(button);
 
     const hamburger = iconList.querySelector(
-      ".hamburger-dropdown, .header-sidebar-toggle",
+      ".hamburger-dropdown, .header-sidebar-toggle"
     );
     const referenceItem = hamburger?.closest("li");
 
@@ -426,7 +426,7 @@ function normalizeFeaturedLimit(value, fallback = 5) {
 
 function getFeaturedTopicConfigs() {
   const configuredObjects = parseFeaturedTopicObjects(
-    getSetting("featured_topic_lists", []),
+    getSetting("featured_topic_lists", [])
   );
 
   if (configuredObjects.length) {
@@ -458,7 +458,7 @@ function getFeaturedTopicConfigs() {
   }
 
   const categoryPath = normalizeFeaturedCategoryPath(
-    getSetting("featured_category_url", ""),
+    getSetting("featured_category_url", "")
   );
 
   if (!categoryPath) {
@@ -483,11 +483,11 @@ function getFeaturedTopicConfigs() {
 
 function findPrimaryTopicList() {
   for (const topicList of document.querySelectorAll(
-    FEATURED_TOPIC_LIST_SELECTOR,
+    FEATURED_TOPIC_LIST_SELECTOR
   )) {
     if (
       !topicList.closest(
-        `#topic, .more-topics__container, .${FEATURED_TOPICS_CLASS}`,
+        `#topic, .more-topics__container, .${FEATURED_TOPICS_CLASS}`
       )
     ) {
       return topicList;
@@ -532,7 +532,7 @@ function formatRelativeActivity(value) {
           {
             numeric: "auto",
             style: "short",
-          },
+          }
         ).format(Math.round(seconds / length), unit);
       } catch {
         break;
@@ -615,7 +615,7 @@ function firstTopicTag(topic) {
 
 function populateFeaturedTopics(section, payload, limit) {
   const usersById = new Map(
-    (payload?.users || []).map((user) => [user.id, user]),
+    (payload?.users || []).map((user) => [user.id, user])
   );
   const topics = (payload?.topic_list?.topics || []).slice(0, limit);
 
@@ -690,7 +690,7 @@ function populateFeaturedTopics(section, payload, limit) {
 
     const replies = document.createElement("strong");
     replies.textContent = String(
-      Math.max(0, Number(topic.posts_count || 1) - 1),
+      Math.max(0, Number(topic.posts_count || 1) - 1)
     );
     replies.setAttribute("aria-label", "Yanıt");
 
@@ -708,7 +708,7 @@ function populateFeaturedTopics(section, payload, limit) {
 
 function getProfileUsernameFromPath(pathname = window.location.pathname) {
   const match = String(pathname || "").match(
-    /(?:^|\/)u\/([^/]+)(?:\/([^/]+))?/i,
+    /(?:^|\/)u\/([^/]+)(?:\/([^/]+))?/i
   );
 
   if (!match || String(match[2] || "").toLowerCase() === "preferences") {
@@ -771,7 +771,9 @@ function normalizeCommunityMember(user) {
     return null;
   }
 
-  const name = String(user?.name || username).trim().slice(0, 120);
+  const name = String(user?.name || username)
+    .trim()
+    .slice(0, 120);
 
   return {
     username,
@@ -839,7 +841,7 @@ async function recordProfileVisit(username) {
 
   recordedProfileVisits.set(key, now);
   const path = `/crimson-community/profile-visits/${encodeURIComponent(
-    username,
+    username
   )}.json`;
 
   try {
@@ -870,7 +872,7 @@ async function loadCommunityMembers(profileUsername) {
     await recordProfileVisit(profileUsername);
 
     const path = `/crimson-community/profile-visits/${encodeURIComponent(
-      profileUsername,
+      profileUsername
     )}.json`;
     const payload = await fetchCommunityPayload(path, 10_000);
 
@@ -887,7 +889,7 @@ async function loadCommunityMembers(profileUsername) {
 
   const payload = await fetchCommunityPayload(
     "/crimson-community/online.json",
-    5_000,
+    5_000
   );
 
   return {
@@ -923,7 +925,7 @@ function storePanelState(collapsed) {
   try {
     window.localStorage.setItem(
       "cn-member-rail-collapsed",
-      collapsed ? "1" : "0",
+      collapsed ? "1" : "0"
     );
   } catch {
     // The visual toggle still works when browser storage is unavailable.
@@ -940,7 +942,7 @@ function setPanelCollapsed(collapsed) {
 function syncThemeSettings() {
   document.documentElement.style.setProperty(
     "--cn-forum-width",
-    `${getNumberSetting("forum_width_percent", 100, 40, 100)}%`,
+    `${getNumberSetting("forum_width_percent", 100, 40, 100)}%`
   );
 
   const brand = document.querySelector("[data-cn-brand-initial]");
@@ -952,23 +954,21 @@ function syncThemeSettings() {
   }
 
   if (title) {
-    title.textContent = String(
-      getSetting("member_panel_title", "ÇEVRİMİÇİ"),
-    );
+    title.textContent = String(getSetting("member_panel_title", "ÇEVRİMİÇİ"));
   }
 
   for (const [key, [settingName, fallback]] of Object.entries(LINK_SETTINGS)) {
     for (const link of document.querySelectorAll(`[data-cn-link="${key}"]`)) {
       link.setAttribute(
         "href",
-        normalizeUrl(getSetting(settingName, fallback), fallback),
+        normalizeUrl(getSetting(settingName, fallback), fallback)
       );
     }
   }
 
   document.body?.classList.toggle(
     "cn-member-rail-disabled",
-    !getBooleanSetting("member_rail_enabled", true),
+    !getBooleanSetting("member_rail_enabled", true)
   );
 }
 
@@ -976,7 +976,7 @@ function syncRouteState() {
   const currentPath = window.location.pathname || "/";
   document.body?.classList.toggle(
     "cn-shell-hidden",
-    HIDDEN_ROUTE_PATTERN.test(currentPath),
+    HIDDEN_ROUTE_PATTERN.test(currentPath)
   );
 
   for (const link of document.querySelectorAll("[data-cn-link]")) {
@@ -1060,7 +1060,7 @@ function createMemberElement(member) {
 
 function decorateCollapsedProfileNameplate() {
   const primary = document.querySelector(
-    ".user-main .about.collapsed-info .details > .primary",
+    ".user-main .about.collapsed-info .details > .primary"
   );
   const username = getProfileUsernameFromPath();
 
@@ -1111,7 +1111,7 @@ async function renderMemberRail() {
 
   try {
     const community = await loadCommunityMembers(
-      showProfileVisitors ? profileUsername : "",
+      showProfileVisitors ? profileUsername : ""
     );
     members = community.members;
     footerText = community.footer;
@@ -1136,20 +1136,18 @@ async function renderMemberRail() {
 
   rail?.classList.toggle(
     "cn-member-rail--recent-profiles",
-    showProfileVisitors,
+    showProfileVisitors
   );
   rail?.setAttribute(
     "aria-label",
     showProfileVisitors
       ? "Bu profili son ziyaret eden üyeler"
-      : "Çevrimiçi üyeler",
+      : "Çevrimiçi üyeler"
   );
 
   if (title) {
     title.textContent = showProfileVisitors
-      ? String(
-          getSetting("recent_profiles_title", "SON PROFİL ZİYARETÇİLERİ"),
-        )
+      ? String(getSetting("recent_profiles_title", "SON PROFİL ZİYARETÇİLERİ"))
       : String(getSetting("member_panel_title", "ÇEVRİMİÇİ"));
   }
 
@@ -1212,10 +1210,9 @@ export default apiInitializer((api) => {
         Array.from(mutation.addedNodes).some(
           (node) =>
             node instanceof Element &&
-            (node.matches(
-              ".about.collapsed-info",
-            ) || node.querySelector(".about.collapsed-info")),
-        ),
+            (node.matches(".about.collapsed-info") ||
+              node.querySelector(".about.collapsed-info"))
+        )
       );
 
       if (relevantMutation) {
@@ -1248,7 +1245,7 @@ export default apiInitializer((api) => {
 
     document.documentElement.style.setProperty(
       "--cn-member-user-card-top",
-      memberRailCardTop,
+      memberRailCardTop
     );
     document.body?.classList.add("cn-user-card-from-member-rail");
     memberRailCardPending = false;
@@ -1268,7 +1265,7 @@ export default apiInitializer((api) => {
 
     const memberRail = trigger.closest(".cn-member-rail");
     const desktopRailIsVisible = window.matchMedia(
-      "(min-width: 1280px)",
+      "(min-width: 1280px)"
     ).matches;
 
     if (!memberRail || !desktopRailIsVisible) {
@@ -1286,13 +1283,13 @@ export default apiInitializer((api) => {
     const minimumTop = Math.max(10, Math.ceil(headerBottom + 10));
     const maximumTop = Math.max(
       minimumTop,
-      Math.floor(window.innerHeight - safeCardHeight - 10),
+      Math.floor(window.innerHeight - safeCardHeight - 10)
     );
     const preferredTop = Math.round(rowRect.top - 10);
 
     memberRailCardTop = `${Math.min(
       maximumTop,
-      Math.max(minimumTop, preferredTop),
+      Math.max(minimumTop, preferredTop)
     )}px`;
     memberRailCardPending = true;
   };
@@ -1317,14 +1314,14 @@ export default apiInitializer((api) => {
     ensureMobileServersLink();
     const button = ensureMobileCommunityToggle();
     const backdrop = document.querySelector(
-      '[data-cn-action="close-mobile-community"]',
+      '[data-cn-action="close-mobile-community"]'
     );
 
     if (button && button.dataset.cnCommunityBound !== "true") {
       button.dataset.cnCommunityBound = "true";
       button.addEventListener("click", () => {
         setMobileCommunityOpen(
-          !document.body.classList.contains("cn-mobile-community-open"),
+          !document.body.classList.contains("cn-mobile-community-open")
         );
       });
     }
@@ -1353,7 +1350,7 @@ export default apiInitializer((api) => {
 
     button?.setAttribute(
       "aria-expanded",
-      String(document.body.classList.contains("cn-mobile-community-open")),
+      String(document.body.classList.contains("cn-mobile-community-open"))
     );
 
     return Boolean(button);
@@ -1369,13 +1366,13 @@ export default apiInitializer((api) => {
           scheduleMobileCommunityControls(attempt + 1);
         }
       },
-      attempt === 0 ? 0 : 150,
+      attempt === 0 ? 0 : 150
     );
   };
 
   const removeFeaturedTopics = () => {
     for (const section of document.querySelectorAll(
-      `.${FEATURED_TOPICS_CLASS}`,
+      `.${FEATURED_TOPICS_CLASS}`
     )) {
       section.remove();
     }
@@ -1410,7 +1407,7 @@ export default apiInitializer((api) => {
 
     for (const entry of entries) {
       (entry.config.position === "below" ? below : above).appendChild(
-        entry.section,
+        entry.section
       );
     }
 
@@ -1443,7 +1440,7 @@ export default apiInitializer((api) => {
             }
           }
         }
-      }),
+      })
     );
 
     return true;
@@ -1455,14 +1452,14 @@ export default apiInitializer((api) => {
       async () => {
         const rendered = await renderFeaturedTopics();
         const outletCannotHostList = document.querySelector(
-          "#topic, .user-main, .chat-full-page",
+          "#topic, .user-main, .chat-full-page"
         );
 
         if (!rendered && !outletCannotHostList && attempt < 7) {
           scheduleFeaturedTopics(attempt + 1);
         }
       },
-      attempt === 0 ? 80 : 220,
+      attempt === 0 ? 80 : 220
     );
   };
 
@@ -1535,7 +1532,7 @@ export default apiInitializer((api) => {
           bubbles: true,
           cancelable: true,
           view: window,
-        }),
+        })
       );
     }, delay);
   };
@@ -1558,7 +1555,7 @@ export default apiInitializer((api) => {
 
   const bindMemberHoverCard = () => {
     for (const container of document.querySelectorAll(
-      ".cn-member-rail, #main-outlet",
+      ".cn-member-rail, #main-outlet"
     )) {
       if (container.dataset.cnHoverCardBound === "true") {
         continue;
@@ -1597,7 +1594,7 @@ export default apiInitializer((api) => {
 
   const bindToggleButton = () => {
     const toggleButton = document.querySelector(
-      '[data-cn-action="toggle-members"]',
+      '[data-cn-action="toggle-members"]'
     );
 
     if (!toggleButton || toggleButton.dataset.cnBound === "true") {
@@ -1607,7 +1604,7 @@ export default apiInitializer((api) => {
     toggleButton.dataset.cnBound = "true";
     toggleButton.addEventListener("click", () => {
       const collapsed = !document.body.classList.contains(
-        "cn-member-rail-collapsed",
+        "cn-member-rail-collapsed"
       );
       setPanelCollapsed(collapsed);
       storePanelState(collapsed);

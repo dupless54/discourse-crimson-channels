@@ -146,11 +146,10 @@ body.cn-mobile-community-open .cn-member-rail {
   height: auto;
   padding: 0;
   visibility: hidden;
-  background: rgba(2, 6, 14, 0.62);
+  background: rgb(2, 6, 14, 0.62);
   border: 0;
   opacity: 0;
   cursor: default;
-  -webkit-backdrop-filter: blur(3px);
   backdrop-filter: blur(3px);
   transition:
     opacity 150ms ease,
@@ -188,7 +187,6 @@ body.cn-shell-hidden .cn-mobile-community-backdrop {
 
 .card-cloak.--visible {
   opacity: 0.58;
-  -webkit-backdrop-filter: blur(3px);
   backdrop-filter: blur(3px);
 }
 
@@ -262,6 +260,7 @@ body.cn-shell-hidden .cn-mobile-community-backdrop {
 
 /* Keep the primary action explicit on phones; it must not collapse to an
    ambiguous pencil icon beside the other compact controls. */
+
 .mobile-view .navigation-container #create-topic,
 .mobile-view .list-controls #create-topic {
   width: auto !important;
@@ -292,7 +291,7 @@ body.cn-shell-hidden .cn-mobile-community-backdrop {
   background: var(--cn-panel) !important;
   border: 0 !important;
   border-radius: var(--cn-radius-sm) !important;
-  box-shadow: 0 10px 26px rgba(2, 6, 14, 0.2) !important;
+  box-shadow: 0 10px 26px rgb(2, 6, 14, 0.2) !important;
 }
 
 .topic-list-header {
@@ -477,7 +476,7 @@ body.cn-shell-hidden .cn-mobile-community-backdrop {
   margin-block: 0 8px;
   border: 0;
   border-radius: var(--cn-radius-sm);
-  box-shadow: 0 10px 26px rgba(2, 6, 14, 0.2);
+  box-shadow: 0 10px 26px rgb(2, 6, 14, 0.2);
 }
 
 .cn-featured-topics--below {
@@ -532,7 +531,6 @@ body.cn-shell-hidden .cn-mobile-community-backdrop {
   border: 0 !important;
   border-radius: 0 !important;
   box-shadow: none !important;
-  -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
 }
 
@@ -655,8 +653,8 @@ body.cn-shell-hidden .cn-mobile-community-backdrop {
   gap: 1px;
 }
 
-#topic nav.post-controls .btn:not(.btn-primary):not(.create),
-#topic .post-menu-area .btn:not(.btn-primary):not(.create),
+#topic nav.post-controls .btn:not(.btn-primary, .create),
+#topic .post-menu-area .btn:not(.btn-primary, .create),
 #topic .topic-map .btn:not(.btn-primary),
 #topic-footer-buttons .btn:not(.btn-primary) {
   min-width: 32px;
@@ -851,7 +849,7 @@ body.cn-shell-hidden .cn-mobile-community-backdrop {
   margin-block: 2px !important;
 }
 
-.nested-view nav.post-controls .btn:not(.btn-primary):not(.create) {
+.nested-view nav.post-controls .btn:not(.btn-primary, .create) {
   min-width: 30px;
   min-height: 30px;
   padding: 5px 6px;
@@ -1135,7 +1133,7 @@ body.cn-shell-hidden .cn-mobile-community-backdrop {
   max-width: 100%;
 }
 
-@media (max-width: 370px) {
+@media (width <= 370px) {
   #main-outlet {
     padding-inline: 4px !important;
   }

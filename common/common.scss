@@ -36,7 +36,7 @@
   --cn-hover: color-mix(in srgb, var(--cn-crimson) 16%, transparent);
   --cn-active: color-mix(in srgb, var(--cn-crimson) 26%, transparent);
   --cn-shadow:
-    0 14px 34px rgba(2, 6, 14, 0.3), 0 0 22px rgba(197, 3, 55, 0.13),
+    0 14px 34px rgb(2, 6, 14, 0.3), 0 0 22px rgb(197, 3, 55, 0.13),
     inset 0 1px 0 color-mix(in srgb, var(--primary) 8%, transparent);
 }
 
@@ -47,11 +47,7 @@ html {
 body {
   min-height: 100vh;
   background:
-    radial-gradient(
-      circle at 78% 12%,
-      rgba(197, 3, 55, 0.2),
-      transparent 34rem
-    ),
+    radial-gradient(circle at 78% 12%, rgb(197, 3, 55, 0.2), transparent 34rem),
     linear-gradient(
         155deg,
         color-mix(in srgb, var(--secondary) 96%, var(--cn-noir) 4%) 0%,
@@ -90,9 +86,8 @@ a {
   background: var(--cn-panel-strong);
   border-inline-end: 1px solid var(--cn-border);
   box-shadow:
-    8px 0 30px rgba(2, 6, 14, 0.28),
-    0 0 18px rgba(197, 3, 55, 0.1);
-  -webkit-backdrop-filter: blur(18px) saturate(125%);
+    8px 0 30px rgb(2, 6, 14, 0.28),
+    0 0 18px rgb(197, 3, 55, 0.1);
   backdrop-filter: blur(18px) saturate(125%);
 }
 
@@ -137,7 +132,7 @@ a {
   content: "";
   background: var(--cn-crimson);
   border-radius: 0 4px 4px 0;
-  box-shadow: 0 0 10px rgba(197, 3, 55, 0.8);
+  box-shadow: 0 0 10px rgb(197, 3, 55, 0.8);
   transition: height 150ms ease;
 }
 
@@ -167,9 +162,9 @@ a {
 .cn-server-button.is-active {
   color: #fff;
   background: var(--cn-crimson);
-  border-color: rgba(255, 255, 255, 0.16);
+  border-color: rgb(255, 255, 255, 0.16);
   border-radius: 12px;
-  box-shadow: 0 8px 22px rgba(197, 3, 55, 0.28);
+  box-shadow: 0 8px 22px rgb(197, 3, 55, 0.28);
   transform: translateY(-1px);
 }
 
@@ -188,9 +183,9 @@ a {
 .cn-server-button--brand {
   color: #fff;
   background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.16), transparent 45%),
+    linear-gradient(145deg, rgb(255, 255, 255, 0.16), transparent 45%),
     var(--cn-crimson);
-  border-color: rgba(255, 255, 255, 0.16);
+  border-color: rgb(255, 255, 255, 0.16);
   border-radius: 50%;
   font-size: 1.15rem;
   font-weight: 800;
@@ -216,9 +211,8 @@ a {
   background: var(--cn-panel-strong);
   border-inline-start: 1px solid var(--cn-border);
   box-shadow:
-    -8px 0 30px rgba(2, 6, 14, 0.25),
-    0 0 18px rgba(197, 3, 55, 0.1);
-  -webkit-backdrop-filter: blur(18px) saturate(125%);
+    -8px 0 30px rgb(2, 6, 14, 0.25),
+    0 0 18px rgb(197, 3, 55, 0.1);
   backdrop-filter: blur(18px) saturate(125%);
 }
 
@@ -426,14 +420,14 @@ a {
   background: var(--cn-panel-strong) !important;
   border-bottom: 1px solid var(--cn-border);
   box-shadow:
-    0 8px 24px rgba(2, 6, 14, 0.24),
-    0 1px 0 rgba(197, 3, 55, 0.24) !important;
-  -webkit-backdrop-filter: blur(18px) saturate(125%);
+    0 8px 24px rgb(2, 6, 14, 0.24),
+    0 1px 0 rgb(197, 3, 55, 0.24) !important;
   backdrop-filter: blur(18px) saturate(125%);
 }
 
 /* Discourse swaps to .logo-small while scrolling. Keep both assets within the
    same header-height contract so a square small-logo can never expand. */
+
 .d-header #site-logo,
 .d-header #site-logo.logo-small,
 .d-header .title img.logo-small {
@@ -471,9 +465,8 @@ a {
   background: var(--cn-panel-strong) !important;
   border-inline-end: 1px solid var(--cn-border);
   box-shadow:
-    9px 0 26px rgba(2, 6, 14, 0.22),
-    0 0 16px rgba(197, 3, 55, 0.08);
-  -webkit-backdrop-filter: blur(18px) saturate(120%);
+    9px 0 26px rgb(2, 6, 14, 0.22),
+    0 0 16px rgb(197, 3, 55, 0.08);
   backdrop-filter: blur(18px) saturate(120%);
 }
 
@@ -510,12 +503,12 @@ a {
   color: var(--primary) !important;
   background: linear-gradient(
     90deg,
-    rgba(197, 3, 55, 0.28),
-    rgba(197, 3, 55, 0.07)
+    rgb(197, 3, 55, 0.28),
+    rgb(197, 3, 55, 0.07)
   ) !important;
   box-shadow:
     inset 3px 0 0 var(--cn-crimson),
-    0 0 13px rgba(197, 3, 55, 0.1);
+    0 0 13px rgb(197, 3, 55, 0.1);
 }
 
 .sidebar-section-wrapper,
@@ -533,7 +526,6 @@ a {
   border: 1px solid var(--cn-border) !important;
   border-radius: var(--cn-radius-md) !important;
   box-shadow: var(--cn-shadow) !important;
-  -webkit-backdrop-filter: blur(15px) saturate(118%);
   backdrop-filter: blur(15px) saturate(118%);
 }
 
@@ -546,7 +538,6 @@ a {
   border: 0 !important;
   border-radius: 0 !important;
   box-shadow: none !important;
-  -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
 }
 
@@ -618,7 +609,6 @@ a {
   border: 1px solid var(--cn-border);
   border-radius: var(--cn-radius-md);
   box-shadow: var(--cn-shadow);
-  -webkit-backdrop-filter: blur(15px) saturate(118%);
   backdrop-filter: blur(15px) saturate(118%);
 }
 
@@ -810,7 +800,7 @@ select {
   background: var(--cn-control) !important;
   border: 1px solid var(--cn-control-outline) !important;
   box-shadow:
-    0 3px 10px rgba(2, 6, 14, 0.12),
+    0 3px 10px rgb(2, 6, 14, 0.12),
     inset 0 1px 0 color-mix(in srgb, var(--primary) 6%, transparent) !important;
   transition:
     color 130ms ease,
@@ -832,18 +822,23 @@ select {
   ) !important;
   border-color: var(--cn-control-outline-hover) !important;
   box-shadow:
-    0 5px 14px rgba(2, 6, 14, 0.16),
+    0 5px 14px rgb(2, 6, 14, 0.16),
     inset 0 1px 0 color-mix(in srgb, var(--primary) 8%, transparent) !important;
 }
 
 .btn-primary,
 .btn.btn-primary {
   color: #fff !important;
-  background: linear-gradient(135deg, #e10848, var(--cn-crimson) 62%, #98002a) !important;
+  background: linear-gradient(
+    135deg,
+    #e10848,
+    var(--cn-crimson) 62%,
+    #98002a
+  ) !important;
   border-color: transparent !important;
   box-shadow:
-    0 7px 18px rgba(197, 3, 55, 0.24),
-    inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
+    0 7px 18px rgb(197, 3, 55, 0.24),
+    inset 0 1px 0 rgb(255, 255, 255, 0.16) !important;
 }
 
 .btn-primary:hover,
@@ -854,15 +849,15 @@ select {
   background: linear-gradient(135deg, #f10a50, #d00642 62%, #a80030) !important;
   border-color: transparent !important;
   box-shadow:
-    0 9px 22px rgba(197, 3, 55, 0.32),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    0 9px 22px rgb(197, 3, 55, 0.32),
+    inset 0 1px 0 rgb(255, 255, 255, 0.2) !important;
   transform: translateY(-1px);
 }
 
 .btn.btn-flat,
 .btn.btn-transparent,
-.btn.no-text:not(.btn-primary):not(.btn-danger),
-.btn-icon:not(.btn-primary):not(.btn-danger) {
+.btn.no-text:not(.btn-primary, .btn-danger),
+.btn-icon:not(.btn-primary, .btn-danger) {
   background: transparent !important;
   border-color: transparent !important;
   box-shadow: none !important;
@@ -872,10 +867,10 @@ select {
 .btn.btn-flat:focus-visible,
 .btn.btn-transparent:hover,
 .btn.btn-transparent:focus-visible,
-.btn.no-text:not(.btn-primary):not(.btn-danger):hover,
-.btn.no-text:not(.btn-primary):not(.btn-danger):focus-visible,
-.btn-icon:not(.btn-primary):not(.btn-danger):hover,
-.btn-icon:not(.btn-primary):not(.btn-danger):focus-visible {
+.btn.no-text:not(.btn-primary, .btn-danger):hover,
+.btn.no-text:not(.btn-primary, .btn-danger):focus-visible,
+.btn-icon:not(.btn-primary, .btn-danger):hover,
+.btn-icon:not(.btn-primary, .btn-danger):focus-visible {
   background: color-mix(in srgb, var(--primary) 10%, transparent) !important;
   border-color: transparent !important;
   box-shadow: none !important;
@@ -892,7 +887,7 @@ select {
 /* The primary discovery action should read as an action, not another filter. */
 .navigation-container .topic-create-button__combo {
   border-radius: 9px;
-  filter: drop-shadow(0 7px 13px rgba(197, 3, 55, 0.2));
+  filter: drop-shadow(0 7px 13px rgb(197, 3, 55, 0.2));
 }
 
 .navigation-container #create-topic {
@@ -900,13 +895,13 @@ select {
   padding-inline: 13px !important;
   color: #fff !important;
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.14), transparent 46%),
+    linear-gradient(135deg, rgb(255, 255, 255, 0.14), transparent 46%),
     linear-gradient(135deg, #e00645, var(--cn-crimson) 58%, #970029) !important;
   border: 1px solid transparent !important;
   border-radius: 9px !important;
   box-shadow:
-    0 9px 20px rgba(197, 3, 55, 0.34),
-    inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+    0 9px 20px rgb(197, 3, 55, 0.34),
+    inset 0 1px 0 rgb(255, 255, 255, 0.18) !important;
   font-weight: 800;
   letter-spacing: 0.01em;
   transition:
@@ -919,11 +914,11 @@ select {
 .navigation-container #create-topic:focus-visible {
   color: #fff !important;
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent 48%),
+    linear-gradient(135deg, rgb(255, 255, 255, 0.2), transparent 48%),
     linear-gradient(135deg, #f30b51, #cf063f 58%, #a3002d) !important;
   box-shadow:
-    0 11px 24px rgba(197, 3, 55, 0.42),
-    inset 0 1px 0 rgba(255, 255, 255, 0.22) !important;
+    0 11px 24px rgb(197, 3, 55, 0.42),
+    inset 0 1px 0 rgb(255, 255, 255, 0.22) !important;
   transform: translateY(-1px);
 }
 
@@ -942,11 +937,12 @@ textarea:focus,
 select:focus,
 .d-editor-textarea-wrapper:focus-within {
   border-color: var(--cn-crimson) !important;
-  box-shadow: 0 0 0 3px rgba(197, 3, 55, 0.14) !important;
+  box-shadow: 0 0 0 3px rgb(197, 3, 55, 0.14) !important;
 }
 
 /* Topic pages use one continuous reading surface. Hierarchy comes from
    spacing and restrained separators, not nested crimson frames. */
+
 #main-outlet > .regular,
 #topic,
 #topic.nested-view {
@@ -955,7 +951,6 @@ select:focus,
   border: 0 !important;
   border-radius: 0 !important;
   box-shadow: none !important;
-  -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
 }
 
@@ -1044,7 +1039,7 @@ select:focus,
 }
 
 /* Flat topic actions, including deleted-post reveal/recover controls. */
-#topic .btn:not(.btn-primary):not(.create),
+#topic .btn:not(.btn-primary, .create),
 #topic .select-kit-header,
 #topic .btn.no-text.btn-icon.btn-flat,
 #topic .toggle-deleted-content,
@@ -1054,7 +1049,7 @@ select:focus,
   box-shadow: none !important;
 }
 
-#topic .btn:not(.btn-primary):not(.create),
+#topic .btn:not(.btn-primary, .create),
 #topic .btn.no-text.btn-icon.btn-flat,
 #topic .toggle-deleted-content {
   border-radius: 999px !important;
@@ -1075,8 +1070,8 @@ select:focus,
   box-shadow: none !important;
 }
 
-#topic .btn:not(.btn-primary):not(.create):hover,
-#topic .btn:not(.btn-primary):not(.create):focus-visible,
+#topic .btn:not(.btn-primary, .create):hover,
+#topic .btn:not(.btn-primary, .create):focus-visible,
 #topic .select-kit-header:hover,
 #topic .select-kit-header:focus-visible {
   color: var(--tertiary) !important;
@@ -1162,9 +1157,8 @@ select:focus,
   border: 1px solid var(--cn-border) !important;
   border-radius: var(--cn-radius-md) var(--cn-radius-md) 0 0 !important;
   box-shadow:
-    0 -12px 32px rgba(2, 6, 14, 0.32),
-    0 0 22px rgba(197, 3, 55, 0.14) !important;
-  -webkit-backdrop-filter: blur(18px) saturate(125%);
+    0 -12px 32px rgb(2, 6, 14, 0.32),
+    0 0 22px rgb(197, 3, 55, 0.14) !important;
   backdrop-filter: blur(18px) saturate(125%);
 }
 
@@ -1189,7 +1183,6 @@ select:focus,
   border: 1px solid var(--cn-border) !important;
   border-radius: var(--cn-radius-sm) !important;
   box-shadow: var(--cn-shadow) !important;
-  -webkit-backdrop-filter: blur(18px) saturate(125%);
   backdrop-filter: blur(18px) saturate(125%);
 }
 
@@ -1216,6 +1209,7 @@ select:focus,
 /* Discourse keeps the card root mounted between openings. Its closed state
    must not inherit the fixed 304 x 444 presentation or it becomes a blank
    card after a hard refresh. */
+
 #user-card.user-card:not(.show) {
   display: none !important;
   width: 0 !important;
@@ -1246,7 +1240,6 @@ select:focus,
   border: 0 !important;
   border-radius: 12px !important;
   box-shadow: none !important;
-  -webkit-backdrop-filter: none;
   backdrop-filter: none;
 }
 
@@ -1281,8 +1274,8 @@ select:focus,
   border: 1px solid color-mix(in srgb, var(--primary) 20%, transparent) !important;
   border-radius: 12px !important;
   box-shadow:
-    0 18px 52px rgba(0, 0, 0, 0.55),
-    0 0 0 1px rgba(255, 255, 255, 0.035) !important;
+    0 18px 52px rgb(0, 0, 0, 0.55),
+    0 0 0 1px rgb(255, 255, 255, 0.035) !important;
   isolation: isolate;
   animation: cn-user-card-pop-in 150ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
@@ -1306,7 +1299,7 @@ select:focus,
   background-image:
     radial-gradient(
       circle at 82% 12%,
-      rgba(255, 255, 255, 0.22),
+      rgb(255, 255, 255, 0.22),
       transparent 34%
     ),
     linear-gradient(125deg, #5865f2, #8c2f67 58%, var(--cn-crimson));
@@ -1406,7 +1399,7 @@ select:focus,
   box-sizing: border-box;
   border: 5px solid color-mix(in srgb, var(--secondary) 90%, var(--primary) 10%);
   border-radius: 50%;
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.52);
+  box-shadow: 0 8px 22px rgb(0, 0, 0, 0.52);
 }
 
 #user-card.user-card .first-row .names {
@@ -1654,9 +1647,8 @@ select:focus,
   border: 1px solid var(--cn-separator) !important;
   border-radius: var(--cn-radius-lg) !important;
   box-shadow:
-    0 20px 45px rgba(2, 6, 14, 0.3),
+    0 20px 45px rgb(2, 6, 14, 0.3),
     inset 0 1px 0 color-mix(in srgb, var(--primary) 8%, transparent) !important;
-  -webkit-backdrop-filter: blur(18px) saturate(118%);
   backdrop-filter: blur(18px) saturate(118%);
 }
 
@@ -1697,12 +1689,11 @@ select:focus,
 
 .user-main .about .staff-counters > div {
   padding: 4px 8px;
-  color: rgba(255, 255, 255, 0.88);
-  background: rgba(2, 6, 14, 0.72);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgb(255, 255, 255, 0.88);
+  background: rgb(2, 6, 14, 0.72);
+  border: 1px solid rgb(255, 255, 255, 0.12);
   border-radius: 999px;
-  box-shadow: 0 5px 16px rgba(2, 6, 14, 0.22);
-  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 5px 16px rgb(2, 6, 14, 0.22);
   backdrop-filter: blur(8px);
 }
 
@@ -1749,7 +1740,7 @@ select:focus,
   box-sizing: border-box;
   border: 5px solid var(--cn-panel-strong);
   border-radius: 50%;
-  box-shadow: 0 9px 24px rgba(2, 6, 14, 0.42);
+  box-shadow: 0 9px 24px rgb(2, 6, 14, 0.42);
 }
 
 .user-main .about .primary-textual {
@@ -1946,7 +1937,7 @@ select:focus,
   background: var(--cn-panel-strong);
   border: 1px solid var(--cn-separator) !important;
   border-radius: var(--cn-radius-sm);
-  box-shadow: 0 10px 28px rgba(2, 6, 14, 0.2);
+  box-shadow: 0 10px 28px rgb(2, 6, 14, 0.2);
 }
 
 .user-main .user-navigation .horizontal-overflow-nav {
@@ -1994,7 +1985,7 @@ select:focus,
     var(--cn-crimson),
     color-mix(in srgb, var(--cn-crimson) 72%, #70204b 28%)
   ) !important;
-  box-shadow: 0 6px 16px rgba(197, 3, 55, 0.24);
+  box-shadow: 0 6px 16px rgb(197, 3, 55, 0.24);
 }
 
 .user-main .user-content-wrapper,
@@ -2010,8 +2001,7 @@ select:focus,
   background: var(--cn-panel-strong) !important;
   border: 1px solid var(--cn-separator) !important;
   border-radius: var(--cn-radius-md) !important;
-  box-shadow: 0 16px 36px rgba(2, 6, 14, 0.24) !important;
-  -webkit-backdrop-filter: blur(16px) saturate(116%);
+  box-shadow: 0 16px 36px rgb(2, 6, 14, 0.24) !important;
   backdrop-filter: blur(16px) saturate(116%);
 }
 
@@ -2021,7 +2011,6 @@ select:focus,
   border: 0 !important;
   border-radius: 0 !important;
   box-shadow: none !important;
-  -webkit-backdrop-filter: none;
   backdrop-filter: none;
 }
 
@@ -2054,7 +2043,6 @@ body.user-summary-page .user-main .user-content {
   border: 0 !important;
   border-radius: 0 !important;
   box-shadow: none !important;
-  -webkit-backdrop-filter: none;
   backdrop-filter: none;
 }
 
@@ -2072,7 +2060,7 @@ body.user-summary-page .user-main .user-content {
   background: var(--cn-panel-strong);
   border: 1px solid var(--cn-separator);
   border-radius: var(--cn-radius-md);
-  box-shadow: 0 12px 30px rgba(2, 6, 14, 0.2);
+  box-shadow: 0 12px 30px rgb(2, 6, 14, 0.2);
 }
 
 .user-summary-page .user-content .stats-title,
@@ -2096,6 +2084,7 @@ body.user-summary-page .user-main .user-content {
 
 /* Discourse adds clearfix/placeholder nodes around this list. They must not
    become visual grid cells. Only entries containing a real statistic remain. */
+
 .user-summary-page .stats-section > ul::before,
 .user-summary-page .stats-section > ul::after {
   display: none !important;
@@ -2254,7 +2243,7 @@ body.user-summary-page .user-main .user-content {
 /* Each native .top-section is a section itself, not a shared wrapper. Applying
    CSS columns to it splits a heading from its content and produces fake empty
    tiles. Keep paired sections in their native semantic groups instead. */
-@media (min-width: 1000px) {
+@media (width >= 1000px) {
   .user-summary-page .user-content .stats-section,
   .user-summary-page .user-content .top-categories-section,
   .user-summary-page .user-content .badges-section {
@@ -2289,14 +2278,13 @@ body.user-summary-page .user-main .user-content {
 .chat-drawer-container {
   border: 0 !important;
   border-radius: var(--cn-radius-md) var(--cn-radius-md) 0 0 !important;
-  box-shadow: 0 18px 46px rgba(2, 6, 14, 0.4) !important;
+  box-shadow: 0 18px 46px rgb(2, 6, 14, 0.4) !important;
 }
 
 .chat-composer__inner-container {
   border: 0 !important;
   border-radius: var(--cn-radius-sm) !important;
-  box-shadow: inset 0 0 0 1px
-    color-mix(in srgb, var(--primary) 8%, transparent) !important;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--primary) 8%, transparent) !important;
 }
 
 .chat-composer__inner-container:focus-within {
@@ -2304,10 +2292,10 @@ body.user-summary-page .user-main .user-content {
     color-mix(in srgb, var(--cn-crimson) 52%, transparent) !important;
 }
 
-.chat-drawer-container .btn:not(.btn-primary):not(.btn-danger),
-.chat-channel .btn:not(.btn-primary):not(.btn-danger),
-.chat-full-page .btn:not(.btn-primary):not(.btn-danger),
-.chat-composer .btn:not(.btn-primary):not(.btn-danger) {
+.chat-drawer-container .btn:not(.btn-primary, .btn-danger),
+.chat-channel .btn:not(.btn-primary, .btn-danger),
+.chat-full-page .btn:not(.btn-primary, .btn-danger),
+.chat-composer .btn:not(.btn-primary, .btn-danger) {
   color: var(--primary-medium) !important;
   background: transparent !important;
   border: 0 !important;
@@ -2315,14 +2303,14 @@ body.user-summary-page .user-main .user-content {
   box-shadow: none !important;
 }
 
-.chat-drawer-container .btn:not(.btn-primary):not(.btn-danger):hover,
-.chat-drawer-container .btn:not(.btn-primary):not(.btn-danger):focus-visible,
-.chat-channel .btn:not(.btn-primary):not(.btn-danger):hover,
-.chat-channel .btn:not(.btn-primary):not(.btn-danger):focus-visible,
-.chat-full-page .btn:not(.btn-primary):not(.btn-danger):hover,
-.chat-full-page .btn:not(.btn-primary):not(.btn-danger):focus-visible,
-.chat-composer .btn:not(.btn-primary):not(.btn-danger):hover,
-.chat-composer .btn:not(.btn-primary):not(.btn-danger):focus-visible {
+.chat-drawer-container .btn:not(.btn-primary, .btn-danger):hover,
+.chat-drawer-container .btn:not(.btn-primary, .btn-danger):focus-visible,
+.chat-channel .btn:not(.btn-primary, .btn-danger):hover,
+.chat-channel .btn:not(.btn-primary, .btn-danger):focus-visible,
+.chat-full-page .btn:not(.btn-primary, .btn-danger):hover,
+.chat-full-page .btn:not(.btn-primary, .btn-danger):focus-visible,
+.chat-composer .btn:not(.btn-primary, .btn-danger):hover,
+.chat-composer .btn:not(.btn-primary, .btn-danger):focus-visible {
   color: var(--primary) !important;
   background: color-mix(in srgb, var(--primary) 10%, transparent) !important;
   border: 0 !important;
@@ -2330,6 +2318,7 @@ body.user-summary-page .user-main .user-content {
 
 /* Compact chat toolbars stay quiet until interaction; text actions keep the
    softly raised surface above. */
+
 .chat-drawer-container .btn.btn-flat,
 .chat-drawer-container .btn.btn-transparent,
 .chat-drawer-container .btn.no-text,
@@ -2404,6 +2393,7 @@ body.user-summary-page .user-main .user-content {
 
 /* Admin keeps the visual language but uses calmer separators so controls,
    sections and data rows form a readable hierarchy instead of red boxes. */
+
 body.admin-interface {
   --cn-admin-border: color-mix(in srgb, var(--primary) 12%, transparent);
   --cn-admin-border-strong: color-mix(in srgb, var(--primary) 18%, transparent);
@@ -2421,7 +2411,7 @@ body.admin-interface {
 
 body.admin-interface .sidebar-wrapper {
   border-inline-end-color: var(--cn-admin-border) !important;
-  box-shadow: 8px 0 28px rgba(2, 6, 14, 0.2) !important;
+  box-shadow: 8px 0 28px rgb(2, 6, 14, 0.2) !important;
 }
 
 body.admin-interface .sidebar-wrapper .admin-panel {
@@ -2476,7 +2466,7 @@ body.admin-interface #main-outlet {
   border: 1px solid var(--cn-admin-border-strong);
   border-radius: var(--cn-radius-md);
   box-shadow:
-    0 16px 42px rgba(2, 6, 14, 0.26),
+    0 16px 42px rgb(2, 6, 14, 0.26),
     inset 0 1px 0 color-mix(in srgb, var(--primary) 5%, transparent);
 }
 
@@ -2501,9 +2491,14 @@ body.admin-interface #main-outlet .admin-report {
 
 body.admin-interface
   #main-outlet
-  .btn:not(.btn-primary):not(.btn-danger):not(.btn-flat):not(
-    .btn-transparent
-  ):not(.no-text):not(.btn-icon),
+  .btn:not(
+    .btn-primary,
+    .btn-danger,
+    .btn-flat,
+    .btn-transparent,
+    .no-text,
+    .btn-icon
+  ),
 body.admin-interface #main-outlet .select-kit-header,
 body.admin-interface #main-outlet input,
 body.admin-interface #main-outlet textarea,
@@ -2574,6 +2569,7 @@ body.admin-interface #main-outlet .duc-admin-table tbody tr:hover td {
 /* discourse-user-cosmetics uses the standard admin outlet, but supplies its
    own page classes. These refinements keep its tabs, table and edit form on
    the same hierarchy as the rest of the admin interface. */
+
 body.admin-interface #main-outlet .duc-admin-page {
   width: 100%;
   max-width: 1100px;
@@ -2662,6 +2658,7 @@ body.admin-interface #main-outlet .duc-admin-form {
    Crimson Channels — comfort palette layer (2026-08)
    Semantic light/dark colors for long reading sessions
    ============================================================ */
+
 :root {
   --cn-crimson: var(--tertiary);
   --cn-noir: var(--secondary);
@@ -2671,16 +2668,28 @@ body.admin-interface #main-outlet .duc-admin-form {
   --cn-panel: rgb(var(--secondary-rgb), 0.94);
   --cn-panel-strong: rgb(var(--secondary-rgb), 0.985);
   --cn-surface: color-mix(in srgb, var(--secondary) 97%, var(--primary) 3%);
-  --cn-surface-raised: color-mix(in srgb, var(--secondary) 93%, var(--primary) 7%);
+  --cn-surface-raised: color-mix(
+    in srgb,
+    var(--secondary) 93%,
+    var(--primary) 7%
+  );
   --cn-control: color-mix(in srgb, var(--secondary) 95%, var(--primary) 5%);
-  --cn-control-outline: color-mix(in srgb, var(--primary) 48%, var(--secondary));
+  --cn-control-outline: color-mix(
+    in srgb,
+    var(--primary) 48%,
+    var(--secondary)
+  );
   --cn-control-outline-hover: var(--quaternary);
   --cn-muted: color-mix(in srgb, var(--primary) 76%, var(--secondary));
   --cn-border: color-mix(in srgb, var(--tertiary) 20%, var(--secondary));
   --cn-separator: color-mix(in srgb, var(--primary) 14%, var(--secondary));
   --cn-hover: color-mix(in srgb, var(--quaternary) 9%, var(--secondary));
   --cn-active: color-mix(in srgb, var(--tertiary) 15%, var(--secondary));
-  --cn-accent-start: color-mix(in srgb, var(--tertiary) 82%, var(--quaternary) 18%);
+  --cn-accent-start: color-mix(
+    in srgb,
+    var(--tertiary) 82%,
+    var(--quaternary) 18%
+  );
   --cn-accent-end: color-mix(in srgb, var(--tertiary) 82%, var(--primary) 18%);
   --cn-action-gradient: linear-gradient(
     135deg,
@@ -2720,6 +2729,7 @@ body {
     ),
     var(--secondary) !important;
   background-attachment: fixed !important;
+
   --scrollbarThumbBg: color-mix(in srgb, var(--primary) 32%, transparent);
 }
 
@@ -2830,12 +2840,16 @@ select:focus,
 }
 
 .cn-mobile-community-backdrop {
-  background: rgba(8, 16, 24, 0.56);
+  background: rgb(8, 16, 24, 0.56);
 }
 
 @media (prefers-contrast: more) {
   :root {
-    --cn-control-outline: color-mix(in srgb, var(--primary) 66%, var(--secondary));
+    --cn-control-outline: color-mix(
+      in srgb,
+      var(--primary) 66%,
+      var(--secondary)
+    );
     --cn-separator: color-mix(in srgb, var(--primary) 28%, var(--secondary));
   }
 
@@ -2859,7 +2873,6 @@ select:focus,
   }
 }
 
-
 /* ==========================================================
    SENIN.ME — XenForo-inspired category directory
    Scope: /categories only | Desktop + mobile
@@ -2872,9 +2885,17 @@ select:focus,
     color-mix(in srgb, var(--quaternary) 14%, var(--cn-panel-strong))
   );
   --xf-cat-row: color-mix(in srgb, var(--cn-panel) 94%, var(--secondary));
-  --xf-cat-row-alt: color-mix(in srgb, var(--cn-panel-strong) 93%, var(--secondary));
+  --xf-cat-row-alt: color-mix(
+    in srgb,
+    var(--cn-panel-strong) 93%,
+    var(--secondary)
+  );
   --xf-cat-divider: color-mix(in srgb, var(--cn-separator) 88%, transparent);
-  --xf-cat-icon-bg: color-mix(in srgb, var(--category-badge-color) 17%, var(--cn-surface));
+  --xf-cat-icon-bg: color-mix(
+    in srgb,
+    var(--category-badge-color) 17%,
+    var(--cn-surface)
+  );
 
   #list-area .contents {
     width: 100%;
@@ -2891,7 +2912,7 @@ select:focus,
   }
 }
 
-@media (min-width: 1000px) {
+@media (width >= 1000px) {
   .categories-list {
     #list-area .category-list.with-topics {
       display: block;
@@ -2974,7 +2995,9 @@ select:focus,
         background: var(--xf-cat-row);
         border: 0;
         border-bottom: 1px solid var(--xf-cat-divider);
-        transition: background-color 160ms ease, box-shadow 160ms ease;
+        transition:
+          background-color 160ms ease,
+          box-shadow 160ms ease;
       }
 
       > tbody > tr:nth-child(even) {
@@ -3062,7 +3085,8 @@ select:focus,
       height: 34px;
       padding: 7px;
       transform: translateY(-50%);
-      border: 1px solid color-mix(in srgb, var(--category-badge-color) 32%, var(--cn-border));
+      border: 1px solid
+        color-mix(in srgb, var(--category-badge-color) 32%, var(--cn-border));
       border-radius: 14px;
       background: var(--xf-cat-icon-bg);
       object-fit: contain;
@@ -3096,7 +3120,10 @@ select:focus,
       margin: 0;
     }
 
-    .category-list.with-topics td.category > .subcategories .badge-category__wrapper {
+    .category-list.with-topics
+      td.category
+      > .subcategories
+      .badge-category__wrapper {
       max-width: 100%;
       padding: 4px 8px;
       border: 1px solid var(--cn-separator);
@@ -3172,7 +3199,7 @@ select:focus,
   }
 }
 
-@media (max-width: 999px) {
+@media (width <= 999px) {
   .categories-list {
     #list-area .category-list:not(table) {
       display: block;
@@ -3227,7 +3254,12 @@ select:focus,
       border: 0;
     }
 
-    #list-area .category-list-item > .topic-list > tbody > tr:first-child > .main-link {
+    #list-area
+      .category-list-item
+      > .topic-list
+      > tbody
+      > tr:first-child
+      > .main-link {
       position: relative;
       box-sizing: border-box;
       min-height: 68px;
@@ -3266,7 +3298,8 @@ select:focus,
       width: 28px;
       height: 28px;
       padding: 6px;
-      border: 1px solid color-mix(in srgb, var(--category-badge-color) 32%, var(--cn-border));
+      border: 1px solid
+        color-mix(in srgb, var(--category-badge-color) 32%, var(--cn-border));
       border-radius: 12px;
       background: var(--xf-cat-icon-bg);
       object-fit: contain;
@@ -3373,7 +3406,8 @@ select:focus,
       width: 28px;
       height: 28px;
       padding: 6px;
-      border: 1px solid color-mix(in srgb, var(--category-badge-color) 32%, var(--cn-border));
+      border: 1px solid
+        color-mix(in srgb, var(--category-badge-color) 32%, var(--cn-border));
       border-radius: 12px;
       background: var(--xf-cat-icon-bg);
     }
@@ -3386,4 +3420,5 @@ select:focus,
     }
   }
 }
+
 /* XFCAT_PASTE_TEST */
