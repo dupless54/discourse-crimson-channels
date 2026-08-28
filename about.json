@@ -1,0 +1,57 @@
+{
+  "name": "Crimson Channels",
+  "component": false,
+  "license_url": null,
+  "about_url": null,
+  "authors": "dupless54",
+  "theme_version": "0.2.0",
+  "minimum_discourse_version": null,
+  "maximum_discourse_version": null,
+  "assets": {},
+  "color_schemes": {
+    "Crimson Channels Light": {
+      "primary": "17212B",
+      "secondary": "F4F7FA",
+      "tertiary": "A51D55",
+      "quaternary": "0F6F73",
+      "header_background": "FFFFFF",
+      "header_primary": "17212B",
+      "selected": "0F6F73",
+      "hover": "E7EDF3",
+      "highlight": "F7E8EF",
+      "danger": "B42335",
+      "success": "177245",
+      "love": "A51D55"
+    },
+    "Crimson Pearl Light": {
+      "primary": "20242e",
+      "secondary": "f7f8fb",
+      "tertiary": "c50337",
+      "quaternary": "a9002e",
+      "header_background": "ffffff",
+      "header_primary": "20242e",
+      "highlight": "ffe0e9",
+      "selected": "d1f0ff",
+      "hover": "f2f2f2",
+      "danger": "b90032",
+      "success": "16884e",
+      "love": "c50337"
+    },
+    "Crimson Noir Dark": {
+      "primary": "EDF3F8",
+      "secondary": "0F151C",
+      "tertiary": "EA6B9A",
+      "quaternary": "66C7C2",
+      "header_background": "111821",
+      "header_primary": "EDF3F8",
+      "highlight": "33202B",
+      "selected": "8CE0DA",
+      "hover": "1B2632",
+      "danger": "FF8D98",
+      "success": "57C790",
+      "love": "EA6B9A"
+    }
+  },
+  "modifiers": {},
+  "learn_more": "https://meta.discourse.org/t/beginners-guide-to-using-discourse-themes/91966"
+}

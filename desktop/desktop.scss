@@ -1,0 +1,133 @@
+/* ============================================================
+   Desktop shell: community rail | channels | content | members
+   ============================================================ */
+
+@media (min-width: 1000px) {
+  body:not(.admin-interface):not(.cn-shell-hidden) {
+    --d-sidebar-width: var(--cn-channel-rail-width);
+  }
+
+  body:not(.admin-interface):not(.cn-shell-hidden) .cn-server-rail {
+    position: fixed;
+    z-index: var(--cn-rail-z-index);
+    inset-block: var(--header-offset, 60px) 0;
+    inset-inline-start: 0;
+    display: flex;
+    width: var(--cn-server-rail-width);
+  }
+
+  body:not(.admin-interface):not(.cn-shell-hidden) #main-outlet-wrapper {
+    width: 100% !important;
+    max-width: none !important;
+    min-height: calc(100vh - var(--header-offset, 60px));
+    box-sizing: border-box;
+    margin: 0 !important;
+    padding-inline-start: var(--cn-server-rail-width) !important;
+    padding-inline-end: 0 !important;
+  }
+
+  body.has-sidebar-page:not(.admin-interface):not(.cn-shell-hidden)
+    #main-outlet-wrapper {
+    display: grid;
+    grid-template-columns: var(--cn-channel-rail-width) minmax(0, 1fr);
+    gap: 0;
+  }
+
+  body:not(.admin-interface):not(.cn-shell-hidden) .sidebar-wrapper {
+    width: var(--cn-channel-rail-width) !important;
+    min-width: var(--cn-channel-rail-width) !important;
+    max-width: var(--cn-channel-rail-width) !important;
+    border-radius: 0;
+  }
+
+  body:not(.admin-interface):not(.cn-shell-hidden) #main-outlet {
+    width: var(--cn-forum-width) !important;
+    max-width: var(--cn-forum-width) !important;
+    min-width: 0;
+    box-sizing: border-box;
+    margin: 0 auto !important;
+    padding: 18px 22px 84px !important;
+  }
+
+  body:not(.admin-interface):not(.cn-shell-hidden) .d-header .wrap {
+    width: 100%;
+    max-width: none;
+    box-sizing: border-box;
+    padding-inline-start: calc(var(--cn-server-rail-width) + 16px);
+  }
+
+  body:not(.admin-interface):not(.cn-shell-hidden)
+    .sidebar-wrapper
+    .sidebar-container {
+    padding-inline: 10px;
+  }
+
+  .user-main .about .details > .primary {
+    padding-inline: 4px;
+  }
+
+  .user-main .user-navigation .nav-pills > li {
+    flex: 1 0 auto;
+  }
+
+  .user-main .user-navigation .nav-pills > li > a {
+    justify-content: center;
+  }
+}
+
+@media (min-width: 1280px) {
+  body:not(.admin-interface):not(.cn-shell-hidden):not(
+      .cn-member-rail-disabled
+    ):not(.cn-member-rail-collapsed)
+    .cn-member-rail {
+    position: fixed;
+    z-index: var(--cn-rail-z-index);
+    inset-block: var(--header-offset, 60px) 0;
+    inset-inline-end: 0;
+    display: flex;
+    width: var(--cn-member-rail-width);
+  }
+
+  body:not(.admin-interface):not(.cn-shell-hidden):not(
+      .cn-member-rail-disabled
+    ):not(.cn-member-rail-collapsed)
+    #main-outlet-wrapper {
+    padding-inline-end: var(--cn-member-rail-width) !important;
+  }
+
+  body:not(.admin-interface):not(.cn-shell-hidden):not(
+      .cn-member-rail-disabled
+    ):not(.cn-member-rail-collapsed)
+    .chat-drawer-container {
+    inset-inline-end: calc(var(--cn-member-rail-width) + 12px) !important;
+  }
+
+  /* Floating UI otherwise alternates placements when a 304px card is opened
+     from the fixed right rail. Pinning it beside the rail avoids compression
+     and the resulting left/right jitter while keeping it close to its row. */
+  body.cn-user-card-from-member-rail .fk-d-menu[data-identifier="usercard"] {
+    position: fixed !important;
+    inset: var(
+        --cn-member-user-card-top,
+        calc(var(--header-offset, 60px) + 10px)
+      )
+      calc(var(--cn-member-rail-width) + 12px) auto auto !important;
+    width: 304px !important;
+    max-width: 304px !important;
+    margin: 0 !important;
+    translate: none !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+@media (min-width: 1680px) {
+  :root {
+    --cn-channel-rail-width: 276px;
+    --cn-member-rail-width: 264px;
+  }
+
+  body:not(.admin-interface):not(.cn-shell-hidden) #main-outlet {
+    padding-inline: 28px !important;
+  }
+}

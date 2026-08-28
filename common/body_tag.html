@@ -1,0 +1,117 @@
+<nav class="cn-server-rail" aria-label="Hızlı alanlar">
+  <a
+    class="cn-server-button cn-server-button--brand"
+    data-cn-link="home"
+    href="/"
+    aria-label="Ana sayfa"
+    data-label="Ana sayfa"
+  >
+    <span data-cn-brand-initial>S</span>
+  </a>
+
+  <span class="cn-server-rail__separator" aria-hidden="true"></span>
+
+  <a
+    class="cn-server-button"
+    data-cn-link="categories"
+    href="/categories"
+    aria-label="Kategoriler"
+    data-label="Kategoriler"
+  >
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <rect x="3" y="3" width="7" height="7" rx="2"></rect>
+      <rect x="14" y="3" width="7" height="7" rx="2"></rect>
+      <rect x="3" y="14" width="7" height="7" rx="2"></rect>
+      <rect x="14" y="14" width="7" height="7" rx="2"></rect>
+    </svg>
+  </a>
+
+  <a
+    class="cn-server-button"
+    data-cn-link="latest"
+    href="/latest"
+    aria-label="Son konular"
+    data-label="Son konular"
+  >
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="12" cy="12" r="8.5"></circle>
+      <path d="M12 7.5v5l3.5 2"></path>
+    </svg>
+  </a>
+
+  <a
+    class="cn-server-button"
+    data-cn-link="servers"
+    href="/servers"
+    aria-label="Private server top listesi"
+    data-label="Private Serverlar"
+  >
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <rect x="4" y="4" width="16" height="6" rx="2"></rect>
+      <rect x="4" y="14" width="16" height="6" rx="2"></rect>
+      <path d="M8 7h.01M8 17h.01M12 7h5M12 17h5"></path>
+    </svg>
+  </a>
+
+  <a
+    class="cn-server-button"
+    data-cn-link="chat"
+    href="/chat"
+    aria-label="Sohbet"
+    data-label="Sohbet"
+  >
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 5.5h16v11H9l-5 3v-14Z"></path>
+      <path d="M8 10h8M8 13h5"></path>
+    </svg>
+  </a>
+
+  <span class="cn-server-rail__spacer"></span>
+
+  <button
+    class="cn-server-button cn-server-button--members"
+    type="button"
+    data-cn-action="toggle-members"
+    aria-label="Üye panelini aç veya kapat"
+    data-label="Üye paneli"
+  >
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="9" cy="8" r="3"></circle>
+      <circle cx="17" cy="10" r="2.4"></circle>
+      <path d="M3.5 19c.5-3.3 2.3-5 5.5-5s5 1.7 5.5 5"></path>
+      <path d="M14.5 15c3.4-.6 5.4.8 6 3.7"></path>
+    </svg>
+  </button>
+</nav>
+
+<button
+  class="cn-mobile-community-backdrop"
+  type="button"
+  data-cn-action="close-mobile-community"
+  aria-label="Topluluk panelini kapat"
+  aria-hidden="true"
+  tabindex="-1"
+></button>
+
+<aside
+  id="cn-community-panel"
+  class="cn-member-rail"
+  aria-label="Bu sayfadaki üyeler"
+>
+  <header class="cn-member-rail__header">
+    <div>
+      <span class="cn-member-rail__eyebrow">TOPLULUK</span>
+      <h2 data-cn-member-title>ÇEVRİMİÇİ</h2>
+    </div>
+    <span class="cn-member-rail__count" data-cn-member-count>0</span>
+  </header>
+
+  <div class="cn-member-list" data-cn-member-list>
+    <p class="cn-member-list__empty">Üyeler yükleniyor…</p>
+  </div>
+
+  <footer class="cn-member-rail__footer">
+    <span class="cn-presence-dot" aria-hidden="true"></span>
+    <span data-cn-member-footer>Canlı çevrimiçi durumu</span>
+  </footer>
+</aside>
