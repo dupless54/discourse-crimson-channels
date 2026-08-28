@@ -1,0 +1,49 @@
+name: Apply SEO performance fixes
+
+on:
+  push:
+    branches:
+      - fix/security-visual-audit
+    paths:
+      - ".perf-fix/ready"
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/security-visual-audit
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.28.0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Apply and validate SEO performance fixes
+        shell: bash
+        run: |
+          set -euo pipefail
+          python .perf-fix/apply.py
+          pnpm install --frozen-lockfile
+          pnpm lint:js:fix
+          pnpm lint:css:fix
+          pnpm lint:prettier:fix
+          pnpm lint:js --max-warnings 0
+          pnpm lint:css
+          pnpm lint:prettier
+          pnpm lint:types
+          rm -rf .perf-fix
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "FIX: optimize theme SEO compatibility and runtime work"
+          git push origin HEAD:fix/security-visual-audit
