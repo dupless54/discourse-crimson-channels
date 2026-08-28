@@ -1,0 +1,59 @@
+name: Sync Discourse tooling
+
+on:
+  push:
+    branches:
+      - bootstrap-import
+    paths:
+      - ".ci-bootstrap/ready"
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: bootstrap-import
+          fetch-depth: 0
+
+      - name: Copy pinned official theme tooling
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ ! -f .ci-bootstrap/ready ]]; then
+            echo "Tooling bootstrap already applied; nothing to do."
+            exit 0
+          fi
+
+          skeleton_sha="98cb44f550add3091200664cf8b05ffbfb618ea2"
+          files=(
+            .gitignore
+            .npmrc
+            .prettierrc.cjs
+            .rubocop.yml
+            .streerc
+            .template-lintrc.cjs
+            Gemfile
+            Gemfile.lock
+            eslint.config.mjs
+            package.json
+            pnpm-lock.yaml
+            stylelint.config.mjs
+            tsconfig.json
+          )
+
+          for file in "${files[@]}"; do
+            curl --fail --silent --show-error --location \
+              "https://raw.githubusercontent.com/discourse/discourse-theme-skeleton/${skeleton_sha}/${file}" \
+              --output "${file}"
+          done
+
+          rm -rf .ci-bootstrap
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "CHORE: align tooling with official Discourse theme skeleton"
+          git push origin HEAD:bootstrap-import
