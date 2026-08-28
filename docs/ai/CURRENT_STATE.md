@@ -12,7 +12,7 @@
 - PR: #2 — `FIX: harden Crimson Channels security and responsive UI`
 - scope: security/robustness, responsive/accessibility, theme-level SEO compatibility, and bounded runtime performance fixes
 - runtime paths: `javascripts/discourse/api-initializers/crimson-channels.js`, `common/body_tag.html`, `common/common.scss`, `desktop/desktop.scss`, `mobile/mobile.scss`
-- verification helper: `.github/workflows/apply-seo-performance-fixes.yml` is retired to manual, read-only lint verification only
+- verification helper: `.github/workflows/apply-seo-performance-fixes.yml` is manual/read-only lint verification only; the temporary write/apply behavior is retired
 
 ## Security and visual fixes
 - shell navigation settings are constrained to same-origin Discourse URLs
@@ -44,7 +44,7 @@
 - Stylelint: GREEN
 - Prettier: GREEN
 - TypeScript/Glint types: GREEN
-- final exact changed paths and Official reusable Discourse Theme CI must be re-verified after this state commit
+- final exact branch head after this state commit must receive a fresh Official reusable Discourse Theme CI result before merge
 - live Lighthouse/Core Web Vitals/Search Console/crawler smoke test is not available from GitHub CI alone
 
 ## Known blockers
