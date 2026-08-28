@@ -27,7 +27,10 @@ const communityRequestCache = new Map();
 const recordedProfileVisits = new Map();
 let memberRailRenderVersion = 0;
 const MAX_USER_CACHE_ENTRIES = 128;
+const MAX_FEATURED_CACHE_ENTRIES = 32;
 let mobileCommunityReturnFocus = null;
+let relativeTimeFormatter;
+let relativeTimeFormatterLocale = "";
 
 function setBoundedMap(map, key, value, maxEntries = MAX_USER_CACHE_ENTRIES) {
   if (map.has(key)) {
@@ -384,6 +387,21 @@ function ensureMobileCommunityToggle() {
   return item.querySelector(".cn-mobile-community-toggle");
 }
 
+function stripDiscourseBasePath(path) {
+  const normalizedPath = String(path || "/");
+  const basePath = getURL("/").replace(/\/+$/, "");
+
+  if (
+    basePath &&
+    basePath !== "/" &&
+    (normalizedPath === basePath || normalizedPath.startsWith(`${basePath}/`))
+  ) {
+    return normalizedPath.slice(basePath.length) || "/";
+  }
+
+  return normalizedPath;
+}
+
 function normalizeFeaturedCategoryPath(value) {
   const candidate = String(value || "").trim();
 
@@ -398,10 +416,12 @@ function normalizeFeaturedCategoryPath(value) {
       return "";
     }
 
-    const path = url.pathname
-      .replace(/\.json$/i, "")
-      .replace(/\/l\/[^/]+$/i, "")
-      .replace(/\/+$/, "");
+    const path = stripDiscourseBasePath(
+      url.pathname
+        .replace(/\.json$/i, "")
+        .replace(/\/l\/[^/]+$/i, "")
+        .replace(/\/+$/, "")
+    );
 
     return /^\/c\/(?:[^/]+\/)+\d+$/i.test(path) ? path : "";
   } catch {
@@ -425,7 +445,7 @@ function normalizeRoutePath(value) {
       return "/";
     }
 
-    return url.pathname.replace(/\/+$/, "") || "/";
+    return stripDiscourseBasePath(url.pathname.replace(/\/+$/, "")) || "/";
   } catch {
     return "/";
   }
@@ -544,11 +564,25 @@ function findPrimaryTopicList() {
 function avatarUrlFromTemplate(template, size = 48) {
   const value = String(template || "").replaceAll("{size}", String(size));
 
-  if (value.startsWith("/") || /^https?:\/\//i.test(value)) {
-    return value;
+  if (value.startsWith("/")) {
+    return getURL(stripDiscourseBasePath(value));
   }
 
-  return "";
+  return /^https?:\/\//i.test(value) ? value : "";
+}
+
+function getRelativeTimeFormatter() {
+  const locale = document.documentElement.lang || "tr";
+
+  if (!relativeTimeFormatter || relativeTimeFormatterLocale !== locale) {
+    relativeTimeFormatter = new Intl.RelativeTimeFormat(locale, {
+      numeric: "auto",
+      style: "short",
+    });
+    relativeTimeFormatterLocale = locale;
+  }
+
+  return relativeTimeFormatter;
 }
 
 function formatRelativeActivity(value) {
@@ -571,13 +605,10 @@ function formatRelativeActivity(value) {
   for (const [unit, length] of units) {
     if (Math.abs(seconds) >= length) {
       try {
-        return new Intl.RelativeTimeFormat(
-          document.documentElement.lang || "tr",
-          {
-            numeric: "auto",
-            style: "short",
-          }
-        ).format(Math.round(seconds / length), unit);
+        return getRelativeTimeFormatter().format(
+          Math.round(seconds / length),
+          unit
+        );
       } catch {
         break;
       }
@@ -594,7 +625,7 @@ async function fetchFeaturedTopics(categoryPath) {
     return cached.promise;
   }
 
-  const promise = fetch(`${categoryPath}/l/latest.json`, {
+  const promise = fetch(getURL(`${categoryPath}/l/latest.json`), {
     credentials: "same-origin",
     headers: { Accept: "application/json" },
   }).then((response) => {
@@ -605,10 +636,15 @@ async function fetchFeaturedTopics(categoryPath) {
     return response.json();
   });
 
-  featuredTopicsCache.set(categoryPath, {
-    promise,
-    expiresAt: Date.now() + 60_000,
-  });
+  setBoundedMap(
+    featuredTopicsCache,
+    categoryPath,
+    {
+      promise,
+      expiresAt: Date.now() + 60_000,
+    },
+    MAX_FEATURED_CACHE_ENTRIES
+  );
 
   try {
     return await promise;
@@ -634,7 +670,7 @@ function createFeaturedTopicsSection(config) {
 
   const more = document.createElement("a");
   more.className = "cn-featured-topics__more";
-  more.href = `${config.categoryPath}/l/latest`;
+  more.href = getURL(`${config.categoryPath}/l/latest`);
   more.textContent = "Tümünü gör";
 
   const status = document.createElement("p");
@@ -684,7 +720,7 @@ function populateFeaturedTopics(section, payload, limit) {
     avatar.className = "cn-featured-topic__avatar trigger-user-card";
 
     if (username) {
-      avatar.href = `/u/${encodeURIComponent(username)}`;
+      avatar.href = getURL(`/u/${encodeURIComponent(username)}`);
       avatar.setAttribute("data-user-card", username);
       avatar.setAttribute("aria-label", `${username} kullanıcı kartını aç`);
     }
@@ -695,7 +731,10 @@ function populateFeaturedTopics(section, payload, limit) {
       image.className = "avatar";
       image.src = avatarUrl;
       image.alt = "";
+      image.width = 48;
+      image.height = 48;
       image.loading = "lazy";
+      image.decoding = "async";
       avatar.appendChild(image);
     } else {
       const fallback = document.createElement("span");
@@ -709,7 +748,9 @@ function populateFeaturedTopics(section, payload, limit) {
 
     const link = document.createElement("a");
     link.className = "cn-featured-topic__link";
-    link.href = `/t/${encodeURIComponent(topic.slug || "topic")}/${topic.id}`;
+    link.href = getURL(
+      `/t/${encodeURIComponent(topic.slug || "topic")}/${topic.id}`
+    );
     link.textContent = String(topic.title || "Başlıksız konu");
 
     const meta = document.createElement("div");
@@ -957,7 +998,7 @@ function normalizeUrl(value, fallback) {
       return getURL(fallback);
     }
 
-    return `${getURL(url.pathname)}${url.search}${url.hash}`;
+    return `${getURL(stripDiscourseBasePath(url.pathname))}${url.search}${url.hash}`;
   } catch {
     return getURL(fallback);
   }
@@ -1069,7 +1110,10 @@ function createMemberElement(member) {
     avatar.className = "avatar cn-member__avatar";
     avatar.src = member.avatarUrl;
     avatar.alt = "";
+    avatar.width = 34;
+    avatar.height = 34;
     avatar.loading = "lazy";
+    avatar.decoding = "async";
     avatarWrap.appendChild(avatar);
   } else {
     const fallback = document.createElement("span");
@@ -1238,7 +1282,6 @@ async function renderMemberRail() {
 }
 
 export default apiInitializer((api) => {
-  let observer;
   let surfaceObserver;
   let renderTimer;
   let surfaceTimer;
@@ -1260,7 +1303,9 @@ export default apiInitializer((api) => {
   const bindDynamicSurfaceObserver = () => {
     surfaceObserver?.disconnect();
 
-    if (!document.body) {
+    const surfaceRoot = document.querySelector("#main-outlet");
+
+    if (!surfaceRoot) {
       return;
     }
 
@@ -1278,17 +1323,32 @@ export default apiInitializer((api) => {
         scheduleDynamicSurfaceDecoration();
       }
     });
-    surfaceObserver.observe(document.body, { childList: true, subtree: true });
+    surfaceObserver.observe(surfaceRoot, { childList: true, subtree: true });
+  };
+
+  const memberRailCanRefresh = () => {
+    if (
+      document.visibilityState === "hidden" ||
+      document.body?.classList.contains("cn-member-rail-disabled") ||
+      document.body?.classList.contains("cn-shell-hidden")
+    ) {
+      return false;
+    }
+
+    if (isMobileCommunityViewport()) {
+      return document.body.classList.contains("cn-mobile-community-open");
+    }
+
+    return (
+      window.matchMedia("(min-width: 1280px)").matches &&
+      !document.body.classList.contains("cn-member-rail-collapsed")
+    );
   };
 
   const startMemberRefresh = () => {
     window.clearInterval(memberRefreshTimer);
     memberRefreshTimer = window.setInterval(() => {
-      if (
-        document.visibilityState === "hidden" ||
-        document.body?.classList.contains("cn-member-rail-disabled") ||
-        document.body?.classList.contains("cn-shell-hidden")
-      ) {
+      if (!memberRailCanRefresh()) {
         return;
       }
 
@@ -1387,9 +1447,14 @@ export default apiInitializer((api) => {
     if (button && button.dataset.cnCommunityBound !== "true") {
       button.dataset.cnCommunityBound = "true";
       button.addEventListener("click", () => {
-        setMobileCommunityOpen(
-          !document.body.classList.contains("cn-mobile-community-open")
+        const shouldOpen = !document.body.classList.contains(
+          "cn-mobile-community-open"
         );
+        setMobileCommunityOpen(shouldOpen);
+
+        if (shouldOpen) {
+          scheduleMemberRender();
+        }
       });
     }
 
@@ -1644,29 +1709,11 @@ export default apiInitializer((api) => {
   if (document.body?.dataset.cnVisibilityBound !== "true") {
     document.body.dataset.cnVisibilityBound = "true";
     document.addEventListener("visibilitychange", () => {
-      if (document.visibilityState === "visible") {
+      if (memberRailCanRefresh()) {
         scheduleMemberRender();
       }
     });
   }
-
-  const bindOutletObserver = () => {
-    observer?.disconnect();
-    const outlet = document.querySelector("#main-outlet");
-
-    if (outlet) {
-      observer = new MutationObserver(() => {
-        scheduleMemberRender();
-        scheduleDynamicSurfaceDecoration();
-      });
-      observer.observe(outlet, {
-        attributes: true,
-        attributeFilter: ["class"],
-        childList: true,
-        subtree: true,
-      });
-    }
-  };
 
   const bindToggleButton = () => {
     const toggleButton = document.querySelector(
@@ -1684,6 +1731,10 @@ export default apiInitializer((api) => {
       );
       setPanelCollapsed(collapsed);
       storePanelState(collapsed);
+
+      if (!collapsed) {
+        scheduleMemberRender();
+      }
     });
   };
 
@@ -1694,7 +1745,6 @@ export default apiInitializer((api) => {
   bindMemberHoverCard();
   setPanelCollapsed(getStoredPanelState());
   syncRouteState();
-  bindOutletObserver();
   bindDynamicSurfaceObserver();
   scheduleDynamicSurfaceDecoration();
   startMemberRefresh();
@@ -1711,20 +1761,6 @@ export default apiInitializer((api) => {
     scheduleMobileCommunityControls();
     bindMemberHoverCard();
     syncRouteState();
-    bindOutletObserver();
-    bindDynamicSurfaceObserver();
-    scheduleDynamicSurfaceDecoration();
-    scheduleMemberRender();
-    scheduleFeaturedTopics();
-  });
-
-  window.requestAnimationFrame(() => {
-    syncThemeSettings();
-    bindToggleButton();
-    scheduleMobileCommunityControls();
-    bindMemberHoverCard();
-    syncRouteState();
-    bindOutletObserver();
     bindDynamicSurfaceObserver();
     scheduleDynamicSurfaceDecoration();
     scheduleMemberRender();

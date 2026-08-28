@@ -6,6 +6,11 @@
   display: none !important;
 }
 
+/* Avoid fixed-background repaint cost on touch/mobile scrolling. */
+body {
+  background-attachment: scroll !important;
+}
+
 /* Header community toggle */
 .d-header .wrap {
   padding-inline: 5px;
