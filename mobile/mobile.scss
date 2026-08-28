@@ -137,6 +137,14 @@ body.cn-mobile-community-open .cn-member-rail {
   transition-delay: 0s;
 }
 
+html[dir="rtl"] .cn-member-rail {
+  transform: translateX(-105%);
+}
+
+html[dir="rtl"] body.cn-mobile-community-open .cn-member-rail {
+  transform: translateX(0);
+}
+
 .cn-mobile-community-backdrop {
   position: fixed;
   z-index: 1001;
