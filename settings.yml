@@ -1,0 +1,123 @@
+brand_initial:
+  type: string
+  default: "S"
+
+member_panel_title:
+  type: string
+  default: "ÇEVRİMİÇİ"
+
+member_rail_enabled:
+  type: bool
+  default: true
+
+member_rail_limit:
+  type: integer
+  default: 12
+  min: 4
+  max: 24
+
+forum_width_percent:
+  type: integer
+  default: 100
+  min: 40
+  max: 100
+
+member_hover_card_enabled:
+  type: bool
+  default: true
+
+member_hover_card_delay_seconds:
+  type: integer
+  default: 3
+  min: 1
+  max: 10
+
+recent_profiles_enabled:
+  type: bool
+  default: true
+
+recent_profiles_title:
+  type: string
+  default: "SON PROFİL ZİYARETÇİLERİ"
+
+recent_profiles_limit:
+  type: integer
+  default: 12
+  min: 4
+  max: 24
+
+featured_topic_lists:
+  type: objects
+  default: []
+  schema:
+    name: featured topic list
+    properties:
+      enabled:
+        type: boolean
+      title:
+        type: string
+        validations:
+          max_length: 80
+      category_ids:
+        type: categories
+        required: true
+        validations:
+          min: 1
+          max: 1
+      position:
+        type: enum
+        choices:
+          - "above"
+          - "below"
+      limit:
+        type: integer
+        validations:
+          min: 1
+          max: 20
+
+# v0.1.4 single-list settings are retained as a compatibility fallback. They
+# are used only while featured_topic_lists is empty.
+featured_topics_enabled:
+  type: bool
+  default: false
+
+featured_category_url:
+  type: string
+  default: ""
+
+featured_topics_title:
+  type: string
+  default: "SEÇİLİ KONULAR"
+
+featured_topics_position:
+  type: enum
+  default: "above"
+  choices:
+    - "above"
+    - "below"
+
+featured_topics_limit:
+  type: integer
+  default: 5
+  min: 1
+  max: 20
+
+home_url:
+  type: string
+  default: "/"
+
+categories_url:
+  type: string
+  default: "/categories"
+
+latest_url:
+  type: string
+  default: "/latest"
+
+servers_url:
+  type: string
+  default: "/servers"
+
+chat_url:
+  type: string
+  default: "/chat"

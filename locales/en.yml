@@ -1,0 +1,43 @@
+en:
+  theme_metadata:
+    description: "A Discord-inspired four-column Crimson Noir Discourse theme for senin.me."
+    settings:
+      brand_initial: "Short text displayed in the community rail brand button."
+      member_panel_title: "Heading shown above the online-member rail on regular pages."
+      member_rail_enabled: "Show the right member rail on wide screens."
+      member_rail_limit: "Maximum number of online members to display."
+      forum_width_percent: "Desktop forum content width (40–100%)."
+      member_hover_card_enabled: "Automatically open a user card after hovering a forum avatar or username."
+      member_hover_card_delay_seconds: "Delay before automatically opening the hovered user card (seconds)."
+      recent_profiles_enabled: "Show the members who most recently visited the viewed profile."
+      recent_profiles_title: "Heading used by the right rail while showing profile visitors."
+      recent_profiles_limit: "Maximum number of profile visitors to display."
+      featured_topic_lists:
+        description: "Add separate topic sections shown only on the homepage. Create as many as needed, reorder them, and place each section above or below the main topic list."
+        schema:
+          properties:
+            enabled:
+              label: "Enabled"
+              description: "Show this topic section."
+            title:
+              label: "Section title"
+              description: "SEÇİLİ KONULAR is used when left blank."
+            category_ids:
+              label: "Category"
+              description: "Select the single category used by this section."
+            position:
+              label: "Position"
+              description: "Choose above or below the main topic list."
+            limit:
+              label: "Topic count"
+              description: "Number of topics shown in this section (1–20)."
+      featured_topics_enabled: "Enable the legacy single list. Used only while the new multi-list setting is empty."
+      featured_category_url: "Category path used by the legacy single list."
+      featured_topics_title: "Heading used by the legacy single list."
+      featured_topics_position: "Position of the legacy single list: above or below."
+      featured_topics_limit: "Maximum number of topics in the legacy single list."
+      home_url: "Destination of the home rail button."
+      categories_url: "Destination of the categories rail button."
+      latest_url: "Destination of the latest-topics rail button."
+      servers_url: "Destination of the private-server top-list button."
+      chat_url: "Destination of the chat rail button."

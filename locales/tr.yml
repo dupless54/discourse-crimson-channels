@@ -1,0 +1,43 @@
+tr_TR:
+  theme_metadata:
+    description: "senin.me için Discord esintili, Crimson Noir görsel sistemine sahip Discourse teması."
+    settings:
+      brand_initial: "Topluluk rayındaki marka düğmesinde gösterilecek kısa metin."
+      member_panel_title: "Normal sayfalarda çevrimiçi üye panelinin başlığı."
+      member_rail_enabled: "Geniş ekranlarda sağ üye panelini göster."
+      member_rail_limit: "Gösterilecek en fazla çevrimiçi üye sayısı."
+      forum_width_percent: "Masaüstü forum içerik genişliği (%40–100)."
+      member_hover_card_enabled: "Forum avatarı veya kullanıcı adı üzerinde bekleyince kullanıcı kartını otomatik aç."
+      member_hover_card_delay_seconds: "Kullanıcı kartının otomatik açılması için bekleme süresi (saniye)."
+      recent_profiles_enabled: "Görüntülenen profili en son ziyaret eden üyeleri göster."
+      recent_profiles_title: "Profil ziyaretçileri gösterilirken sağ panelde kullanılacak başlık."
+      recent_profiles_limit: "Gösterilecek en fazla profil ziyaretçisi sayısı."
+      featured_topic_lists:
+        description: "Yalnızca ana sayfada gösterilen ayrı konu bölümleri ekleyin; sıralayın ve ana konu listesinin üstüne ya da altına yerleştirin."
+        schema:
+          properties:
+            enabled:
+              label: "Etkin"
+              description: "Bu konu bölümünü göster."
+            title:
+              label: "Bölüm başlığı"
+              description: "Boş bırakılırsa SEÇİLİ KONULAR kullanılır."
+            category_ids:
+              label: "Kategori"
+              description: "Bu bölüm için kullanılacak tek kategoriyi seçin."
+            position:
+              label: "Konum"
+              description: "Ana konu listesinin üstünü veya altını seçin."
+            limit:
+              label: "Konu sayısı"
+              description: "Bu bölümde gösterilecek konu sayısı (1–20)."
+      featured_topics_enabled: "Eski tek listeyi etkinleştir. Yalnızca yeni çoklu liste ayarı boşken kullanılır."
+      featured_category_url: "Eski tek listenin kullandığı kategori yolu."
+      featured_topics_title: "Eski tek listenin başlığı."
+      featured_topics_position: "Eski tek listenin konumu: üstte veya altta."
+      featured_topics_limit: "Eski tek listedeki en fazla konu sayısı."
+      home_url: "Ana sayfa ray düğmesinin hedefi."
+      categories_url: "Kategoriler ray düğmesinin hedefi."
+      latest_url: "Son konular ray düğmesinin hedefi."
+      servers_url: "Private server listesi ray düğmesinin hedefi."
+      chat_url: "Sohbet ray düğmesinin hedefi."
