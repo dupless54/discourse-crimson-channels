@@ -34,7 +34,9 @@ jobs:
           set -euo pipefail
           pnpm install --frozen-lockfile
           pnpm lint:css:fix
+          pnpm lint:css:fix
           pnpm lint:prettier:fix
+          pnpm lint:css:fix
           pnpm lint:css
           pnpm lint:prettier
           pnpm lint:js --max-warnings 0
