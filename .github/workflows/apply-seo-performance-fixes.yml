@@ -32,6 +32,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          python .perf-fix/fix-script.py
           python .perf-fix/apply.py
           pnpm install --frozen-lockfile
           pnpm lint:js:fix
