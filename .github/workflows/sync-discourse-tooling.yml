@@ -35,7 +35,6 @@ jobs:
             .prettierrc.cjs
             .rubocop.yml
             .streerc
-            .template-lintrc.cjs
             Gemfile
             Gemfile.lock
             eslint.config.mjs
