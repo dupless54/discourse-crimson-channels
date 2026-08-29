@@ -1,0 +1,32 @@
+name: Manual SEO performance verification
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.28.0
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Verify theme source
+        run: |
+          pnpm lint:js --max-warnings 0
+          pnpm lint:css
+          pnpm lint:prettier
+          pnpm lint:types
