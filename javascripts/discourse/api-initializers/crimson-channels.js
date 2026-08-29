@@ -26,6 +26,29 @@ const userCardProfileBannerCache = new Map();
 const communityRequestCache = new Map();
 const recordedProfileVisits = new Map();
 let memberRailRenderVersion = 0;
+const MAX_USER_CACHE_ENTRIES = 128;
+const MAX_FEATURED_CACHE_ENTRIES = 32;
+let mobileCommunityReturnFocus = null;
+let relativeTimeFormatter;
+let relativeTimeFormatterLocale = "";
+
+function setBoundedMap(map, key, value, maxEntries = MAX_USER_CACHE_ENTRIES) {
+  if (map.has(key)) {
+    map.delete(key);
+  }
+
+  map.set(key, value);
+
+  while (map.size > maxEntries) {
+    const oldestKey = map.keys().next().value;
+
+    if (oldestKey === undefined) {
+      break;
+    }
+
+    map.delete(oldestKey);
+  }
+}
 
 const MEMBER_CARD_HOVER_SELECTOR = [
   ".cn-member__avatar-wrap[data-user-card]",
@@ -154,9 +177,12 @@ function fetchUserProfileBanner(username) {
   })
     .then((response) => (response.ok ? response.json() : null))
     .then((payload) => profileBannerUrlFromPayload(payload))
-    .catch(() => "");
+    .catch(() => {
+      userCardProfileBannerCache.delete(key);
+      return "";
+    });
 
-  userCardProfileBannerCache.set(key, request);
+  setBoundedMap(userCardProfileBannerCache, key, request);
   return request;
 }
 
@@ -217,26 +243,47 @@ function isMobileCommunityViewport() {
 }
 
 function setMobileCommunityOpen(open) {
+  const wasOpen =
+    document.body?.classList.contains("cn-mobile-community-open") === true;
   const shouldOpen =
     Boolean(open) &&
     isMobileCommunityViewport() &&
     !document.body?.classList.contains("cn-member-rail-disabled") &&
     !document.body?.classList.contains("cn-shell-hidden");
-
-  document.body?.classList.toggle("cn-mobile-community-open", shouldOpen);
-
   const button = document.querySelector(".cn-mobile-community-toggle");
   const backdrop = document.querySelector(".cn-mobile-community-backdrop");
   const rail = document.querySelector(".cn-member-rail");
 
+  if (shouldOpen && !wasOpen) {
+    mobileCommunityReturnFocus =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : button;
+  }
+
+  document.body?.classList.toggle("cn-mobile-community-open", shouldOpen);
   button?.setAttribute("aria-expanded", String(shouldOpen));
   backdrop?.setAttribute("aria-hidden", String(!shouldOpen));
   backdrop?.setAttribute("tabindex", shouldOpen ? "0" : "-1");
 
   if (isMobileCommunityViewport()) {
     rail?.setAttribute("aria-hidden", String(!shouldOpen));
+    rail?.setAttribute("tabindex", "-1");
   } else {
     rail?.removeAttribute("aria-hidden");
+    rail?.removeAttribute("tabindex");
+  }
+
+  if (shouldOpen && !wasOpen) {
+    window.requestAnimationFrame(() => rail?.focus({ preventScroll: true }));
+  } else if (!shouldOpen && wasOpen) {
+    const returnFocus = mobileCommunityReturnFocus;
+    mobileCommunityReturnFocus = null;
+    window.requestAnimationFrame(() => {
+      if (returnFocus?.isConnected) {
+        returnFocus.focus({ preventScroll: true });
+      }
+    });
   }
 }
 
@@ -340,6 +387,21 @@ function ensureMobileCommunityToggle() {
   return item.querySelector(".cn-mobile-community-toggle");
 }
 
+function stripDiscourseBasePath(path) {
+  const normalizedPath = String(path || "/");
+  const basePath = getURL("/").replace(/\/+$/, "");
+
+  if (
+    basePath &&
+    basePath !== "/" &&
+    (normalizedPath === basePath || normalizedPath.startsWith(`${basePath}/`))
+  ) {
+    return normalizedPath.slice(basePath.length) || "/";
+  }
+
+  return normalizedPath;
+}
+
 function normalizeFeaturedCategoryPath(value) {
   const candidate = String(value || "").trim();
 
@@ -354,10 +416,12 @@ function normalizeFeaturedCategoryPath(value) {
       return "";
     }
 
-    const path = url.pathname
-      .replace(/\.json$/i, "")
-      .replace(/\/l\/[^/]+$/i, "")
-      .replace(/\/+$/, "");
+    const path = stripDiscourseBasePath(
+      url.pathname
+        .replace(/\.json$/i, "")
+        .replace(/\/l\/[^/]+$/i, "")
+        .replace(/\/+$/, "")
+    );
 
     return /^\/c\/(?:[^/]+\/)+\d+$/i.test(path) ? path : "";
   } catch {
@@ -381,7 +445,7 @@ function normalizeRoutePath(value) {
       return "/";
     }
 
-    return url.pathname.replace(/\/+$/, "") || "/";
+    return stripDiscourseBasePath(url.pathname.replace(/\/+$/, "")) || "/";
   } catch {
     return "/";
   }
@@ -500,11 +564,25 @@ function findPrimaryTopicList() {
 function avatarUrlFromTemplate(template, size = 48) {
   const value = String(template || "").replaceAll("{size}", String(size));
 
-  if (value.startsWith("/") || /^https?:\/\//i.test(value)) {
-    return value;
+  if (value.startsWith("/")) {
+    return getURL(stripDiscourseBasePath(value));
   }
 
-  return "";
+  return /^https?:\/\//i.test(value) ? value : "";
+}
+
+function getRelativeTimeFormatter() {
+  const locale = document.documentElement.lang || "tr";
+
+  if (!relativeTimeFormatter || relativeTimeFormatterLocale !== locale) {
+    relativeTimeFormatter = new Intl.RelativeTimeFormat(locale, {
+      numeric: "auto",
+      style: "short",
+    });
+    relativeTimeFormatterLocale = locale;
+  }
+
+  return relativeTimeFormatter;
 }
 
 function formatRelativeActivity(value) {
@@ -527,13 +605,10 @@ function formatRelativeActivity(value) {
   for (const [unit, length] of units) {
     if (Math.abs(seconds) >= length) {
       try {
-        return new Intl.RelativeTimeFormat(
-          document.documentElement.lang || "tr",
-          {
-            numeric: "auto",
-            style: "short",
-          }
-        ).format(Math.round(seconds / length), unit);
+        return getRelativeTimeFormatter().format(
+          Math.round(seconds / length),
+          unit
+        );
       } catch {
         break;
       }
@@ -550,7 +625,7 @@ async function fetchFeaturedTopics(categoryPath) {
     return cached.promise;
   }
 
-  const promise = fetch(`${categoryPath}/l/latest.json`, {
+  const promise = fetch(getURL(`${categoryPath}/l/latest.json`), {
     credentials: "same-origin",
     headers: { Accept: "application/json" },
   }).then((response) => {
@@ -561,10 +636,15 @@ async function fetchFeaturedTopics(categoryPath) {
     return response.json();
   });
 
-  featuredTopicsCache.set(categoryPath, {
-    promise,
-    expiresAt: Date.now() + 60_000,
-  });
+  setBoundedMap(
+    featuredTopicsCache,
+    categoryPath,
+    {
+      promise,
+      expiresAt: Date.now() + 60_000,
+    },
+    MAX_FEATURED_CACHE_ENTRIES
+  );
 
   try {
     return await promise;
@@ -590,7 +670,7 @@ function createFeaturedTopicsSection(config) {
 
   const more = document.createElement("a");
   more.className = "cn-featured-topics__more";
-  more.href = `${config.categoryPath}/l/latest`;
+  more.href = getURL(`${config.categoryPath}/l/latest`);
   more.textContent = "Tümünü gör";
 
   const status = document.createElement("p");
@@ -640,7 +720,7 @@ function populateFeaturedTopics(section, payload, limit) {
     avatar.className = "cn-featured-topic__avatar trigger-user-card";
 
     if (username) {
-      avatar.href = `/u/${encodeURIComponent(username)}`;
+      avatar.href = getURL(`/u/${encodeURIComponent(username)}`);
       avatar.setAttribute("data-user-card", username);
       avatar.setAttribute("aria-label", `${username} kullanıcı kartını aç`);
     }
@@ -651,7 +731,10 @@ function populateFeaturedTopics(section, payload, limit) {
       image.className = "avatar";
       image.src = avatarUrl;
       image.alt = "";
+      image.width = 48;
+      image.height = 48;
       image.loading = "lazy";
+      image.decoding = "async";
       avatar.appendChild(image);
     } else {
       const fallback = document.createElement("span");
@@ -665,7 +748,9 @@ function populateFeaturedTopics(section, payload, limit) {
 
     const link = document.createElement("a");
     link.className = "cn-featured-topic__link";
-    link.href = `/t/${encodeURIComponent(topic.slug || "topic")}/${topic.id}`;
+    link.href = getURL(
+      `/t/${encodeURIComponent(topic.slug || "topic")}/${topic.id}`
+    );
     link.textContent = String(topic.title || "Başlıksız konu");
 
     const meta = document.createElement("div");
@@ -815,7 +900,7 @@ function fetchCommunityPayload(path, maxAgeMilliseconds = 15_000) {
       throw error;
     });
 
-  communityRequestCache.set(path, {
+  setBoundedMap(communityRequestCache, path, {
     expiresAt: now + maxAgeMilliseconds,
     promise,
   });
@@ -839,7 +924,7 @@ async function recordProfileVisit(username) {
     return;
   }
 
-  recordedProfileVisits.set(key, now);
+  setBoundedMap(recordedProfileVisits, key, now);
   const path = `/crimson-community/profile-visits/${encodeURIComponent(
     username
   )}.json`;
@@ -904,13 +989,19 @@ async function loadCommunityMembers(profileUsername) {
 }
 
 function normalizeUrl(value, fallback) {
-  const candidate = String(value || "").trim();
+  const candidate = String(value || fallback).trim();
 
-  if (/^\/(?!\/)/.test(candidate) || /^https?:\/\//i.test(candidate)) {
-    return candidate;
+  try {
+    const url = new URL(candidate, window.location.origin);
+
+    if (url.origin !== window.location.origin) {
+      return getURL(fallback);
+    }
+
+    return `${getURL(stripDiscourseBasePath(url.pathname))}${url.search}${url.hash}`;
+  } catch {
+    return getURL(fallback);
   }
-
-  return fallback;
 }
 
 function getStoredPanelState() {
@@ -1019,7 +1110,10 @@ function createMemberElement(member) {
     avatar.className = "avatar cn-member__avatar";
     avatar.src = member.avatarUrl;
     avatar.alt = "";
+    avatar.width = 34;
+    avatar.height = 34;
     avatar.loading = "lazy";
+    avatar.decoding = "async";
     avatarWrap.appendChild(avatar);
   } else {
     const fallback = document.createElement("span");
@@ -1094,6 +1188,15 @@ async function renderMemberRail() {
   const rail = document.querySelector(".cn-member-rail");
 
   if (!list || !count) {
+    return;
+  }
+
+  if (
+    document.visibilityState === "hidden" ||
+    document.body?.classList.contains("cn-member-rail-disabled") ||
+    document.body?.classList.contains("cn-shell-hidden")
+  ) {
+    list.removeAttribute("aria-busy");
     return;
   }
 
@@ -1179,7 +1282,6 @@ async function renderMemberRail() {
 }
 
 export default apiInitializer((api) => {
-  let observer;
   let surfaceObserver;
   let renderTimer;
   let surfaceTimer;
@@ -1201,7 +1303,9 @@ export default apiInitializer((api) => {
   const bindDynamicSurfaceObserver = () => {
     surfaceObserver?.disconnect();
 
-    if (!document.body) {
+    const surfaceRoot = document.querySelector("#main-outlet");
+
+    if (!surfaceRoot) {
       return;
     }
 
@@ -1219,12 +1323,35 @@ export default apiInitializer((api) => {
         scheduleDynamicSurfaceDecoration();
       }
     });
-    surfaceObserver.observe(document.body, { childList: true, subtree: true });
+    surfaceObserver.observe(surfaceRoot, { childList: true, subtree: true });
+  };
+
+  const memberRailCanRefresh = () => {
+    if (
+      document.visibilityState === "hidden" ||
+      document.body?.classList.contains("cn-member-rail-disabled") ||
+      document.body?.classList.contains("cn-shell-hidden")
+    ) {
+      return false;
+    }
+
+    if (isMobileCommunityViewport()) {
+      return document.body.classList.contains("cn-mobile-community-open");
+    }
+
+    return (
+      window.matchMedia("(min-width: 1280px)").matches &&
+      !document.body.classList.contains("cn-member-rail-collapsed")
+    );
   };
 
   const startMemberRefresh = () => {
     window.clearInterval(memberRefreshTimer);
     memberRefreshTimer = window.setInterval(() => {
+      if (!memberRailCanRefresh()) {
+        return;
+      }
+
       communityRequestCache.delete("/crimson-community/online.json");
       scheduleMemberRender();
     }, 15_000);
@@ -1320,9 +1447,14 @@ export default apiInitializer((api) => {
     if (button && button.dataset.cnCommunityBound !== "true") {
       button.dataset.cnCommunityBound = "true";
       button.addEventListener("click", () => {
-        setMobileCommunityOpen(
-          !document.body.classList.contains("cn-mobile-community-open")
+        const shouldOpen = !document.body.classList.contains(
+          "cn-mobile-community-open"
         );
+        setMobileCommunityOpen(shouldOpen);
+
+        if (shouldOpen) {
+          scheduleMemberRender();
+        }
       });
     }
 
@@ -1574,23 +1706,14 @@ export default apiInitializer((api) => {
     renderTimer = window.setTimeout(renderMemberRail, 180);
   };
 
-  const bindOutletObserver = () => {
-    observer?.disconnect();
-    const outlet = document.querySelector("#main-outlet");
-
-    if (outlet) {
-      observer = new MutationObserver(() => {
+  if (document.body?.dataset.cnVisibilityBound !== "true") {
+    document.body.dataset.cnVisibilityBound = "true";
+    document.addEventListener("visibilitychange", () => {
+      if (memberRailCanRefresh()) {
         scheduleMemberRender();
-        scheduleDynamicSurfaceDecoration();
-      });
-      observer.observe(outlet, {
-        attributes: true,
-        attributeFilter: ["class"],
-        childList: true,
-        subtree: true,
-      });
-    }
-  };
+      }
+    });
+  }
 
   const bindToggleButton = () => {
     const toggleButton = document.querySelector(
@@ -1608,6 +1731,10 @@ export default apiInitializer((api) => {
       );
       setPanelCollapsed(collapsed);
       storePanelState(collapsed);
+
+      if (!collapsed) {
+        scheduleMemberRender();
+      }
     });
   };
 
@@ -1618,7 +1745,6 @@ export default apiInitializer((api) => {
   bindMemberHoverCard();
   setPanelCollapsed(getStoredPanelState());
   syncRouteState();
-  bindOutletObserver();
   bindDynamicSurfaceObserver();
   scheduleDynamicSurfaceDecoration();
   startMemberRefresh();
@@ -1635,20 +1761,6 @@ export default apiInitializer((api) => {
     scheduleMobileCommunityControls();
     bindMemberHoverCard();
     syncRouteState();
-    bindOutletObserver();
-    bindDynamicSurfaceObserver();
-    scheduleDynamicSurfaceDecoration();
-    scheduleMemberRender();
-    scheduleFeaturedTopics();
-  });
-
-  window.requestAnimationFrame(() => {
-    syncThemeSettings();
-    bindToggleButton();
-    scheduleMobileCommunityControls();
-    bindMemberHoverCard();
-    syncRouteState();
-    bindOutletObserver();
     bindDynamicSurfaceObserver();
     scheduleDynamicSurfaceDecoration();
     scheduleMemberRender();

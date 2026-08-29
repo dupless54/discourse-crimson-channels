@@ -117,11 +117,13 @@
 
   body.cn-user-card-from-member-rail .fk-d-menu[data-identifier="usercard"] {
     position: fixed !important;
-    inset: var(
-        --cn-member-user-card-top,
-        calc(var(--header-offset, 60px) + 10px)
-      )
-      calc(var(--cn-member-rail-width) + 12px) auto auto !important;
+    inset-block-start: var(
+      --cn-member-user-card-top,
+      calc(var(--header-offset, 60px) + 10px)
+    ) !important;
+    inset-inline-end: calc(var(--cn-member-rail-width) + 12px) !important;
+    inset-block-end: auto !important;
+    inset-inline-start: auto !important;
     width: 304px !important;
     max-width: 304px !important;
     margin: 0 !important;
@@ -139,5 +141,11 @@
 
   body:not(.admin-interface, .cn-shell-hidden) #main-outlet {
     padding-inline: 28px !important;
+  }
+}
+
+@media (1000px <= width < 1280px) {
+  .cn-server-button--members {
+    display: none;
   }
 }
