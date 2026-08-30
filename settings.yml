@@ -144,6 +144,93 @@ featured_topics_limit:
   min: 1
   max: 20
 
+navigation_items:
+  type: objects
+  default:
+    - key: "home"
+      enabled: true
+      label: "Ana sayfa"
+      url: "/"
+      icon: "house"
+      style: "brand"
+      visibility: "everyone"
+      mobile_shortcut: false
+    - key: "categories"
+      enabled: true
+      label: "Kategoriler"
+      url: "/categories"
+      icon: "list"
+      style: "standard"
+      visibility: "everyone"
+      mobile_shortcut: false
+    - key: "latest"
+      enabled: true
+      label: "Son konular"
+      url: "/latest"
+      icon: "clock"
+      style: "standard"
+      visibility: "everyone"
+      mobile_shortcut: false
+    - key: "servers"
+      enabled: true
+      label: "Private Serverlar"
+      url: "/servers"
+      icon: "server"
+      style: "standard"
+      visibility: "everyone"
+      mobile_shortcut: true
+    - key: "chat"
+      enabled: true
+      label: "Sohbet"
+      url: "/chat"
+      icon: "comments"
+      style: "standard"
+      visibility: "everyone"
+      mobile_shortcut: false
+  schema:
+    name: navigation item
+    properties:
+      key:
+        type: string
+        required: true
+        validations:
+          min_length: 1
+          max_length: 40
+      enabled:
+        type: boolean
+      label:
+        type: string
+        required: true
+        validations:
+          min_length: 1
+          max_length: 60
+      url:
+        type: string
+        required: true
+        validations:
+          min_length: 1
+          max_length: 2048
+      icon:
+        type: icon
+        required: true
+      style:
+        type: enum
+        choices:
+          - "brand"
+          - "standard"
+      visibility:
+        type: enum
+        choices:
+          - "everyone"
+          - "groups"
+      groups:
+        type: groups
+        resolve_group_membership: true
+      mobile_shortcut:
+        type: boolean
+
+# Legacy single-link settings remain available for compatibility. Existing
+# customized values are migrated into navigation_items during theme updates.
 home_url:
   type: string
   default: "/"
