@@ -25,15 +25,17 @@ Tercih: `symbol/search -> targeted range -> dependency`.
 ## Adaptive context
 Cross-plugin contracts, privacy, external requests, destructive operations, or broad Discourse API migrations require controlled context expansion. Correctness and safety beat token savings.
 
-## Git/GitHub governance
+## CI-only Git/GitHub governance
 - lock task scope and exact allowed paths
 - verify exact changed paths
 - run targeted checks first
-- latest exact PR head CI is authoritative; new commits invalidate old CI evidence
-- `NO_CI != GREEN`
-- PR creation/update is not merge authorization
-- merge only with explicit user approval, preferably squash + exact expected head SHA
-- force/destructive Git actions need separate explicit authorization
+- Claude/Gemini/Codex approvals are not merge gates and must not be awaited
+- latest exact PR head required Discourse/theme CI is authoritative; new commits invalidate old CI evidence
+- any additional required Discourse-owned check must also be GREEN
+- `NO_CI`, missing, skipped, pending, cancelled, stale-head, or failed checks are not GREEN
+- when latest exact head required CI is GREEN and no unresolved security/product/architecture blocker remains, the agent is authorized to merge without further user confirmation
+- prefer squash + exact `expected_head_sha` when supported
+- force/destructive Git actions still need separate explicit authorization
 
 ## CI remediation
 Fail -> first actionable root cause -> classify -> smallest justified repair -> targeted validation -> new exact head -> new exact-head CI.
