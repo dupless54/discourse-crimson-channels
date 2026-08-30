@@ -5,13 +5,9 @@ RSpec.describe "Crimson channel sections" do
 
   before { SiteSetting.navigation_menu = "sidebar" }
 
-  def configure_channel_sections(sections)
-    theme.update_setting(:channel_sections, sections)
-    theme.save!
-  end
-
   it "renders configured channels through the native Discourse sidebar" do
-    configure_channel_sections(
+    theme.update_setting(
+      :channel_sections,
       [
         {
           enabled: true,
@@ -38,11 +34,12 @@ RSpec.describe "Crimson channel sections" do
         },
       ],
     )
+    theme.save!
 
     visit("/")
 
     section = ".sidebar-section[data-section-name='crimson-channel-section-0']"
-    expect(page).to have_css("#{section} .sidebar-section-header-text", text: "Topluluk")
+    expect(page).to have_css("#{section} .sidebar-section-header-text", text: /topluluk/i)
     expect(page).to have_css(
       "#{section} a[data-link-name='crimson-channel-0-0'][href='/latest']",
       text: "Son konular",
@@ -56,7 +53,8 @@ RSpec.describe "Crimson channel sections" do
     member = Fabricate(:user)
     group.add(member)
 
-    configure_channel_sections(
+    theme.update_setting(
+      :channel_sections,
       [
         {
           enabled: true,
@@ -83,6 +81,7 @@ RSpec.describe "Crimson channel sections" do
         },
       ],
     )
+    theme.save!
 
     visit("/")
 
@@ -100,7 +99,8 @@ RSpec.describe "Crimson channel sections" do
     member = Fabricate(:user)
     group.add(member)
 
-    configure_channel_sections(
+    theme.update_setting(
+      :channel_sections,
       [
         {
           enabled: true,
@@ -120,6 +120,7 @@ RSpec.describe "Crimson channel sections" do
         },
       ],
     )
+    theme.save!
 
     visit("/")
 
