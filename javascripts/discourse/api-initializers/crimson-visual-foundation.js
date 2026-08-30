@@ -2,7 +2,9 @@ import { apiInitializer } from "discourse/lib/api";
 
 /* global settings */
 
-const DEFAULT_ACCENT = "#c50337";
+const DEFAULT_ACCENT = "#5865f2";
+const DEFAULT_SECONDARY_ACCENT = "#7c3aed";
+const LEGACY_DEFAULT_ACCENTS = new Set(["#c50337", "c50337"]);
 const SURFACE_STYLES = new Set(["balanced", "flat", "glass"]);
 const CORNER_STYLES = new Set(["compact", "soft", "rounded"]);
 
@@ -29,37 +31,37 @@ const CORNER_PRESETS = {
 
 const SURFACE_PRESETS = {
   balanced: {
-    surfaceSecondary: 94,
-    surfacePrimary: 6,
+    surfaceSecondary: 96,
+    surfacePrimary: 4,
+    raisedSecondary: 91,
+    raisedPrimary: 9,
+    controlSecondary: 93,
+    controlPrimary: 7,
+    separatorPrimary: 10,
+    neutralBorderScale: 0.28,
+    baseShadowOpacity: 0.24,
+  },
+  flat: {
+    surfaceSecondary: 98,
+    surfacePrimary: 2,
+    raisedSecondary: 95,
+    raisedPrimary: 5,
+    controlSecondary: 96,
+    controlPrimary: 4,
+    separatorPrimary: 12,
+    neutralBorderScale: 0.34,
+    baseShadowOpacity: 0.14,
+  },
+  glass: {
+    surfaceSecondary: 93,
+    surfacePrimary: 7,
     raisedSecondary: 88,
     raisedPrimary: 12,
     controlSecondary: 90,
     controlPrimary: 10,
-    separatorPrimary: 10,
-    neutralBorderScale: 0.28,
-    baseShadowOpacity: 0.3,
-  },
-  flat: {
-    surfaceSecondary: 97,
-    surfacePrimary: 3,
-    raisedSecondary: 94,
-    raisedPrimary: 6,
-    controlSecondary: 95,
-    controlPrimary: 5,
-    separatorPrimary: 12,
-    neutralBorderScale: 0.34,
-    baseShadowOpacity: 0.16,
-  },
-  glass: {
-    surfaceSecondary: 90,
-    surfacePrimary: 10,
-    raisedSecondary: 84,
-    raisedPrimary: 16,
-    controlSecondary: 86,
-    controlPrimary: 14,
     separatorPrimary: 12,
     neutralBorderScale: 0.24,
-    baseShadowOpacity: 0.34,
+    baseShadowOpacity: 0.28,
   },
 };
 
@@ -79,12 +81,12 @@ function getEnumSetting(name, fallback, allowedValues) {
   return allowedValues.has(value) ? value : fallback;
 }
 
-function normalizeHexColor(value) {
+function normalizeHexColor(value, fallback) {
   const candidate = String(value || "").trim();
   const match = candidate.match(/^#?([0-9a-f]{3}|[0-9a-f]{6})$/i);
 
   if (!match) {
-    return DEFAULT_ACCENT;
+    return fallback;
   }
 
   let hex = match[1].toLowerCase();
@@ -123,12 +125,12 @@ function hasReadableWhiteText(hex) {
   return contrastRatio >= 4.5;
 }
 
-function getAccessibleAccent() {
-  const accent = normalizeHexColor(
-    getSetting("visual_accent_color", DEFAULT_ACCENT)
-  );
+function getAccessibleAccent(settingName, fallback, legacyValues = new Set()) {
+  const rawValue = String(getSetting(settingName, fallback)).trim().toLowerCase();
+  const migratedValue = legacyValues.has(rawValue) ? fallback : rawValue;
+  const accent = normalizeHexColor(migratedValue, fallback);
 
-  return hasReadableWhiteText(accent) ? accent : DEFAULT_ACCENT;
+  return hasReadableWhiteText(accent) ? accent : fallback;
 }
 
 function setCornerVariables(root, cornerStyle) {
@@ -139,20 +141,50 @@ function setCornerVariables(root, cornerStyle) {
   }
 }
 
+function setAccentVariables(root) {
+  const primaryAccent = getAccessibleAccent(
+    "visual_accent_color",
+    DEFAULT_ACCENT,
+    LEGACY_DEFAULT_ACCENTS
+  );
+  const secondaryAccent = getAccessibleAccent(
+    "visual_secondary_accent_color",
+    DEFAULT_SECONDARY_ACCENT
+  );
+
+  root.style.setProperty("--cn-crimson", primaryAccent);
+  root.style.setProperty("--cn-violet", secondaryAccent);
+  root.style.setProperty(
+    "--cn-accent-mix",
+    "color-mix(in srgb, var(--cn-crimson) 58%, var(--cn-violet) 42%)"
+  );
+  root.style.setProperty("--cn-accent-start", primaryAccent);
+  root.style.setProperty("--cn-accent-end", secondaryAccent);
+  root.style.setProperty("--cn-on-accent", "#fff");
+  root.style.setProperty(
+    "--cn-action-gradient",
+    "linear-gradient(135deg, var(--cn-crimson), var(--cn-accent-mix) 52%, var(--cn-violet))"
+  );
+  root.style.setProperty(
+    "--cn-action-gradient-hover",
+    "linear-gradient(135deg, color-mix(in srgb, var(--cn-crimson) 90%, var(--primary) 10%), var(--cn-accent-mix) 52%, color-mix(in srgb, var(--cn-violet) 90%, var(--primary) 10%))"
+  );
+}
+
 function setSurfaceVariables(root, surfaceStyle) {
   const preset = SURFACE_PRESETS[surfaceStyle];
   const panelOpacity =
-    getNumberSetting("visual_panel_opacity_percent", 82, 72, 100) / 100;
-  const strongPanelOpacity = Math.min(1, panelOpacity + 0.13);
+    getNumberSetting("visual_panel_opacity_percent", 94, 72, 100) / 100;
+  const strongPanelOpacity = Math.min(1, panelOpacity + 0.04);
   const borderIntensity = getNumberSetting(
     "visual_border_intensity_percent",
-    52,
+    28,
     20,
     70
   );
   const glowIntensity = getNumberSetting(
     "visual_glow_intensity_percent",
-    35,
+    12,
     0,
     100
   );
@@ -194,7 +226,7 @@ function setSurfaceVariables(root, surfaceStyle) {
   } else {
     root.style.setProperty(
       "--cn-border",
-      `color-mix(in srgb, var(--cn-crimson) ${borderIntensity}%, transparent)`
+      `color-mix(in srgb, var(--cn-accent-mix) ${borderIntensity}%, transparent)`
     );
   }
 
@@ -203,8 +235,8 @@ function setSurfaceVariables(root, surfaceStyle) {
     15,
     Math.round(borderIntensity * 0.42)
   );
-  const hoverIntensity = Math.max(7, Math.round(borderIntensity * 0.3));
-  const activeIntensity = Math.max(13, Math.round(borderIntensity * 0.5));
+  const hoverIntensity = Math.max(6, Math.round(borderIntensity * 0.24));
+  const activeIntensity = Math.max(10, Math.round(borderIntensity * 0.38));
 
   root.style.setProperty(
     "--cn-control-outline",
@@ -212,28 +244,28 @@ function setSurfaceVariables(root, surfaceStyle) {
   );
   root.style.setProperty(
     "--cn-control-outline-hover",
-    `color-mix(in srgb, var(--primary) ${outlineHoverIntensity}%, transparent)`
+    `color-mix(in srgb, var(--cn-accent-mix) ${outlineHoverIntensity}%, transparent)`
   );
   root.style.setProperty(
     "--cn-hover",
-    `color-mix(in srgb, var(--cn-crimson) ${hoverIntensity}%, transparent)`
+    `color-mix(in srgb, var(--cn-accent-mix) ${hoverIntensity}%, transparent)`
   );
   root.style.setProperty(
     "--cn-active",
-    `color-mix(in srgb, var(--cn-crimson) ${activeIntensity}%, transparent)`
+    `color-mix(in srgb, var(--cn-accent-mix) ${activeIntensity}%, transparent)`
   );
 
-  const glowMix = Math.round(glowIntensity * 0.28);
+  const glowMix = Math.round(glowIntensity * 0.22);
   const shadowLayers = [
     `0 14px 34px rgb(2 6 14 / ${preset.baseShadowOpacity})`,
-    "inset 0 1px 0 color-mix(in srgb, var(--primary) 8%, transparent)",
+    "inset 0 1px 0 color-mix(in srgb, var(--primary) 7%, transparent)",
   ];
 
   if (glowMix > 0) {
     shadowLayers.splice(
       1,
       0,
-      `0 0 22px color-mix(in srgb, var(--cn-crimson) ${glowMix}%, transparent)`
+      `0 0 22px color-mix(in srgb, var(--cn-accent-mix) ${glowMix}%, transparent)`
     );
   }
 
@@ -253,7 +285,7 @@ function syncVisualFoundation() {
     CORNER_STYLES
   );
 
-  root.style.setProperty("--cn-crimson", getAccessibleAccent());
+  setAccentVariables(root);
   root.dataset.cnSurfaceStyle = surfaceStyle;
   root.dataset.cnCornerStyle = cornerStyle;
 
