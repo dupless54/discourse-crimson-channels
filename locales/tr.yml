@@ -42,15 +42,12 @@ tr_TR:
         description: "Crimson hızlı gezinme rayını yönetin, sıralayın ve grup erişimiyle sınırlandırın. Güvenli yükseltme için bağlantılar yalnızca bu Discourse sitesine yönlenir."
         schema:
           properties:
-            key:
-              label: "Anahtar"
-              description: "Kararlı dahili anahtar. Varsayılan private server mobil kısayolu için 'servers' değerini koruyun."
             enabled:
               label: "Etkin"
               description: "Bu gezinme öğesini göster."
             label:
               label: "Etiket"
-              description: "Öğenin erişilebilir etiketi ve üzerine gelince gösterilen metin."
+              description: "Öğenin erişilebilir etiketi ve üzerine gelince gösterilen metin. Düzenleyicide öğenin adı olarak da kullanılır."
             url:
               label: "Hedef"
               description: "Aynı Discourse sitesindeki yol veya URL; örneğin /latest."
