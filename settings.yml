@@ -22,6 +22,44 @@ forum_width_percent:
   min: 40
   max: 100
 
+visual_surface_style:
+  type: enum
+  default: "balanced"
+  choices:
+    - "balanced"
+    - "flat"
+    - "glass"
+
+visual_accent_color:
+  type: string
+  default: "#c50337"
+
+visual_panel_opacity_percent:
+  type: integer
+  default: 82
+  min: 72
+  max: 100
+
+visual_border_intensity_percent:
+  type: integer
+  default: 52
+  min: 20
+  max: 70
+
+visual_glow_intensity_percent:
+  type: integer
+  default: 35
+  min: 0
+  max: 100
+
+visual_corner_style:
+  type: enum
+  default: "soft"
+  choices:
+    - "compact"
+    - "soft"
+    - "rounded"
+
 member_hover_card_enabled:
   type: bool
   default: true
