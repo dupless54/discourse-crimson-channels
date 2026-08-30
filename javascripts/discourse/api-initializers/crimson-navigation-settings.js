@@ -8,7 +8,9 @@ const MOBILE_SHORTCUT_SELECTOR = ".cn-mobile-servers-link";
 const SERVER_RAIL_SELECTOR = ".cn-server-rail";
 
 function navigationItems() {
-  return Array.isArray(settings?.navigation_items) ? settings.navigation_items : [];
+  return Array.isArray(settings?.navigation_items)
+    ? settings.navigation_items
+    : [];
 }
 
 function stripDiscourseBasePath(path) {
