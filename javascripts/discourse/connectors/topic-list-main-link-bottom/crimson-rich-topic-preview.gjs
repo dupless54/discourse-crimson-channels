@@ -10,10 +10,14 @@ export default class CrimsonRichTopicPreview extends Component {
     );
   }
 
+  get previewClass() {
+    return this.args.outletArgs.topic.image_url
+      ? "cn-topic-rich-preview"
+      : "cn-topic-rich-preview cn-topic-rich-preview--text-only";
+  }
+
   <template>
-    <div
-      class="cn-topic-rich-preview {{unless @outletArgs.topic.image_url 'cn-topic-rich-preview--text-only'}}"
-    >
+    <div class={{this.previewClass}}>
       {{#unless @outletArgs.expandPinned}}
         {{#if @outletArgs.topic.excerpt}}
           <p class="cn-topic-rich-preview__excerpt">
