@@ -219,6 +219,67 @@ navigation_items:
       mobile_shortcut:
         type: boolean
 
+channel_sections:
+  type: objects
+  default: []
+  schema:
+    name: channel section
+    identifier: title
+    properties:
+      enabled:
+        type: boolean
+      title:
+        type: string
+        required: true
+        validations:
+          min_length: 1
+          max_length: 60
+      collapsed_by_default:
+        type: boolean
+      visibility:
+        type: enum
+        choices:
+          - "everyone"
+          - "groups"
+      groups:
+        type: groups
+        resolve_group_membership: true
+      channels:
+        type: objects
+        schema:
+          name: channel
+          identifier: label
+          properties:
+            enabled:
+              type: boolean
+            label:
+              type: string
+              required: true
+              validations:
+                min_length: 1
+                max_length: 60
+            url:
+              type: string
+              required: true
+              validations:
+                min_length: 1
+                max_length: 2048
+            icon:
+              type: icon
+              required: true
+            visibility:
+              type: enum
+              choices:
+                - "everyone"
+                - "groups"
+            groups:
+              type: groups
+              resolve_group_membership: true
+            badge_text:
+              type: string
+              validations:
+                max_length: 20
+
 # Legacy single-link settings remain available for compatibility. Existing
 # customized values are migrated into navigation_items during theme updates.
 home_url:

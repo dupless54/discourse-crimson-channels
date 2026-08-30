@@ -66,6 +66,47 @@ tr_TR:
             mobile_shortcut:
               label: "Mobil başlık kısayolu"
               description: "Bu öğeyi kompakt mobil başlık kısayolu olarak kullan. Etkin olan ilk eşleşme kullanılır."
+      channel_sections:
+        description: "Discourse'un kendi kenar çubuğunda Discord benzeri kanal grupları oluşturun. Bölümleri ve kanalları sıralayabilir, grup üyeliğine göre görünürlüğü sınırlandırabilirsiniz. Kanal hedefleri yalnızca bu Discourse sitesinde olabilir."
+        schema:
+          properties:
+            enabled:
+              label: "Etkin"
+              description: "Bu kanal bölümünü göster."
+            title:
+              label: "Bölüm başlığı"
+              description: "Discourse kenar çubuğunda gösterilecek başlık. Düzenleyicide bölümün adı olarak da kullanılır."
+            collapsed_by_default:
+              label: "Varsayılan olarak kapalı"
+              description: "Ziyaretçi kendi kayıtlı kenar çubuğu durumunu değiştirene kadar bölümü kapalı başlat."
+            visibility:
+              label: "Görünürlük"
+              description: "Bu bölümü herkese veya yalnızca seçilen grupların üyelerine gösterin."
+            groups:
+              label: "İzin verilen gruplar"
+              description: "Yalnızca bölüm görünürlüğü gruplar olarak seçildiğinde kullanılır."
+            channels:
+              enabled:
+                label: "Etkin"
+                description: "Bu kanal bağlantısını göster."
+              label:
+                label: "Kanal etiketi"
+                description: "Kenar çubuğunda kanal için gösterilecek metin. Düzenleyicide kanalın adı olarak da kullanılır."
+              url:
+                label: "Hedef"
+                description: "Aynı Discourse sitesindeki yol veya URL; örneğin /latest ya da /c/topluluk/5."
+              icon:
+                label: "İkon"
+                description: "Kanal etiketinden önce gösterilecek yerel Discourse ikonunu seçin."
+              visibility:
+                label: "Görünürlük"
+                description: "Bu kanalı herkese veya yalnızca seçilen grupların üyelerine gösterin."
+              groups:
+                label: "İzin verilen gruplar"
+                description: "Yalnızca kanal görünürlüğü gruplar olarak seçildiğinde kullanılır."
+              badge_text:
+                label: "Rozet metni"
+                description: "Kanal satırının sonunda gösterilecek isteğe bağlı kısa rozet; örneğin YENİ."
       featured_topics_enabled: "Eski tek listeyi etkinleştir. Yalnızca yeni çoklu liste ayarı boşken kullanılır."
       featured_category_url: "Eski tek listenin kullandığı kategori yolu."
       featured_topics_title: "Eski tek listenin başlığı."
