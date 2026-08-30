@@ -24,10 +24,12 @@ const FEATURED_TOPICS_CLASS = "cn-featured-topics";
 const featuredTopicsCache = new Map();
 const userCardProfileBannerCache = new Map();
 const communityRequestCache = new Map();
-const recordedProfileVisits = new Map();
+const communityRateLimitUntil = new Map();
 let memberRailRenderVersion = 0;
 const MAX_USER_CACHE_ENTRIES = 128;
 const MAX_FEATURED_CACHE_ENTRIES = 32;
+const DEFAULT_COMMUNITY_BACKOFF_MS = 30_000;
+const MAX_COMMUNITY_BACKOFF_MS = 5 * 60_000;
 let mobileCommunityReturnFocus = null;
 let relativeTimeFormatter;
 let relativeTimeFormatterLocale = "";
@@ -237,7 +239,6 @@ function renderUserCardProfileBanner(user) {
     }
   });
 }
-
 function isMobileCommunityViewport() {
   return window.matchMedia(MOBILE_COMMUNITY_MEDIA_QUERY).matches;
 }
@@ -477,7 +478,6 @@ function parseFeaturedTopicObjects(value) {
       return [];
     }
   }
-
   return [];
 }
 
@@ -872,8 +872,46 @@ function normalizeCommunityMember(user) {
   };
 }
 
+function getCommunityRetryAfterMilliseconds(response) {
+  const retryAfter = response.headers.get("Retry-After");
+
+  if (!retryAfter) {
+    return DEFAULT_COMMUNITY_BACKOFF_MS;
+  }
+
+  const seconds = Number(retryAfter);
+  if (Number.isFinite(seconds) && seconds >= 0) {
+    return Math.min(
+      MAX_COMMUNITY_BACKOFF_MS,
+      Math.max(1_000, Math.ceil(seconds * 1_000))
+    );
+  }
+
+  const retryAt = Date.parse(retryAfter);
+  if (Number.isFinite(retryAt)) {
+    return Math.min(
+      MAX_COMMUNITY_BACKOFF_MS,
+      Math.max(1_000, retryAt - Date.now())
+    );
+  }
+
+  return DEFAULT_COMMUNITY_BACKOFF_MS;
+}
+
 function fetchCommunityPayload(path, maxAgeMilliseconds = 15_000) {
   const now = Date.now();
+  const rateLimitUntil = communityRateLimitUntil.get(path) || 0;
+
+  if (rateLimitUntil > now) {
+    return Promise.reject(
+      new Error("Community request is temporarily rate limited")
+    );
+  }
+
+  if (rateLimitUntil) {
+    communityRateLimitUntil.delete(path);
+  }
+
   const cached = communityRequestCache.get(path);
 
   if (cached && cached.expiresAt > now) {
@@ -890,9 +928,18 @@ function fetchCommunityPayload(path, maxAgeMilliseconds = 15_000) {
   })
     .then((response) => {
       if (!response.ok) {
+        if (response.status === 429) {
+          setBoundedMap(
+            communityRateLimitUntil,
+            path,
+            Date.now() + getCommunityRetryAfterMilliseconds(response)
+          );
+        }
+
         throw new Error(`Community request failed (${response.status})`);
       }
 
+      communityRateLimitUntil.delete(path);
       return response.json();
     })
     .catch((error) => {
@@ -908,58 +955,14 @@ function fetchCommunityPayload(path, maxAgeMilliseconds = 15_000) {
   return promise;
 }
 
-async function recordProfileVisit(username) {
-  const key = String(username || "").toLowerCase();
-  const now = Date.now();
-
-  if (!key || now - (recordedProfileVisits.get(key) || 0) < 60_000) {
-    return;
-  }
-
-  const csrfToken = document
-    .querySelector('meta[name="csrf-token"]')
-    ?.getAttribute("content");
-
-  if (!csrfToken) {
-    return;
-  }
-
-  setBoundedMap(recordedProfileVisits, key, now);
-  const path = `/crimson-community/profile-visits/${encodeURIComponent(
-    username
-  )}.json`;
-
-  try {
-    const response = await fetch(getURL(path), {
-      method: "POST",
-      credentials: "same-origin",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "X-CSRF-Token": csrfToken,
-        "X-Requested-With": "XMLHttpRequest",
-      },
-      body: "{}",
-    });
-
-    if (!response.ok) {
-      throw new Error(`Profile visit request failed (${response.status})`);
-    }
-
-    communityRequestCache.delete(path);
-  } catch {
-    recordedProfileVisits.delete(key);
-  }
-}
-
 async function loadCommunityMembers(profileUsername) {
   if (profileUsername) {
-    await recordProfileVisit(profileUsername);
-
+    // The Crimson Community GET endpoint records the profile visit while
+    // returning the visitor list, so a separate POST would duplicate traffic.
     const path = `/crimson-community/profile-visits/${encodeURIComponent(
       profileUsername
     )}.json`;
-    const payload = await fetchCommunityPayload(path, 10_000);
+    const payload = await fetchCommunityPayload(path, 60_000);
 
     return {
       members: (payload?.users || [])
@@ -1517,7 +1520,6 @@ export default apiInitializer((api) => {
     if (!isFeaturedTopicsHomeRoute()) {
       return true;
     }
-
     const configs = getFeaturedTopicConfigs();
 
     if (!configs.length) {
