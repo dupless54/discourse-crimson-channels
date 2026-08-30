@@ -66,6 +66,47 @@ en:
             mobile_shortcut:
               label: "Mobile header shortcut"
               description: "Use this item as the compact mobile header shortcut. The first enabled match wins."
+      channel_sections:
+        description: "Build Discord-like channel groups inside Discourse's native sidebar. Sections and channels can be reordered and restricted by group. Channel destinations must stay on this Discourse site."
+        schema:
+          properties:
+            enabled:
+              label: "Enabled"
+              description: "Show this channel section."
+            title:
+              label: "Section title"
+              description: "Heading shown in the native Discourse sidebar. This also names the section in the editor."
+            collapsed_by_default:
+              label: "Collapsed by default"
+              description: "Start this section collapsed until the visitor changes its saved sidebar state."
+            visibility:
+              label: "Visibility"
+              description: "Show this section to everyone or only to members of selected groups."
+            groups:
+              label: "Allowed groups"
+              description: "Used only when section visibility is set to groups."
+            channels:
+              enabled:
+                label: "Enabled"
+                description: "Show this channel link."
+              label:
+                label: "Channel label"
+                description: "Text shown for the channel in the sidebar. This also names the channel in the editor."
+              url:
+                label: "Destination"
+                description: "Same-site Discourse path or URL, for example /latest or /c/community/5."
+              icon:
+                label: "Icon"
+                description: "Choose the native Discourse icon displayed before the channel label."
+              visibility:
+                label: "Visibility"
+                description: "Show this channel to everyone or only to members of selected groups."
+              groups:
+                label: "Allowed groups"
+                description: "Used only when channel visibility is set to groups."
+              badge_text:
+                label: "Badge text"
+                description: "Optional short badge displayed at the end of the channel row, for example NEW."
       featured_topics_enabled: "Enable the legacy single list. Used only while the new multi-list setting is empty."
       featured_category_url: "Category path used by the legacy single list."
       featured_topics_title: "Heading used by the legacy single list."
