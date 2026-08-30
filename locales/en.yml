@@ -38,14 +38,45 @@ en:
             limit:
               label: "Topic count"
               description: "Number of topics shown in this section (1–20)."
+      navigation_items:
+        description: "Configure, reorder, and restrict the Crimson quick-navigation rail. URLs are limited to this Discourse site for a safe upgrade path."
+        schema:
+          properties:
+            key:
+              label: "Key"
+              description: "Stable internal key. Keep 'servers' for the default private-server shortcut."
+            enabled:
+              label: "Enabled"
+              description: "Show this navigation item."
+            label:
+              label: "Label"
+              description: "Accessible label and hover text shown for the item."
+            url:
+              label: "Destination"
+              description: "Same-site Discourse path or URL, for example /latest."
+            icon:
+              label: "Icon"
+              description: "Choose an icon from Discourse's supported icon picker."
+            style:
+              label: "Style"
+              description: "Brand is intended for the first/home item; standard is used for normal shortcuts."
+            visibility:
+              label: "Visibility"
+              description: "Show the item to everyone or only to members of selected groups."
+            groups:
+              label: "Allowed groups"
+              description: "Used only when visibility is set to groups."
+            mobile_shortcut:
+              label: "Mobile header shortcut"
+              description: "Use this item as the compact mobile header shortcut. The first enabled match wins."
       featured_topics_enabled: "Enable the legacy single list. Used only while the new multi-list setting is empty."
       featured_category_url: "Category path used by the legacy single list."
       featured_topics_title: "Heading used by the legacy single list."
       featured_topics_position: "Position of the legacy single list: above or below."
       featured_topics_limit: "Maximum number of topics in the legacy single list."
-      home_url: "Destination of the home rail button."
-      categories_url: "Destination of the categories rail button."
-      latest_url: "Destination of the latest-topics rail button."
-      servers_url: "Destination of the private-server top-list button."
-      chat_url: "Destination of the chat rail button."
+      home_url: "Legacy home destination retained for migration compatibility."
+      categories_url: "Legacy categories destination retained for migration compatibility."
+      latest_url: "Legacy latest-topics destination retained for migration compatibility."
+      servers_url: "Legacy private-server destination retained for migration compatibility."
+      chat_url: "Legacy chat destination retained for migration compatibility."
   topic_author: "Author"
