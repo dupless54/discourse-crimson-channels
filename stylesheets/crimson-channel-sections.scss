@@ -1,0 +1,94 @@
+/* Crimson channel sections extend the native Discourse sidebar without
+   replacing its structure, routing, or accessibility semantics. */
+
+.sidebar-section-link.cn-channel-section-link {
+  position: relative;
+  min-height: 34px;
+  box-sizing: border-box;
+  padding-inline: 8px 9px;
+  border: 1px solid transparent;
+  transition:
+    color 120ms ease,
+    background-color 120ms ease,
+    border-color 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.sidebar-section-link.cn-channel-section-link
+  .sidebar-section-link-prefix.icon {
+  color: var(--primary-medium);
+  transition: color 120ms ease;
+}
+
+.sidebar-section-link.cn-channel-section-link
+  .sidebar-section-link-content-text {
+  min-width: 0;
+  font-weight: 600;
+}
+
+.sidebar-section-link.cn-channel-section-link
+  .sidebar-section-link-content-badge {
+  min-width: 1.25rem;
+  box-sizing: border-box;
+  padding: 2px 6px;
+  color: var(--primary-high);
+  background: color-mix(in srgb, var(--cn-crimson) 14%, var(--secondary));
+  border: 1px solid color-mix(in srgb, var(--cn-crimson) 30%, transparent);
+  border-radius: 999px;
+  font-size: var(--font-down-2);
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.sidebar-section-link.cn-channel-section-link:hover,
+.sidebar-section-link.cn-channel-section-link:focus-visible {
+  border-color: color-mix(in srgb, var(--cn-crimson) 18%, transparent);
+}
+
+.sidebar-section-link.cn-channel-section-link:hover
+  .sidebar-section-link-prefix.icon,
+.sidebar-section-link.cn-channel-section-link:focus-visible
+  .sidebar-section-link-prefix.icon {
+  color: var(--primary-high);
+}
+
+.sidebar-section-link.cn-channel-section-link:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--tertiary) 58%, transparent);
+  outline-offset: 1px;
+}
+
+.sidebar-section-link.cn-channel-section-link.active {
+  border-color: color-mix(in srgb, var(--cn-crimson) 32%, transparent);
+  font-weight: 700;
+}
+
+.sidebar-section-link.cn-channel-section-link.active
+  .sidebar-section-link-prefix.icon {
+  color: var(--primary);
+}
+
+.sidebar-section-link.cn-channel-section-link.active
+  .sidebar-section-link-content-badge {
+  color: var(--primary);
+  background: color-mix(in srgb, var(--cn-crimson) 24%, var(--secondary));
+  border-color: color-mix(in srgb, var(--cn-crimson) 42%, transparent);
+}
+
+.sidebar-section[data-section-name^="crimson-channel-section-"]
+  .sidebar-section-header {
+  margin-block-start: 3px;
+}
+
+.sidebar-section[data-section-name^="crimson-channel-section-"]
+  .sidebar-section-header-text {
+  letter-spacing: 0.065em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar-section-link.cn-channel-section-link,
+  .sidebar-section-link.cn-channel-section-link
+    .sidebar-section-link-prefix.icon {
+    transition: none;
+  }
+}
