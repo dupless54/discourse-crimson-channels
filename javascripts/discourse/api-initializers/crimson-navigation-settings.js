@@ -4,25 +4,11 @@ import { iconElement } from "discourse/lib/icon-library";
 
 /* global settings */
 
-const NAVIGATION_SETTING = "navigation_items";
 const MOBILE_SHORTCUT_SELECTOR = ".cn-mobile-servers-link";
 const SERVER_RAIL_SELECTOR = ".cn-server-rail";
 
-function parseNavigationItems(value) {
-  if (Array.isArray(value)) {
-    return value;
-  }
-
-  if (typeof value === "string" && value.trim()) {
-    try {
-      const parsed = JSON.parse(value);
-      return Array.isArray(parsed) ? parsed : [];
-    } catch {
-      return [];
-    }
-  }
-
-  return [];
+function navigationItems() {
+  return Array.isArray(settings?.navigation_items) ? settings.navigation_items : [];
 }
 
 function stripDiscourseBasePath(path) {
@@ -57,7 +43,7 @@ function normalizeNavigationUrl(value, fallback = "/") {
 }
 
 function visibleNavigationItems() {
-  return parseNavigationItems(settings?.[NAVIGATION_SETTING]).filter((item) => {
+  return navigationItems().filter((item) => {
     if (!item || item.enabled === false) {
       return false;
     }
@@ -131,13 +117,12 @@ function syncNavigationActiveState() {
   }
 }
 
-function renderNavigationRail() {
+function renderNavigationRail(items) {
   const rail = document.querySelector(SERVER_RAIL_SELECTOR);
   const spacer = rail?.querySelector(".cn-server-rail__spacer");
   const separator = rail?.querySelector(".cn-server-rail__separator");
-  const items = visibleNavigationItems();
 
-  if (!rail || !spacer || !items.length) {
+  if (!rail || !spacer) {
     return false;
   }
 
@@ -147,6 +132,10 @@ function renderNavigationRail() {
 
   separator?.remove();
 
+  if (!items.length) {
+    return true;
+  }
+
   const fragment = document.createDocumentFragment();
   const firstIsBrand = items[0]?.style === "brand";
 
@@ -154,7 +143,7 @@ function renderNavigationRail() {
     fragment.appendChild(createNavigationLink(item, index));
 
     if (firstIsBrand && index === 0 && items.length > 1) {
-      const divider = separator || document.createElement("span");
+      const divider = document.createElement("span");
       divider.className = "cn-server-rail__separator";
       divider.setAttribute("aria-hidden", "true");
       fragment.appendChild(divider);
@@ -204,7 +193,7 @@ export default apiInitializer((api) => {
     renderTimer = window.setTimeout(
       () => {
         const items = visibleNavigationItems();
-        const rendered = renderNavigationRail();
+        const rendered = renderNavigationRail(items);
 
         if (!rendered && attempt < 7) {
           render(attempt + 1);
