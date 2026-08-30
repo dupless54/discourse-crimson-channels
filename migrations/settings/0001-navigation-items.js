@@ -76,6 +76,6 @@ export default function migrate(settings) {
     },
   ];
 
-  settings.set("navigation_items", JSON.stringify(items));
+  settings.set("navigation_items", items);
   return settings;
 }
