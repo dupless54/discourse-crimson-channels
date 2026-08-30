@@ -1,24 +1,12 @@
 import { apiInitializer } from "discourse/lib/api";
-import CrimsonTopicAuthor from "../components/crimson-topic-author";
-import CrimsonTopicAuthorHeader from "../components/crimson-topic-author-header";
+import CrimsonTopicCell from "../components/crimson-topic-cell";
 
 export default apiInitializer((api) => {
   api.registerValueTransformer("topic-list-columns", ({ value: columns }) => {
-    const site = api.container.lookup("service:site");
-
-    if (site?.mobileView) {
-      return columns;
-    }
-
-    columns.add(
-      "crimson-topic-author",
-      {
-        item: CrimsonTopicAuthor,
-        header: CrimsonTopicAuthorHeader,
-      },
-      { before: "topic" }
-    );
-
-    return columns;
+    // Keep the core table model and sorting cells intact. We only replace the
+    // topic cell and remove the optional poster stack so the row stays compact.
+    columns.delete("crimson-topic-author");
+    columns.delete("posters");
+    columns.replace("topic", { item: CrimsonTopicCell });
   });
 });
