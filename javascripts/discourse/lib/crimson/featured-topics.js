@@ -1,11 +1,11 @@
 import getURL from "discourse/lib/get-url";
-import { setBoundedMap } from "discourse/lib/crimson/cache";
+import { setBoundedMap } from "./cache";
 import {
   getBooleanSetting,
   getNumberSetting,
   getSetting,
   stripDiscourseBasePath,
-} from "discourse/lib/crimson/settings";
+} from "./settings";
 
 const FEATURED_TOPIC_LIST_SELECTOR = [
   "#main-outlet .list-container .topic-list",
