@@ -101,6 +101,41 @@ RSpec.describe "Crimson channel sections" do
     )
   end
 
+  it "marks accessible restricted category channels with the native lock badge" do
+    admin = Fabricate(:admin)
+    category = Fabricate(:category, name: "Yönetim", read_restricted: true)
+
+    theme.update_setting(
+      :channel_sections,
+      [
+        {
+          enabled: true,
+          title: "Yönetim",
+          collapsed_by_default: false,
+          visibility: "everyone",
+          channels: [
+            {
+              enabled: true,
+              label: "Özel Kategori",
+              target_type: "category",
+              category_ids: [category.id],
+              icon: "folder",
+              visibility: "everyone",
+            },
+          ],
+        },
+      ],
+    )
+    theme.save!
+
+    sign_in(admin)
+    visit("/")
+
+    expect(page).to have_css(
+      "[data-link-name='crimson-channel-0-0'] .sidebar-section-link-prefix .d-icon-category-restricted",
+    )
+  end
+
   it "shows nested group-restricted channels only to matching members" do
     group = Fabricate(:group)
     member = Fabricate(:user)
