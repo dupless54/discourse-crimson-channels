@@ -147,40 +147,35 @@ featured_topics_limit:
 navigation_items:
   type: objects
   default:
-    - key: "home"
-      enabled: true
+    - enabled: true
       label: "Ana sayfa"
       url: "/"
       icon: "house"
       style: "brand"
       visibility: "everyone"
       mobile_shortcut: false
-    - key: "categories"
-      enabled: true
+    - enabled: true
       label: "Kategoriler"
       url: "/categories"
       icon: "list"
       style: "standard"
       visibility: "everyone"
       mobile_shortcut: false
-    - key: "latest"
-      enabled: true
+    - enabled: true
       label: "Son konular"
       url: "/latest"
       icon: "clock"
       style: "standard"
       visibility: "everyone"
       mobile_shortcut: false
-    - key: "servers"
-      enabled: true
+    - enabled: true
       label: "Private Serverlar"
       url: "/servers"
       icon: "server"
       style: "standard"
       visibility: "everyone"
       mobile_shortcut: true
-    - key: "chat"
-      enabled: true
+    - enabled: true
       label: "Sohbet"
       url: "/chat"
       icon: "comments"
@@ -189,13 +184,8 @@ navigation_items:
       mobile_shortcut: false
   schema:
     name: navigation item
+    identifier: label
     properties:
-      key:
-        type: string
-        required: true
-        validations:
-          min_length: 1
-          max_length: 40
       enabled:
         type: boolean
       label:
