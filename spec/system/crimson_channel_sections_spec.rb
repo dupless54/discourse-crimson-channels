@@ -132,7 +132,7 @@ RSpec.describe "Crimson channel sections" do
     visit("/")
 
     expect(page).to have_css(
-      "[data-link-name='crimson-channel-0-0'] .sidebar-section-link-prefix .d-icon-category-restricted",
+      "[data-link-name='crimson-channel-0-0'] .sidebar-section-link-prefix .prefix-badge.d-icon-lock",
     )
   end
 
