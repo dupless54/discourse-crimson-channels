@@ -375,9 +375,7 @@
 
   .cn-topic-author__link:is(:hover, :focus-visible) img.avatar {
     border-color: color-mix(in srgb, var(--cn-crimson) 58%, transparent);
-    box-shadow:
-      0 7px 18px
-      color-mix(in srgb, var(--cn-crimson) 18%, transparent);
+    box-shadow: 0 7px 18px rgb(0 0 0 / 20%);
     transform: translateY(-1px);
   }
 
@@ -428,8 +426,7 @@
     content: "";
     background: var(--cn-crimson);
     border-radius: 999px;
-    box-shadow: 0 0 12px
-      color-mix(in srgb, var(--cn-crimson) 35%, transparent);
+    box-shadow: 0 0 12px var(--cn-active);
   }
 
   body:not(.admin-interface)
@@ -446,11 +443,7 @@
     :is(.list-container, .topic-list-container)
     .topic-list-item:has(.heatmap-high):not(.pinned, .pinned-globally)
     > td {
-    border-color: color-mix(
-      in srgb,
-      var(--tertiary) 28%,
-      transparent
-    ) !important;
+    border-color: var(--tertiary-low) !important;
   }
 
   body:not(.admin-interface)
