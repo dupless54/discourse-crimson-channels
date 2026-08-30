@@ -126,7 +126,9 @@ function hasReadableWhiteText(hex) {
 }
 
 function getAccessibleAccent(settingName, fallback, legacyValues = new Set()) {
-  const rawValue = String(getSetting(settingName, fallback)).trim().toLowerCase();
+  const rawValue = String(getSetting(settingName, fallback))
+    .trim()
+    .toLowerCase();
   const migratedValue = legacyValues.has(rawValue) ? fallback : rawValue;
   const accent = normalizeHexColor(migratedValue, fallback);
 
