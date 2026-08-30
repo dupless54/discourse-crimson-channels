@@ -1,0 +1,166 @@
+<style id="cn-social-feed-layout-fix">
+  @media (width >= 700px) {
+    body:not(.admin-interface)
+      #main-outlet
+      :is(.list-container, .topic-list-container)
+      .cn-topic-author-header,
+    body:not(.admin-interface)
+      #main-outlet
+      :is(.list-container, .topic-list-container)
+      .cn-topic-author {
+      width: 58px !important;
+      min-width: 58px !important;
+      max-width: 58px !important;
+      box-sizing: border-box;
+      padding-inline: 8px !important;
+    }
+
+    body:not(.admin-interface)
+      #main-outlet
+      :is(.list-container, .topic-list-container)
+      .cn-topic-author {
+      padding-block: 15px !important;
+      vertical-align: top !important;
+    }
+
+    .cn-topic-author-header__label {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      overflow: hidden !important;
+      clip-path: inset(50%) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+
+    .cn-topic-author__link {
+      gap: 0 !important;
+      justify-content: center !important;
+    }
+
+    .cn-topic-author__identity {
+      display: none !important;
+    }
+
+    .cn-topic-author__link img.avatar {
+      width: 38px !important;
+      height: 38px !important;
+      flex: 0 0 38px !important;
+    }
+
+    body:not(.admin-interface)
+      #main-outlet
+      :is(.list-container, .topic-list-container)
+      .topic-list-item
+      > .cn-topic-author
+      + .main-link {
+      min-width: 0;
+      padding-block: 13px !important;
+      padding-inline-start: 12px !important;
+      vertical-align: top !important;
+    }
+
+    body:not(.admin-interface)
+      #main-outlet
+      :is(.list-container, .topic-list-container)
+      .topic-list-item
+      > :is(.posts, .views, .activity, .posters) {
+      padding-block: 17px !important;
+      vertical-align: top !important;
+    }
+
+    body:not(.admin-interface)
+      #main-outlet
+      :is(.list-container, .topic-list-container)
+      .topic-list
+      td.num {
+      width: 58px;
+      min-width: 58px !important;
+      padding-inline: 6px !important;
+    }
+
+    body:not(.admin-interface)
+      #main-outlet
+      :is(.list-container, .topic-list-container)
+      .topic-list
+      td.posters {
+      width: 92px;
+      min-width: 92px !important;
+      padding-inline: 8px !important;
+    }
+
+    .cn-topic-rich-preview {
+      display: flex !important;
+      width: 100%;
+      max-width: 760px;
+      min-width: 0;
+      box-sizing: border-box;
+      gap: 12px;
+      align-items: flex-start;
+      margin-top: 9px;
+      padding: 0 !important;
+      background: transparent !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+    }
+
+    .cn-topic-rich-preview--text-only {
+      display: block !important;
+      max-width: 70ch;
+    }
+
+    .cn-topic-rich-preview__excerpt {
+      display: -webkit-box;
+      min-width: 0;
+      flex: 1 1 auto;
+      margin: 0 !important;
+      overflow: hidden;
+      color: var(--primary-medium);
+      font-size: var(--font-down-1, 0.86rem);
+      line-height: 1.45;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+
+    .cn-topic-rich-preview__media {
+      width: clamp(112px, 10vw, 152px) !important;
+      min-width: clamp(112px, 10vw, 152px) !important;
+      max-width: 152px !important;
+      flex: 0 0 clamp(112px, 10vw, 152px);
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+      background: var(--primary-very-low);
+      border: 1px solid color-mix(in srgb, var(--primary) 10%, transparent);
+      border-radius: var(--cn-radius-xs);
+    }
+
+    .cn-topic-rich-preview__media img {
+      display: block !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      height: 100% !important;
+      max-height: none !important;
+      object-fit: cover !important;
+    }
+  }
+
+  @media (700px <= width < 1000px) {
+    .cn-topic-rich-preview {
+      gap: 9px;
+    }
+
+    .cn-topic-rich-preview__excerpt {
+      -webkit-line-clamp: 1;
+    }
+
+    body:not(.admin-interface)
+      #main-outlet
+      :is(.list-container, .topic-list-container)
+      .topic-list
+      td.posters {
+      width: 78px;
+      min-width: 78px !important;
+    }
+  }
+</style>
