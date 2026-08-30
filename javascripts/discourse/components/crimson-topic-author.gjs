@@ -7,7 +7,10 @@ export default class CrimsonTopicAuthor extends Component {
   }
 
   <template>
-    <td class="cn-topic-author topic-list-data">
+    <td
+      class="cn-topic-author topic-list-data"
+      style="width:58px;min-width:58px;max-width:58px;vertical-align:top;"
+    >
       {{#if this.topic.creator}}
         <a
           class="cn-topic-author__link"
@@ -16,9 +19,6 @@ export default class CrimsonTopicAuthor extends Component {
           aria-label={{this.topic.creator.username}}
         >
           {{avatar this.topic.creator imageSize="40"}}
-          <span class="cn-topic-author__identity">
-            {{this.topic.creator.username}}
-          </span>
         </a>
       {{/if}}
     </td>
