@@ -124,16 +124,12 @@ RSpec.describe "Crimson channel sections" do
 
     visit("/")
 
-    expect(page).to have_no_css(
-      ".sidebar-section[data-section-name='crimson-channel-section-0']",
-    )
+    expect(page).to have_no_css(".sidebar-section[data-section-name='crimson-channel-section-0']")
 
     sign_in(member)
     visit("/")
 
-    expect(page).to have_css(
-      ".sidebar-section[data-section-name='crimson-channel-section-0']",
-    )
+    expect(page).to have_css(".sidebar-section[data-section-name='crimson-channel-section-0']")
     expect(page).to have_css("[data-link-name='crimson-channel-0-0']", text: "Gizli Kanal")
   end
 end
