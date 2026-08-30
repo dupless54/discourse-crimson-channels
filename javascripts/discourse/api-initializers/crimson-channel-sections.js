@@ -105,6 +105,7 @@ function resolveChannelTarget(channel) {
       model: `${Category.slugFor(category)}/${category.id}`,
       currentWhen: CATEGORY_CURRENT_WHEN,
       prefixColor: category.color,
+      prefixBadge: category.read_restricted ? "category.restricted" : undefined,
     };
   }
 
@@ -194,6 +195,7 @@ export default apiInitializer((api) => {
             prefixType = "icon";
             prefixValue = channel.icon;
             prefixColor = channel.target.prefixColor;
+            prefixBadge = channel.target.prefixBadge;
             badgeText = channel.badgeText || undefined;
 
             get currentWhen() {
