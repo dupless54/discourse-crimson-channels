@@ -15,7 +15,6 @@ import topicFeaturedLink from "discourse/helpers/topic-featured-link";
 import { groupPath } from "discourse/lib/url";
 import DUserLink from "discourse/ui-kit/d-user-link";
 import dAvatar from "discourse/ui-kit/helpers/d-avatar";
-import borderColor from "discourse/helpers/border-color";
 import dCategoryLink from "discourse/ui-kit/helpers/d-category-link";
 import dDiscourseTags from "discourse/ui-kit/helpers/d-discourse-tags";
 
@@ -47,15 +46,7 @@ export default class CrimsonTopicCell extends Component {
 
   <template>
     <td class="main-link topic-list-data cn-topic-cell" colspan="1">
-      {{#if @topic.category}}
-        <span
-          class="cn-topic-cell__rail"
-          style={{borderColor @topic.category.color}}
-          aria-hidden="true"
-        ></span>
-      {{else}}
-        <span class="cn-topic-cell__rail" aria-hidden="true"></span>
-      {{/if}}
+      <span class="cn-topic-cell__rail" aria-hidden="true"></span>
 
       <div class="cn-topic-cell__layout">
         {{#if this.author}}

@@ -32,23 +32,27 @@ visual_surface_style:
 
 visual_accent_color:
   type: string
-  default: "#c50337"
+  default: "#5865f2"
+
+visual_secondary_accent_color:
+  type: string
+  default: "#7c3aed"
 
 visual_panel_opacity_percent:
   type: integer
-  default: 82
+  default: 94
   min: 72
   max: 100
 
 visual_border_intensity_percent:
   type: integer
-  default: 52
+  default: 28
   min: 20
   max: 70
 
 visual_glow_intensity_percent:
   type: integer
-  default: 35
+  default: 12
   min: 0
   max: 100
 
