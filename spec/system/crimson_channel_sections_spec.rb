@@ -51,8 +51,8 @@ RSpec.describe "Crimson channel sections" do
     expect(page).to have_no_css("#{section} [data-link-name='crimson-channel-0-1']")
   end
 
-  it "uses native Discourse routes for category and tag targets" do
-    category = Fabricate(:category, name: "Oyun Haberleri")
+  it "uses native Discourse routes and category colors for category and tag targets" do
+    category = Fabricate(:category, name: "Oyun Haberleri", color: "12AB34")
     tag = Fabricate(:tag, name: "robotik")
 
     theme.update_setting(
@@ -88,9 +88,10 @@ RSpec.describe "Crimson channel sections" do
 
     visit("/")
 
+    category_link = "[data-link-name='crimson-channel-0-0'][href='/c/#{category.slug}/#{category.id}']"
+    expect(page).to have_css(category_link, text: "Oyun Haberleri")
     expect(page).to have_css(
-      "[data-link-name='crimson-channel-0-0'][href='/c/#{category.slug}/#{category.id}']",
-      text: "Oyun Haberleri",
+      "#{category_link} .sidebar-section-link-prefix[style*='color: #12AB34']",
     )
     expect(page).to have_css(
       "[data-link-name='crimson-channel-0-1'][href='/tag/#{tag.name}']",
