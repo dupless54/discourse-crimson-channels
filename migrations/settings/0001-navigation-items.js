@@ -25,7 +25,6 @@ export default function migrate(settings) {
 
   const items = [
     {
-      key: "home",
       enabled: true,
       label: "Ana sayfa",
       url: legacyValue(settings, "home_url"),
@@ -35,7 +34,6 @@ export default function migrate(settings) {
       mobile_shortcut: false,
     },
     {
-      key: "categories",
       enabled: true,
       label: "Kategoriler",
       url: legacyValue(settings, "categories_url"),
@@ -45,7 +43,6 @@ export default function migrate(settings) {
       mobile_shortcut: false,
     },
     {
-      key: "latest",
       enabled: true,
       label: "Son konular",
       url: legacyValue(settings, "latest_url"),
@@ -55,7 +52,6 @@ export default function migrate(settings) {
       mobile_shortcut: false,
     },
     {
-      key: "servers",
       enabled: true,
       label: "Private Serverlar",
       url: legacyValue(settings, "servers_url"),
@@ -65,7 +61,6 @@ export default function migrate(settings) {
       mobile_shortcut: true,
     },
     {
-      key: "chat",
       enabled: true,
       label: "Sohbet",
       url: legacyValue(settings, "chat_url"),
