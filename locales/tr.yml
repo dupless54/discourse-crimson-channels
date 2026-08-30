@@ -38,14 +38,42 @@ tr_TR:
             limit:
               label: "Konu sayısı"
               description: "Bu bölümde gösterilecek konu sayısı (1–20)."
+      navigation_items:
+        description: "Crimson hızlı gezinme rayını yönetin, sıralayın ve grup erişimiyle sınırlandırın. Güvenli yükseltme için bağlantılar yalnızca bu Discourse sitesine yönlenir."
+        schema:
+          properties:
+            enabled:
+              label: "Etkin"
+              description: "Bu gezinme öğesini göster."
+            label:
+              label: "Etiket"
+              description: "Öğenin erişilebilir etiketi ve üzerine gelince gösterilen metin. Düzenleyicide öğenin adı olarak da kullanılır."
+            url:
+              label: "Hedef"
+              description: "Aynı Discourse sitesindeki yol veya URL; örneğin /latest."
+            icon:
+              label: "İkon"
+              description: "Discourse'un desteklenen ikon seçicisinden bir ikon seçin."
+            style:
+              label: "Stil"
+              description: "Marka stili ilk/ana sayfa öğesi içindir; standart normal kısayollar için kullanılır."
+            visibility:
+              label: "Görünürlük"
+              description: "Öğeyi herkese veya yalnızca seçilen grupların üyelerine gösterin."
+            groups:
+              label: "İzin verilen gruplar"
+              description: "Yalnızca görünürlük gruplar olarak seçildiğinde kullanılır."
+            mobile_shortcut:
+              label: "Mobil başlık kısayolu"
+              description: "Bu öğeyi kompakt mobil başlık kısayolu olarak kullan. Etkin olan ilk eşleşme kullanılır."
       featured_topics_enabled: "Eski tek listeyi etkinleştir. Yalnızca yeni çoklu liste ayarı boşken kullanılır."
       featured_category_url: "Eski tek listenin kullandığı kategori yolu."
       featured_topics_title: "Eski tek listenin başlığı."
       featured_topics_position: "Eski tek listenin konumu: üstte veya altta."
       featured_topics_limit: "Eski tek listedeki en fazla konu sayısı."
-      home_url: "Ana sayfa ray düğmesinin hedefi."
-      categories_url: "Kategoriler ray düğmesinin hedefi."
-      latest_url: "Son konular ray düğmesinin hedefi."
-      servers_url: "Private server listesi ray düğmesinin hedefi."
-      chat_url: "Sohbet ray düğmesinin hedefi."
+      home_url: "Geçiş uyumluluğu için tutulan eski ana sayfa hedefi."
+      categories_url: "Geçiş uyumluluğu için tutulan eski kategoriler hedefi."
+      latest_url: "Geçiş uyumluluğu için tutulan eski son konular hedefi."
+      servers_url: "Geçiş uyumluluğu için tutulan eski private server hedefi."
+      chat_url: "Geçiş uyumluluğu için tutulan eski sohbet hedefi."
   topic_author: "Başlatan"
