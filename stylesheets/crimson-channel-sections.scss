@@ -10,8 +10,7 @@
     color 120ms ease,
     background-color 120ms ease,
     border-color 120ms ease,
-    box-shadow 120ms ease,
-    transform 120ms ease;
+    box-shadow 120ms ease;
 }
 
 .sidebar-section-link.cn-channel-section-link
@@ -23,7 +22,7 @@
 .sidebar-section-link.cn-channel-section-link
   .sidebar-section-link-content-text {
   min-width: 0;
-  font-weight: 540;
+  font-weight: 600;
 }
 
 .sidebar-section-link.cn-channel-section-link
@@ -44,7 +43,6 @@
 .sidebar-section-link.cn-channel-section-link:hover,
 .sidebar-section-link.cn-channel-section-link:focus-visible {
   border-color: color-mix(in srgb, var(--cn-crimson) 18%, transparent);
-  transform: translateX(1px);
 }
 
 .sidebar-section-link.cn-channel-section-link:hover
@@ -61,8 +59,7 @@
 
 .sidebar-section-link.cn-channel-section-link.active {
   border-color: color-mix(in srgb, var(--cn-crimson) 32%, transparent);
-  font-weight: 650;
-  transform: none;
+  font-weight: 700;
 }
 
 .sidebar-section-link.cn-channel-section-link.active
@@ -92,10 +89,5 @@
   .sidebar-section-link.cn-channel-section-link
     .sidebar-section-link-prefix.icon {
     transition: none;
-  }
-
-  .sidebar-section-link.cn-channel-section-link:hover,
-  .sidebar-section-link.cn-channel-section-link:focus-visible {
-    transform: none;
   }
 }
