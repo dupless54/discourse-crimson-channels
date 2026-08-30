@@ -21,7 +21,7 @@ RSpec.describe "Crimson Channels mobile shell", mobile: true do
     expect(page).to have_css("body.cn-mobile-community-open", visible: :all)
     expect(page).to have_css(".cn-mobile-community-toggle[aria-expanded='true']", visible: true)
 
-    find("[data-cn-action='close-mobile-community']", visible: :all).click
+    toggle.click
 
     expect(page).to have_no_css("body.cn-mobile-community-open", visible: :all)
     expect(page).to have_css(".cn-mobile-community-toggle[aria-expanded='false']", visible: true)
