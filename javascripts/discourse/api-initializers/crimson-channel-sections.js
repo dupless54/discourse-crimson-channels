@@ -104,6 +104,7 @@ function resolveChannelTarget(channel) {
       route: "discovery.category",
       model: `${Category.slugFor(category)}/${category.id}`,
       currentWhen: CATEGORY_CURRENT_WHEN,
+      prefixColor: category.color,
     };
   }
 
@@ -192,6 +193,7 @@ export default apiInitializer((api) => {
             text = channel.label;
             prefixType = "icon";
             prefixValue = channel.icon;
+            prefixColor = channel.target.prefixColor;
             badgeText = channel.badgeText || undefined;
 
             get currentWhen() {
