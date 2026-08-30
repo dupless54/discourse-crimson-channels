@@ -258,12 +258,24 @@ channel_sections:
               validations:
                 min_length: 1
                 max_length: 60
+            target_type:
+              type: enum
+              choices:
+                - "url"
+                - "category"
+                - "tag"
             url:
               type: string
-              required: true
               validations:
-                min_length: 1
                 max_length: 2048
+            category_ids:
+              type: categories
+              validations:
+                max: 1
+            tags:
+              type: tags
+              validations:
+                max: 1
             icon:
               type: icon
               required: true
