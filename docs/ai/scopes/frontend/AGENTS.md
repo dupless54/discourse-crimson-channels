@@ -1,6 +1,6 @@
 # Crimson Channels Frontend Scoped Rules
 
-Use this file for `common/`, `desktop/`, `mobile/`, `javascripts/`, `scss/`, visual behavior, Glimmer/components/connectors, routing UI, icons, and responsive styling.
+Use this file for `common/`, `desktop/`, `mobile/`, `javascripts/`, `stylesheets/`, visual behavior, Glimmer/components/connectors, routing UI, icons, and responsive styling.
 
 ## Read order
 1. Exact target file/symbol.
@@ -16,9 +16,10 @@ Use this file for `common/`, `desktop/`, `mobile/`, `javascripts/`, `scss/`, vis
 - `javascripts/discourse/lib/crimson/settings.js`: shared setting and same-origin URL helpers.
 - `javascripts/discourse/lib/crimson/cache.js`: shared bounded-cache helper.
 - `javascripts/discourse/api-initializers/crimson-navigation-settings.js`: structured navigation rendering/sync.
-- `common/common.scss`: current shared visual system; prefer extracting cohesive modules into `scss/` over growing this monolith.
-- `desktop/desktop.scss`: wide-screen rail/content geometry.
-- `mobile/mobile.scss`: compact navigation, community drawer, mobile overrides.
+- `common/common.scss`: main shared CSS entrypoint; keep it small and import cohesive modules from `stylesheets/` rather than growing a monolith.
+- `stylesheets/`: responsibility-focused shared stylesheet modules imported by theme entrypoints.
+- `desktop/desktop.scss`: wide-screen rail/content geometry when a breakpoint-specific entrypoint is genuinely needed.
+- `mobile/mobile.scss`: compact navigation, community drawer, and mobile-only overrides when common breakpoint styling is insufficient.
 
 ## Current Discourse frontend conventions
 - Discourse theme JS can be split across `/javascripts` and follows the same file/folder conventions as current Discourse core/plugins. Prefer small responsibility-focused modules over one large initializer.
@@ -45,8 +46,10 @@ When using level 3 or 4, record why supported seams were insufficient and keep s
 - Any endpoint-path/payload assumption change is T2 and requires `docs/ai/DECISIONS.md` plus exact call-site review.
 
 ## SCSS/CSS organization
-- Discourse supports arbitrary `.scss` modules under root `scss/`, imported by common/desktop/mobile entry stylesheets. Extract cohesive foundations/components instead of growing `common/common.scss` indefinitely.
-- Keep common rules common; desktop/mobile files should contain genuinely viewport-specific geometry/overrides, not duplicate component definitions.
+- Current Discourse theme CSS uses `common/common.scss` as the main entrypoint. For complex themes, put cohesive additional SCSS modules under root `stylesheets/` and import them from the appropriate common/desktop/mobile entrypoint (for example `@import "my-styles";`).
+- Prefer breakpoint-based styling in common/shared modules when practical; current Discourse is moving away from unnecessary duplication across separate desktop/mobile stylesheets.
+- Keep desktop/mobile files for genuinely viewport-specific geometry/overrides, not duplicate component definitions.
+- Preserve stylesheet import/source order when splitting existing CSS because cascade order is behavior.
 - If a styling primitive requires a newer core version, prefer a correct `minimum_discourse_version` over fragile backwards-compatibility hacks.
 
 ## Core variables, colors, and dark mode
@@ -108,7 +111,7 @@ When using level 3 or 4, record why supported seams were insufficient and keep s
 - Designer guide: https://meta.discourse.org/t/-/152002?silent=true
 - Theme structure: https://meta.discourse.org/t/-/60848?silent=true
 - Split JS: https://meta.discourse.org/t/-/119369?silent=true
-- Split SCSS: https://meta.discourse.org/t/-/115126?silent=true
+- Current CSS tutorial/source: https://github.com/discourse/discourse/blob/main/docs/developer-guides/docs/07-theme-developer-tutorial/03-css.md
 - Core variables: https://meta.discourse.org/t/-/77551?silent=true
 - Font sizes/scaling: https://meta.discourse.org/t/-/120927?silent=true
 - Theme assets: https://meta.discourse.org/t/-/62459?silent=true
