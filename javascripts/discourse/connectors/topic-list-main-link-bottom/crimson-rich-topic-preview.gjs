@@ -31,8 +31,8 @@ export default class CrimsonRichTopicPreview extends Component {
           <img
             src={{@outletArgs.topic.image_url}}
             alt=""
-            width="640"
-            height="360"
+            width="160"
+            height="90"
             loading="lazy"
             decoding="async"
           />
