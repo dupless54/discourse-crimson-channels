@@ -5,6 +5,17 @@
 @media (width >= 1000px) {
   body:not(.admin-interface, .cn-shell-hidden) {
     --d-sidebar-width: var(--cn-channel-rail-width);
+    --cn-desktop-content-gutter: clamp(18px, 1.65vw, 30px);
+    --cn-desktop-section-surface: color-mix(
+      in srgb,
+      var(--cn-surface) 76%,
+      transparent
+    );
+    --cn-desktop-section-border: color-mix(
+      in srgb,
+      var(--primary) 9%,
+      transparent
+    );
   }
 
   body:not(.admin-interface, .cn-shell-hidden) .cn-server-rail {
@@ -14,6 +25,23 @@
     inset-inline-start: 0;
     display: flex;
     width: var(--cn-server-rail-width);
+    gap: 8px;
+    padding-block: 14px;
+    box-shadow:
+      inset -1px 0 0 var(--cn-desktop-section-border),
+      7px 0 24px rgb(2 6 14 / 16%);
+  }
+
+  body:not(.admin-interface, .cn-shell-hidden) .cn-server-button {
+    width: 44px;
+    height: 44px;
+    flex-basis: 44px;
+    border-radius: var(--cn-radius-sm);
+  }
+
+  body:not(.admin-interface, .cn-shell-hidden)
+    .cn-server-button:is(:hover, :focus-visible, .is-active) {
+    border-radius: var(--cn-radius-xs);
   }
 
   body:not(.admin-interface, .cn-shell-hidden) #main-outlet-wrapper {
@@ -38,6 +66,9 @@
     min-width: var(--cn-channel-rail-width) !important;
     max-width: var(--cn-channel-rail-width) !important;
     border-radius: 0;
+    box-shadow:
+      inset -1px 0 0 var(--cn-desktop-section-border),
+      8px 0 26px rgb(2 6 14 / 14%);
   }
 
   body:not(.admin-interface, .cn-shell-hidden) #main-outlet {
@@ -46,20 +77,84 @@
     min-width: 0;
     box-sizing: border-box;
     margin: 0 auto !important;
-    padding: 18px 22px 84px !important;
+    padding: 22px var(--cn-desktop-content-gutter) 88px !important;
   }
 
   body:not(.admin-interface, .cn-shell-hidden) .d-header .wrap {
     width: 100%;
     max-width: none;
     box-sizing: border-box;
-    padding-inline-start: calc(var(--cn-server-rail-width) + 16px);
+    padding-inline-start: calc(var(--cn-server-rail-width) + 18px);
+    padding-inline-end: 18px;
+  }
+
+  body:not(.admin-interface, .cn-shell-hidden) .d-header-icons .icon {
+    border-radius: var(--cn-radius-xs);
   }
 
   body:not(.admin-interface, .cn-shell-hidden)
     .sidebar-wrapper
     .sidebar-container {
-    padding-inline: 10px;
+    padding: 12px 10px 18px;
+  }
+
+  body:not(.admin-interface, .cn-shell-hidden)
+    .sidebar-wrapper
+    .sidebar-section-wrapper {
+    margin-bottom: 8px;
+    padding: 5px;
+    background: var(--cn-desktop-section-surface);
+    border: 1px solid var(--cn-desktop-section-border);
+    border-radius: var(--cn-radius-sm);
+  }
+
+  body:not(.admin-interface, .cn-shell-hidden)
+    .sidebar-wrapper
+    .sidebar-section-header {
+    min-height: 30px;
+    box-sizing: border-box;
+    padding-inline: 7px;
+  }
+
+  body:not(.admin-interface, .cn-shell-hidden)
+    .sidebar-wrapper
+    .sidebar-section-link {
+    min-height: 34px;
+    box-sizing: border-box;
+    padding-inline: 8px;
+    border: 1px solid transparent;
+  }
+
+  body:not(.admin-interface, .cn-shell-hidden)
+    .sidebar-wrapper
+    .sidebar-section-link:is(:hover, :focus-visible) {
+    border-color: color-mix(in srgb, var(--primary) 8%, transparent);
+  }
+
+  body:not(.admin-interface, .cn-shell-hidden)
+    .sidebar-wrapper
+    :is(
+      .sidebar-section-link.active,
+      .sidebar-section-link-wrapper.active .sidebar-section-link
+    ) {
+    border-color: color-mix(in srgb, var(--cn-crimson) 24%, transparent);
+  }
+
+  body:not(.admin-interface, .cn-shell-hidden)
+    #main-outlet
+    > :is(.navigation-container, .list-controls) {
+    margin-bottom: 8px;
+  }
+
+  body:not(.admin-interface, .cn-shell-hidden)
+    #main-outlet
+    :is(.navigation-container, .list-controls .container)
+    .select-kit-header,
+  body:not(.admin-interface, .cn-shell-hidden)
+    #main-outlet
+    :is(.navigation-container, .list-controls .container)
+    .btn {
+    min-height: 36px;
   }
 
   .user-main .about .details > .primary {
@@ -89,6 +184,64 @@
     inset-inline-end: 0;
     display: flex;
     width: var(--cn-member-rail-width);
+    padding: 10px;
+    background: color-mix(
+      in srgb,
+      var(--cn-panel-strong) 94%,
+      var(--secondary) 6%
+    );
+    box-shadow:
+      inset 1px 0 0 var(--cn-desktop-section-border),
+      -8px 0 26px rgb(2 6 14 / 14%);
+  }
+
+  body:not(
+      .admin-interface,
+      .cn-shell-hidden,
+      .cn-member-rail-disabled,
+      .cn-member-rail-collapsed
+    )
+    .cn-member-rail__header {
+    margin: 0 0 8px;
+    padding: 12px 11px 10px;
+    background: var(--cn-desktop-section-surface);
+    border: 1px solid var(--cn-desktop-section-border);
+    border-radius: var(--cn-radius-sm);
+  }
+
+  body:not(
+      .admin-interface,
+      .cn-shell-hidden,
+      .cn-member-rail-disabled,
+      .cn-member-rail-collapsed
+    )
+    .cn-member-list {
+    padding: 2px 0 8px;
+  }
+
+  body:not(
+      .admin-interface,
+      .cn-shell-hidden,
+      .cn-member-rail-disabled,
+      .cn-member-rail-collapsed
+    )
+    .cn-member {
+    margin-block: 2px;
+    padding: 7px 8px;
+  }
+
+  body:not(
+      .admin-interface,
+      .cn-shell-hidden,
+      .cn-member-rail-disabled,
+      .cn-member-rail-collapsed
+    )
+    .cn-member-rail__footer {
+    margin-top: auto;
+    padding: 10px 11px;
+    background: var(--cn-desktop-section-surface);
+    border: 1px solid var(--cn-desktop-section-border);
+    border-radius: var(--cn-radius-sm);
   }
 
   body:not(
@@ -140,7 +293,7 @@
   }
 
   body:not(.admin-interface, .cn-shell-hidden) #main-outlet {
-    padding-inline: 28px !important;
+    padding-inline: clamp(28px, 2vw, 38px) !important;
   }
 }
 
