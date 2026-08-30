@@ -70,18 +70,13 @@ function visibleNavigationItems() {
   });
 }
 
-function navigationKey(item, index) {
-  const key = String(item?.key || "").trim();
-  return key ? `object-${key}` : `object-${index}`;
-}
-
 function createNavigationLink(item, index) {
   const link = document.createElement("a");
   const label = String(item?.label || "").trim() || "Bağlantı";
   const isBrand = index === 0 && item?.style === "brand";
 
   link.className = "cn-server-button";
-  link.dataset.cnLink = navigationKey(item, index);
+  link.dataset.cnLink = `object-${index}`;
   link.dataset.cnObjectNavigation = "true";
   link.href = normalizeNavigationUrl(item?.url, "/");
   link.setAttribute("aria-label", label);
