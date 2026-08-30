@@ -45,3 +45,14 @@ Before broad reads on non-trivial work, classify with `docs/ai/EFFORT_ROUTER.md`
 - T1 routine theme/frontend work -> medium effort
 - T2 cross-plugin contract/privacy/high-impact compatibility -> high effort
 - T3 exceptional only when targeted T2 evidence is insufficient
+
+## Live Discourse developer source gate
+
+Canonical live upstream index: https://meta.discourse.org/t/developer-guides-index/308036?tl=en
+
+For any Discourse-version-sensitive implementation, refactor, review, or compatibility decision:
+- start at the live Developer Guides Index and open only the task-relevant official topic(s);
+- this repository is a theme, so prioritize **Code & Internals + Themes & Components + Theme Developer Tutorial**; use plugin/environment/general guides only when the task actually crosses those boundaries;
+- verify version-sensitive APIs and deprecations against current `discourse/discourse` core or the current official theme skeleton before coding when needed;
+- current official docs/core beat remembered examples, old snippets, and copied local guidance unless the repo deliberately targets an older validated release via `.discourse-compatibility` / d-compat;
+- do not preload the full index: read the nearest local rules and target theme source/tests first, then fetch only the upstream guide(s) needed for the current choice.
