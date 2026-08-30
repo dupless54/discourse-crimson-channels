@@ -42,15 +42,12 @@ en:
         description: "Configure, reorder, and restrict the Crimson quick-navigation rail. URLs are limited to this Discourse site for a safe upgrade path."
         schema:
           properties:
-            key:
-              label: "Key"
-              description: "Stable internal key. Keep 'servers' for the default private-server shortcut."
             enabled:
               label: "Enabled"
               description: "Show this navigation item."
             label:
               label: "Label"
-              description: "Accessible label and hover text shown for the item."
+              description: "Accessible label and hover text shown for the item. This also names the item in the editor."
             url:
               label: "Destination"
               description: "Same-site Discourse path or URL, for example /latest."
