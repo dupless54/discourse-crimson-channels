@@ -47,3 +47,4 @@ en:
       latest_url: "Destination of the latest-topics rail button."
       servers_url: "Destination of the private-server top-list button."
       chat_url: "Destination of the chat rail button."
+  topic_author: "Author"
