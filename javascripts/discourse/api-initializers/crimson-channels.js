@@ -903,7 +903,9 @@ function fetchCommunityPayload(path, maxAgeMilliseconds = 15_000) {
   const rateLimitUntil = communityRateLimitUntil.get(path) || 0;
 
   if (rateLimitUntil > now) {
-    return Promise.reject(new Error("Community request is temporarily rate limited"));
+    return Promise.reject(
+      new Error("Community request is temporarily rate limited")
+    );
   }
 
   if (rateLimitUntil) {
