@@ -1,13 +1,13 @@
 import { apiInitializer } from "discourse/lib/api";
 import getURL from "discourse/lib/get-url";
-import { setBoundedMap } from "discourse/lib/crimson/cache";
-import { createFeaturedTopicsController } from "discourse/lib/crimson/featured-topics";
+import { setBoundedMap } from "../lib/crimson/cache";
+import { createFeaturedTopicsController } from "../lib/crimson/featured-topics";
 import {
   getBooleanSetting,
   getNumberSetting,
   getSetting,
   normalizeSameOriginUrl,
-} from "discourse/lib/crimson/settings";
+} from "../lib/crimson/settings";
 
 const HIDDEN_ROUTE_PATTERN =
   /^\/(admin|wizard|login|signup|session|password-reset)(\/|$)/;
