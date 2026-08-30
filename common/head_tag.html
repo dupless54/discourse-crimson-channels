@@ -2,24 +2,46 @@
   :root {
     --cn-native-row: color-mix(
       in srgb,
-      var(--secondary) 94%,
-      var(--primary) 6%
+      var(--secondary) 96%,
+      var(--primary) 4%
     );
     --cn-native-row-hover: color-mix(
       in srgb,
-      var(--secondary) 90%,
-      var(--primary) 10%
+      var(--secondary) 93%,
+      var(--primary) 7%
     );
     --cn-native-border: color-mix(
       in srgb,
-      var(--primary) 11%,
+      var(--primary) 9%,
       transparent
     );
     --cn-native-meta: color-mix(
       in srgb,
-      var(--primary) 7%,
+      var(--primary) 5%,
       transparent
     );
+  }
+
+  body:not(.admin-interface) #main-outlet .topic-list .main-link a.title,
+  body:not(.admin-interface) #main-outlet .cn-featured-topic__link,
+  body:not(.admin-interface) #topic-title h1,
+  body:not(.admin-interface) #topic-title .fancy-title {
+    color: var(--primary) !important;
+  }
+
+  body:not(.admin-interface)
+    #main-outlet
+    .topic-list
+    .main-link
+    a.title:is(:hover, :focus-visible),
+  body:not(.admin-interface)
+    #main-outlet
+    .cn-featured-topic__link:is(:hover, :focus-visible) {
+    color: color-mix(
+      in srgb,
+      var(--primary) 84%,
+      var(--cn-accent-mix, var(--cn-crimson)) 16%
+    ) !important;
   }
 
   @media (width >= 700px) {
@@ -88,7 +110,11 @@
       .topic-list-item:not(.topic-list-item-separator):is(:hover, :focus-within)
       > td {
       background: var(--cn-native-row-hover);
-      border-color: color-mix(in srgb, var(--tertiary) 24%, transparent);
+      border-color: color-mix(
+        in srgb,
+        var(--cn-accent-mix, var(--cn-crimson)) 18%,
+        transparent
+      );
     }
 
     body:not(.admin-interface)
@@ -98,8 +124,8 @@
       > td {
       background: color-mix(
         in srgb,
-        var(--cn-native-row) 92%,
-        var(--cn-crimson) 8%
+        var(--cn-native-row) 95%,
+        var(--cn-accent-mix, var(--cn-crimson)) 5%
       );
     }
 
@@ -115,7 +141,8 @@
       inset-block: 8px;
       inset-inline-start: 0;
       width: 0;
-      border-inline-start: 3px solid var(--cn-crimson);
+      border-inline-start: 3px solid
+        var(--cn-accent-mix, var(--cn-crimson));
       border-radius: 999px;
       pointer-events: none;
     }
@@ -123,8 +150,13 @@
     .topic-list-item.pinned .cn-topic-cell__rail,
     .topic-list-item.pinned-globally .cn-topic-cell__rail {
       border-inline-start-width: 4px;
-      border-color: var(--cn-crimson) !important;
-      box-shadow: 0 0 12px color-mix(in srgb, var(--cn-crimson) 28%, transparent);
+      border-color: var(--cn-violet, var(--cn-crimson)) !important;
+      box-shadow: 0 0 10px
+        color-mix(
+          in srgb,
+          var(--cn-violet, var(--cn-crimson)) 18%,
+          transparent
+        );
     }
 
     .cn-topic-cell__layout {
@@ -143,7 +175,7 @@
       justify-content: center;
       margin-top: 1px;
       border-radius: 50%;
-      outline: 1px solid color-mix(in srgb, var(--primary) 10%, transparent);
+      outline: 1px solid color-mix(in srgb, var(--primary) 9%, transparent);
       outline-offset: 2px;
     }
 
@@ -165,14 +197,18 @@
     }
 
     .cn-topic-cell .link-top-line a.title {
-      color: var(--primary-high);
+      color: var(--primary) !important;
       font-size: var(--font-up-1, 1rem);
       font-weight: 680;
       text-wrap: pretty;
     }
 
     .cn-topic-cell .link-top-line a.title:is(:hover, :focus-visible) {
-      color: var(--tertiary);
+      color: color-mix(
+        in srgb,
+        var(--primary) 84%,
+        var(--cn-accent-mix, var(--cn-crimson)) 16%
+      ) !important;
     }
 
     .cn-topic-cell .link-bottom-line {
@@ -198,7 +234,7 @@
       box-sizing: border-box;
       padding: 2px 7px !important;
       color: var(--primary-medium) !important;
-      background: color-mix(in srgb, var(--primary) 5%, transparent);
+      background: color-mix(in srgb, var(--primary) 4%, transparent);
       border: 1px solid var(--cn-native-border);
       border-radius: 999px;
       font-size: var(--font-down-2, 0.74rem);
@@ -304,7 +340,7 @@
       .cn-topic-cell
       .link-top-line
       a.title {
-      color: var(--primary);
+      color: var(--primary) !important;
       font-weight: 720;
     }
 
