@@ -3,7 +3,7 @@ import avatar from "discourse/helpers/avatar";
 
 export default class CrimsonTopicAuthor extends Component {
   get topic() {
-    return this.args.topic;
+    return this.args.topic || this.args.outletArgs?.topic;
   }
 
   <template>
