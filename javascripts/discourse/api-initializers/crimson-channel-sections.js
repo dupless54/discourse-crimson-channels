@@ -1,6 +1,12 @@
 import { apiInitializer } from "discourse/lib/api";
 import getURL from "discourse/lib/get-url";
+import Category from "discourse/models/category";
 import { getSetting, stripDiscourseBasePath } from "../lib/crimson/settings";
+
+const CATEGORY_CURRENT_WHEN =
+  "discovery.unreadCategory discovery.hotCategory discovery.topCategory discovery.newCategory discovery.latestCategory discovery.category discovery.categoryNone discovery.categoryAll";
+const TAG_CURRENT_WHEN =
+  "tag.show tag.showNew tag.showUnread tag.showTop tag.showHot tag.showLatest";
 
 function objectSetting(name) {
   const value = getSetting(name, []);
@@ -74,6 +80,50 @@ function isActiveHref(href) {
     : currentPath === targetPath || currentPath.startsWith(`${targetPath}/`);
 }
 
+function firstValue(value) {
+  return Array.isArray(value) ? value[0] : undefined;
+}
+
+function resolveChannelTarget(channel) {
+  const configuredType = String(channel?.target_type || "").trim();
+  const targetType = configuredType || "url";
+
+  if (targetType === "url") {
+    const href = normalizeInternalHref(channel?.url);
+    return href ? { href } : null;
+  }
+
+  if (targetType === "category") {
+    const category = Category.findById(firstValue(channel?.category_ids));
+
+    if (!category) {
+      return null;
+    }
+
+    return {
+      route: "discovery.category",
+      model: `${Category.slugFor(category)}/${category.id}`,
+      currentWhen: CATEGORY_CURRENT_WHEN,
+    };
+  }
+
+  if (targetType === "tag") {
+    const tagName = String(firstValue(channel?.tags) || "").trim();
+
+    if (!tagName) {
+      return null;
+    }
+
+    return {
+      route: "tag.legacyRedirect",
+      model: tagName,
+      currentWhen: TAG_CURRENT_WHEN,
+    };
+  }
+
+  return null;
+}
+
 function configuredSections() {
   return objectSetting("channel_sections")
     .map((section, sectionIndex) => {
@@ -95,18 +145,18 @@ function configuredSections() {
           }
 
           const label = String(channel?.label || "").trim();
-          const href = normalizeInternalHref(channel?.url);
+          const target = resolveChannelTarget(channel);
           const icon = String(channel?.icon || "").trim();
           const badgeText = String(channel?.badge_text || "").trim();
 
-          if (!label || !href || !icon) {
+          if (!label || !target || !icon) {
             return null;
           }
 
           return {
             name: `crimson-channel-${sectionIndex}-${channelIndex}`,
             label,
-            href,
+            target,
             icon,
             badgeText,
           };
@@ -135,7 +185,9 @@ export default apiInitializer((api) => {
           return new (class extends BaseCustomSidebarSectionLink {
             name = channel.name;
             classNames = "cn-channel-section-link";
-            href = channel.href;
+            href = channel.target.href;
+            route = channel.target.route;
+            model = channel.target.model;
             title = channel.label;
             text = channel.label;
             prefixType = "icon";
@@ -143,7 +195,9 @@ export default apiInitializer((api) => {
             badgeText = channel.badgeText || undefined;
 
             get currentWhen() {
-              return isActiveHref(channel.href);
+              return (
+                channel.target.currentWhen || isActiveHref(channel.target.href)
+              );
             }
 
             get keywords() {

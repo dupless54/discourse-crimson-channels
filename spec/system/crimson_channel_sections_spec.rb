@@ -3,7 +3,10 @@
 RSpec.describe "Crimson channel sections" do
   let!(:theme) { upload_theme_or_component }
 
-  before { SiteSetting.navigation_menu = "sidebar" }
+  before do
+    SiteSetting.navigation_menu = "sidebar"
+    SiteSetting.tagging_enabled = true
+  end
 
   it "renders configured channels through the native Discourse sidebar" do
     theme.update_setting(
@@ -46,6 +49,53 @@ RSpec.describe "Crimson channel sections" do
     )
     expect(page).to have_css("#{section} .sidebar-section-link-content-badge", text: "NEW")
     expect(page).to have_no_css("#{section} [data-link-name='crimson-channel-0-1']")
+  end
+
+  it "uses native Discourse routes for category and tag targets" do
+    category = Fabricate(:category, name: "Oyun Haberleri")
+    tag = Fabricate(:tag, name: "robotik")
+
+    theme.update_setting(
+      :channel_sections,
+      [
+        {
+          enabled: true,
+          title: "Keşfet",
+          collapsed_by_default: false,
+          visibility: "everyone",
+          channels: [
+            {
+              enabled: true,
+              label: "Oyun Haberleri",
+              target_type: "category",
+              category_ids: [category.id],
+              icon: "folder",
+              visibility: "everyone",
+            },
+            {
+              enabled: true,
+              label: "Robotik",
+              target_type: "tag",
+              tags: [tag.name],
+              icon: "tag",
+              visibility: "everyone",
+            },
+          ],
+        },
+      ],
+    )
+    theme.save!
+
+    visit("/")
+
+    expect(page).to have_css(
+      "[data-link-name='crimson-channel-0-0'][href='/c/#{category.slug}/#{category.id}']",
+      text: "Oyun Haberleri",
+    )
+    expect(page).to have_css(
+      "[data-link-name='crimson-channel-0-1'][href='/tag/#{tag.name}']",
+      text: "Robotik",
+    )
   end
 
   it "shows nested group-restricted channels only to matching members" do

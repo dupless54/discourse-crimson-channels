@@ -67,7 +67,7 @@ en:
               label: "Mobile header shortcut"
               description: "Use this item as the compact mobile header shortcut. The first enabled match wins."
       channel_sections:
-        description: "Build Discord-like channel groups inside Discourse's native sidebar. Sections and channels can be reordered and restricted by group. Channel destinations must stay on this Discourse site."
+        description: "Build Discord-like channel groups inside Discourse's native sidebar. Sections and channels can be reordered and restricted by group. Channels can target a same-site URL, a Discourse category, or a Discourse tag."
         schema:
           properties:
             enabled:
@@ -92,9 +92,18 @@ en:
               label:
                 label: "Channel label"
                 description: "Text shown for the channel in the sidebar. This also names the channel in the editor."
+              target_type:
+                label: "Target type"
+                description: "Choose URL, category, or tag. Existing channels with no target type continue to use URL behavior."
               url:
-                label: "Destination"
-                description: "Same-site Discourse path or URL, for example /latest or /c/community/5."
+                label: "URL destination"
+                description: "Used for URL targets only. Must be a path or URL on this Discourse site, for example /latest."
+              category_ids:
+                label: "Category target"
+                description: "Used for category targets only. Select one Discourse category."
+              tags:
+                label: "Tag target"
+                description: "Used for tag targets only. Select one Discourse tag."
               icon:
                 label: "Icon"
                 description: "Choose the native Discourse icon displayed before the channel label."

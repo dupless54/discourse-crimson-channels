@@ -67,7 +67,7 @@ tr_TR:
               label: "Mobil başlık kısayolu"
               description: "Bu öğeyi kompakt mobil başlık kısayolu olarak kullan. Etkin olan ilk eşleşme kullanılır."
       channel_sections:
-        description: "Discourse'un kendi kenar çubuğunda Discord benzeri kanal grupları oluşturun. Bölümleri ve kanalları sıralayabilir, grup üyeliğine göre görünürlüğü sınırlandırabilirsiniz. Kanal hedefleri yalnızca bu Discourse sitesinde olabilir."
+        description: "Discourse'un kendi kenar çubuğunda Discord benzeri kanal grupları oluşturun. Bölümleri ve kanalları sıralayabilir, grup üyeliğine göre görünürlüğü sınırlandırabilirsiniz. Kanallar aynı-site URL, Discourse kategorisi veya Discourse etiketi hedefleyebilir."
         schema:
           properties:
             enabled:
@@ -92,9 +92,18 @@ tr_TR:
               label:
                 label: "Kanal etiketi"
                 description: "Kenar çubuğunda kanal için gösterilecek metin. Düzenleyicide kanalın adı olarak da kullanılır."
+              target_type:
+                label: "Hedef türü"
+                description: "URL, kategori veya etiket seçin. Hedef türü tanımlanmamış mevcut kanallar URL davranışını kullanmaya devam eder."
               url:
-                label: "Hedef"
-                description: "Aynı Discourse sitesindeki yol veya URL; örneğin /latest ya da /c/topluluk/5."
+                label: "URL hedefi"
+                description: "Yalnızca URL hedeflerinde kullanılır. /latest gibi bu Discourse sitesindeki bir yol veya URL olmalıdır."
+              category_ids:
+                label: "Kategori hedefi"
+                description: "Yalnızca kategori hedeflerinde kullanılır. Tek bir Discourse kategorisi seçin."
+              tags:
+                label: "Etiket hedefi"
+                description: "Yalnızca etiket hedeflerinde kullanılır. Tek bir Discourse etiketi seçin."
               icon:
                 label: "İkon"
                 description: "Kanal etiketinden önce gösterilecek yerel Discourse ikonunu seçin."
