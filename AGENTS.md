@@ -9,9 +9,10 @@ Varsayılan okuma: root `AGENTS.md` -> `CURRENT_STATE.md` -> nearest scoped `AGE
 Tercih: `symbol/search -> targeted range -> dependency`.
 
 ## Theme area router
-- `about.json`, `settings.yml`, `locales/` -> root rules + targeted file only.
-- `common/`, `desktop/`, `mobile/`, `javascripts/` -> `docs/ai/scopes/frontend/AGENTS.md`.
-- Git/CI -> `docs/ai/WORKFLOW.md` + `docs/ai/COMMANDS.md` only when needed.
+- `about.json`, `settings.yml`, `locales/`, `migrations/settings/`, theme assets/metadata -> `docs/ai/scopes/theme-config/AGENTS.md`.
+- `common/`, `desktop/`, `mobile/`, `javascripts/`, `scss/` -> `docs/ai/scopes/frontend/AGENTS.md`.
+- `spec/system/`, theme regression/browser validation -> `docs/ai/scopes/testing/AGENTS.md`.
+- Git/CI -> `docs/ai/WORKFLOW.md` + `docs/ai/COMMANDS.md`; add testing scope when CI is exercising theme tests.
 - Cross-plugin/API behavior -> additionally read `docs/ai/DECISIONS.md` and the exact call sites.
 
 ## Project invariants
