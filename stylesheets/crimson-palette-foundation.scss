@@ -6,12 +6,24 @@
 :root {
   --cn-noir: color-mix(in srgb, var(--secondary) 92%, var(--primary) 8%);
   --cn-panel: color-mix(in srgb, var(--secondary) 95%, var(--primary) 5%);
-  --cn-panel-strong: color-mix(in srgb, var(--secondary) 90%, var(--primary) 10%);
+  --cn-panel-strong: color-mix(
+    in srgb,
+    var(--secondary) 90%,
+    var(--primary) 10%
+  );
   --cn-surface: color-mix(in srgb, var(--secondary) 88%, var(--primary) 12%);
-  --cn-surface-raised: color-mix(in srgb, var(--secondary) 82%, var(--primary) 18%);
+  --cn-surface-raised: color-mix(
+    in srgb,
+    var(--secondary) 82%,
+    var(--primary) 18%
+  );
   --cn-control: color-mix(in srgb, var(--secondary) 86%, var(--primary) 14%);
   --cn-control-outline: color-mix(in srgb, var(--primary) 11%, transparent);
-  --cn-control-outline-hover: color-mix(in srgb, var(--primary) 19%, transparent);
+  --cn-control-outline-hover: color-mix(
+    in srgb,
+    var(--primary) 19%,
+    transparent
+  );
   --cn-muted: color-mix(in srgb, var(--primary) 62%, transparent);
   --cn-border: color-mix(in srgb, var(--primary) 10%, transparent);
   --cn-separator: color-mix(in srgb, var(--primary) 9%, transparent);
