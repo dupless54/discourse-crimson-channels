@@ -1,0 +1,23 @@
+/* Keep mobile overlays and card elevation aligned with Soft Crimson Night.
+ * Use Discourse's mobile-view scope so desktop surfaces remain untouched.
+ */
+
+body.mobile-view {
+  --cn-mobile-elevation:
+    0 12px 30px rgb(15, 23, 42, 0.18),
+    0 0 0 1px color-mix(in srgb, var(--primary) 4%, transparent);
+}
+
+body.mobile-view .cn-mobile-community-backdrop {
+  background: rgb(15, 23, 42, 0.56);
+  backdrop-filter: blur(5px) saturate(105%);
+}
+
+body.mobile-view .topic-list {
+  box-shadow: var(--cn-mobile-elevation) !important;
+}
+
+body.mobile-view .cn-featured-topics,
+body.mobile-view .cn-featured-topics--below {
+  box-shadow: var(--cn-mobile-elevation);
+}
