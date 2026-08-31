@@ -9,10 +9,7 @@ body.mobile-view:not(.admin-interface) {
      the geometry contract here and leave the plugin-owned scale untouched. */
 
   :is(
-    .topic-list
-      .topic-list-data
-      > .pull-left
-      [data-user-card]:has(img.avatar),
+    .topic-list .topic-list-data > .pull-left [data-user-card]:has(img.avatar),
     #topic [data-user-card]:has(img.avatar),
     .cn-featured-topic__avatar[data-user-card]:has(img.avatar),
     .cn-member__avatar-wrap[data-user-card]:has(img.avatar)
@@ -41,9 +38,7 @@ body.mobile-view:not(.admin-interface) {
     white-space: nowrap;
   }
 
-  .topic-list
-    .topic-item-stats__category-tags
-    > .badge-category__wrapper {
+  .topic-list .topic-item-stats__category-tags > .badge-category__wrapper {
     min-width: 0;
     max-width: 34vw;
     flex: 0 1 auto;
@@ -94,9 +89,7 @@ body.mobile-view:not(.admin-interface) {
     white-space: nowrap;
   }
 
-  .topic-list
-    .topic-item-stats__category-tags
-    .discourse-tag.bullet::before {
+  .topic-list .topic-item-stats__category-tags .discourse-tag.bullet::before {
     display: none;
   }
 
