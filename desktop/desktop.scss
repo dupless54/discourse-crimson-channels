@@ -323,8 +323,7 @@
 }
 
 @media (width >= 1440px) {
-  body:not(.admin-interface) .cn-topic-cell__author img.avatar {
-    width: 46px;
-    height: 46px;
+  body:not(.admin-interface) .cn-topic-cell__author {
+    --cn-topic-avatar-size: 46px;
   }
 }
