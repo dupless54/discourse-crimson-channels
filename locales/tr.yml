@@ -2,10 +2,7 @@ tr_TR:
   theme_metadata:
     description: "senin.me için Discord esintili, mavi–mor ağırlıklı modern görsel sisteme sahip Discourse teması."
     settings:
-      brand_initial: "Topluluk rayındaki marka düğmesinde gösterilecek kısa metin."
-      member_panel_title: "Normal sayfalarda çevrimiçi üye panelinin başlığı."
-      member_rail_enabled: "Geniş ekranlarda sağ üye panelini göster."
-      member_rail_limit: "Gösterilecek en fazla çevrimiçi üye sayısı."
+      brand_initial: "Hızlı gezinme rayındaki marka düğmesinde gösterilecek kısa metin."
       forum_width_percent: "Masaüstü forum içerik genişliği (%40–100)."
       visual_surface_style: "Yüzey hiyerarşisi: Dengeli sakin ve modern görünümü korur, Düz dekoratif derinliği azaltır, Cam ise Discourse yüzeylerini değiştirmeden saydam ayrımı artırır."
       visual_accent_color: "Birincil mavi vurgu için 3 veya 6 haneli hex renk. Beyaz eylem metniyle yeterli kontrast sağlamayan renklerde güvenli varsayılan maviye dönülür."
@@ -16,9 +13,6 @@ tr_TR:
       visual_corner_style: "Genel köşe yarıçapı düzeni: kompakt, yumuşak veya yuvarlak."
       member_hover_card_enabled: "Forum avatarı veya kullanıcı adı üzerinde bekleyince kullanıcı kartını otomatik aç."
       member_hover_card_delay_seconds: "Kullanıcı kartının otomatik açılması için bekleme süresi (saniye)."
-      recent_profiles_enabled: "Görüntülenen profili en son ziyaret eden üyeleri göster."
-      recent_profiles_title: "Profil ziyaretçileri gösterilirken sağ panelde kullanılacak başlık."
-      recent_profiles_limit: "Gösterilecek en fazla profil ziyaretçisi sayısı."
       featured_topic_lists:
         description: "Yalnızca ana sayfada gösterilen ayrı konu bölümleri ekleyin; sıralayın ve ana konu listesinin üstüne ya da altına yerleştirin."
         schema:
