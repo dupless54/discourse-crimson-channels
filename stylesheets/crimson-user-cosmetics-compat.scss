@@ -1,0 +1,14 @@
+/* Optional discourse-user-cosmetics compatibility.
+ *
+ * User Cosmetics mounts profile-effect portals as siblings of the native
+ * user-card and owns their local stacking contract: back=0, card=1, front=2.
+ * Crimson Channels keeps the floating menu itself at the high application
+ * overlay layer, so the card must not also inherit that global z-index while
+ * the plugin's effect host is active.
+ */
+
+body:not(.admin-interface)
+  .duc-profile-effect-host
+  > #user-card.user-card.duc-profile-effect-card {
+  z-index: 1 !important;
+}
