@@ -1,0 +1,152 @@
+/* Premium Graphite mobile refinement.
+ * Keep native Discourse mobile behavior while reducing cramped cards, heavy
+ * shadows and oversized chrome on narrow screens.
+ */
+
+body.mobile-view:not(.admin-interface) {
+  --cn-radius-sm: 10px;
+  --cn-radius-md: 12px;
+  --cn-radius-lg: 16px;
+}
+
+body.mobile-view:not(.admin-interface) .d-header .contents {
+  min-height: 54px;
+}
+
+body.mobile-view:not(.admin-interface) .d-header #site-logo,
+body.mobile-view:not(.admin-interface) .d-header #site-logo.logo-small,
+body.mobile-view:not(.admin-interface) .d-header .title img.logo-small {
+  max-height: 32px !important;
+}
+
+body.mobile-view:not(.admin-interface) #main-outlet {
+  padding: 10px 8px 76px !important;
+}
+
+body.mobile-view:not(.admin-interface) .navigation-container,
+body.mobile-view:not(.admin-interface) .list-controls .container,
+body.mobile-view:not(.admin-interface) .category-navigation {
+  margin-bottom: 8px;
+  padding-inline: 2px;
+}
+
+body.mobile-view:not(.admin-interface) .topic-list,
+body.mobile-view:not(.admin-interface) #list-area .category-list,
+body.mobile-view:not(.admin-interface) .search-container,
+body.mobile-view:not(.admin-interface) .user-main,
+body.mobile-view:not(.admin-interface) .bookmarks-list,
+body.mobile-view:not(.admin-interface) .directory-table-container,
+body.mobile-view:not(.admin-interface) .cn-featured-topics,
+body.mobile-view:not(.admin-interface) .cn-featured-topics--below {
+  border-radius: 12px !important;
+  box-shadow: none !important;
+}
+
+body.mobile-view:not(.admin-interface) .topic-list > .topic-list-body > .topic-list-item > .topic-list-data {
+  min-height: 62px;
+  padding: 9px !important;
+}
+
+body.mobile-view:not(.admin-interface) .topic-list .main-link a.title {
+  font-size: 0.94rem;
+  line-height: 1.35;
+}
+
+body.mobile-view:not(.admin-interface) .topic-list .topic-item-stats {
+  margin-top: 5px;
+  font-size: 0.7rem;
+}
+
+body.mobile-view:not(.admin-interface) .category-list-item.category,
+body.mobile-view:not(.admin-interface) .groups-boxes .group-box,
+body.mobile-view:not(.admin-interface) .badge-card,
+body.mobile-view:not(.admin-interface) .tags-page .tag-box {
+  border-radius: 11px !important;
+}
+
+body.mobile-view:not(.admin-interface) .topic-body {
+  padding-block: 14px 18px;
+}
+
+body.mobile-view:not(.admin-interface) .topic-avatar {
+  padding-block-start: 16px;
+}
+
+body.mobile-view:not(.admin-interface) .topic-post {
+  margin-inline: 0;
+}
+
+body.mobile-view:not(.admin-interface) .topic-map,
+body.mobile-view:not(.admin-interface) .small-action,
+body.mobile-view:not(.admin-interface) .post-notice,
+body.mobile-view:not(.admin-interface) .topic-status-info {
+  border-radius: 10px !important;
+}
+
+body.mobile-view:not(.admin-interface) .search-container {
+  padding: 12px;
+}
+
+body.mobile-view:not(.admin-interface) .user-main .about {
+  padding: 14px !important;
+}
+
+body.mobile-view:not(.admin-interface) .user-main .user-navigation {
+  padding-inline: 8px;
+}
+
+body.mobile-view:not(.admin-interface) .menu-panel,
+body.mobile-view:not(.admin-interface) .user-menu,
+body.mobile-view:not(.admin-interface) .select-kit-body,
+body.mobile-view:not(.admin-interface) .fk-d-menu__inner-content,
+body.mobile-view:not(.admin-interface) .d-modal__container,
+body.mobile-view:not(.admin-interface) .composer-popup,
+body.mobile-view:not(.admin-interface) .dropdown-menu {
+  border-radius: 12px !important;
+  box-shadow: var(--cn-shadow-md) !important;
+}
+
+body.mobile-view:not(.admin-interface) #reply-control,
+body.mobile-view:not(.admin-interface) .reply-area {
+  border-radius: 14px 14px 0 0 !important;
+  box-shadow: 0 -12px 32px rgb(8, 11, 18, 0.14) !important;
+}
+
+body.mobile-view:not(.admin-interface) .cn-member-rail {
+  background: var(--cn-panel-strong) !important;
+  border-inline-start: 1px solid var(--cn-border) !important;
+  box-shadow: -16px 0 40px rgb(8, 11, 18, 0.16) !important;
+}
+
+body.mobile-view:not(.admin-interface) .cn-mobile-community-backdrop {
+  background: rgb(11, 14, 21, 0.48) !important;
+  backdrop-filter: blur(5px);
+}
+
+body.mobile-view:not(.admin-interface) .cn-mobile-community-toggle,
+body.mobile-view:not(.admin-interface) .cn-mobile-servers-link {
+  border-radius: 10px !important;
+}
+
+body.mobile-view:not(.admin-interface) .cn-mobile-community-toggle:is(
+    :hover,
+    :focus-visible,
+    [aria-expanded="true"]
+  ) {
+  color: var(--primary) !important;
+  background: var(--cn-active-strong) !important;
+}
+
+@media (width <= 480px) {
+  body.mobile-view:not(.admin-interface) #main-outlet {
+    padding-inline: 6px !important;
+  }
+
+  body.mobile-view:not(.admin-interface) .topic-list > .topic-list-body > .topic-list-item > .topic-list-data {
+    padding-inline: 7px !important;
+  }
+
+  body.mobile-view:not(.admin-interface) .search-container {
+    padding: 10px;
+  }
+}
