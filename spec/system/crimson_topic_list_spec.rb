@@ -45,8 +45,11 @@ RSpec.describe "Crimson topic list" do
 
     expect(geometry_for.call).to eq([42, 42, 42, 42, 0, 0])
 
-    page.current_window.resize_to(1440, 900)
+    page.current_window.resize_to(1600, 900)
 
+    expect(
+      page.evaluate_script("window.matchMedia('(min-width: 1440px)').matches"),
+    ).to eq(true)
     expect(geometry_for.call).to eq([46, 46, 46, 46, 0, 0])
   end
 
