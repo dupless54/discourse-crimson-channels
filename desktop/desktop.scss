@@ -304,12 +304,10 @@
 }
 
 /* ============================================================
-   Topic list: avatar now lives inside `.cn-topic-cell` itself
-   (see stylesheets/crimson-topic-list.scss); this used to be a
-   separate `crimson-topic-author` column, which
-   crimson-topic-list-v2.js retired in favor of the CrimsonTopicCell
-   component. Only genuinely breakpoint-specific card geometry
-   belongs here.
+   Topic list: the native TopicCell remains authoritative; the
+   outlet-injected avatar geometry lives in
+   `stylesheets/crimson-topic-list.scss`. Only genuinely
+   breakpoint-specific row treatment belongs here.
    ============================================================ */
 
 @media (width >= 700px) {
@@ -319,11 +317,5 @@
     .topic-list-item:has(.heatmap-high):not(.pinned, .pinned-globally)
     > td {
     border-color: var(--tertiary-low) !important;
-  }
-}
-
-@media (width >= 1440px) {
-  body:not(.admin-interface) .cn-topic-cell__author {
-    --cn-topic-avatar-size: 46px;
   }
 }
