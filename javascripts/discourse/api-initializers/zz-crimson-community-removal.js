@@ -7,7 +7,7 @@ const LEGACY_COMMUNITY_UI_SELECTOR = [
   ".cn-server-button--members",
 ].join(", ");
 
-function removeLegacyCommunityUi() {
+function disableLegacyCommunityState() {
   const body = document.body;
 
   if (!body) {
@@ -23,8 +23,11 @@ function removeLegacyCommunityUi() {
     "cn-mobile-community-open",
     "cn-user-card-from-member-rail"
   );
-
   document.documentElement.style.removeProperty("--cn-member-user-card-top");
+}
+
+function removeLegacyCommunityUi() {
+  disableLegacyCommunityState();
 
   for (const element of document.querySelectorAll(
     LEGACY_COMMUNITY_UI_SELECTOR
@@ -39,21 +42,23 @@ function removeLegacyCommunityUi() {
   }
 }
 
-export default apiInitializer((api) => {
+function scheduleLegacyCommunityCleanup() {
   removeLegacyCommunityUi();
+  window.setTimeout(removeLegacyCommunityUi, 0);
+  window.setTimeout(removeLegacyCommunityUi, 250);
+}
 
-  const observer = new MutationObserver(() => removeLegacyCommunityUi());
+export default apiInitializer((api) => {
+  const body = document.body;
 
-  if (document.body) {
-    observer.observe(document.body, {
+  if (body) {
+    const classObserver = new MutationObserver(disableLegacyCommunityState);
+    classObserver.observe(body, {
       attributes: true,
       attributeFilter: ["class"],
-      childList: true,
-      subtree: true,
     });
   }
 
-  api.onPageChange(() => {
-    window.requestAnimationFrame(removeLegacyCommunityUi);
-  });
+  scheduleLegacyCommunityCleanup();
+  api.onPageChange(scheduleLegacyCommunityCleanup);
 });
