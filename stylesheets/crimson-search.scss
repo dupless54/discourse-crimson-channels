@@ -1,0 +1,138 @@
+/* Premium full-page search built on Discourse's native search.scss contract.
+ * Core keeps ownership of search routing, form layout, advanced filters,
+ * bulk actions, result semantics, keyboard selection, avatars, and responsive
+ * stacking. This module only supplies Crimson surface hierarchy and states.
+ */
+
+body.search-page:not(.admin-interface) .search-container {
+  --d-content-background: var(--cn-panel-strong);
+  min-width: 0;
+  background: var(--cn-panel-strong);
+  border: 1px solid var(--cn-separator);
+  border-radius: var(--cn-radius-lg);
+  box-shadow: var(--cn-shadow-sm);
+
+  .search-page-heading {
+    color: var(--primary);
+    letter-spacing: -0.02em;
+  }
+
+  .search-page-heading .term {
+    color: var(--primary);
+    background: color-mix(in srgb, var(--tertiary) 18%, transparent);
+    border-radius: var(--d-border-radius);
+  }
+
+  .search-bar :is(input.search-query, .select-kit-header) {
+    min-height: 2.6rem;
+    box-sizing: border-box;
+    background: var(--cn-surface);
+    border-color: var(--cn-border);
+    border-radius: var(--d-button-border-radius);
+  }
+
+  .search-bar :is(input.search-query, .select-kit-header):focus,
+  .search-bar :is(input.search-query, .select-kit-header):focus-visible {
+    border-color: var(--tertiary);
+    outline: 2px solid color-mix(in srgb, var(--tertiary) 24%, transparent);
+    outline-offset: 1px;
+  }
+
+  .search-advanced .search-info {
+    color: var(--primary-medium);
+    background: var(--cn-panel-strong);
+    border-color: var(--cn-separator);
+  }
+
+  .search-filters .search-advanced-filters {
+    background: var(--cn-surface);
+    border-color: var(--cn-border);
+    border-radius: var(--cn-radius-md);
+  }
+
+  .search-results .fps-result {
+    box-sizing: border-box;
+    gap: var(--space-2);
+    margin-block-end: var(--space-3);
+    padding: clamp(0.7rem, 1.4vw, 1rem);
+    background: var(--cn-surface);
+    border: 1px solid var(--cn-separator);
+    border-radius: var(--cn-radius-sm);
+    transition:
+      background-color 120ms ease,
+      border-color 120ms ease,
+      box-shadow 120ms ease;
+  }
+
+  .search-results .fps-result:last-child {
+    margin-block-end: 0;
+  }
+
+  .search-results .fps-result:is(.selected, :focus-within) {
+    background: var(--cn-hover);
+    border-color: var(--cn-border-strong);
+    box-shadow: var(--cn-shadow-xs);
+  }
+
+  .search-results .fps-result .fps-topic {
+    min-width: 0;
+  }
+
+  .search-results .fps-result .search-link {
+    color: var(--primary);
+    font-weight: 700;
+    line-height: 1.35;
+  }
+
+  .search-results .fps-result .blurb,
+  .search-results .fps-result .search-category,
+  .search-results .fps-result .topic-statuses {
+    color: var(--primary-medium);
+  }
+
+  .search-results .fps-result .author {
+    flex: 0 0 auto;
+  }
+
+  .search-results .fps-result .author img.avatar {
+    display: block;
+  }
+
+  .search-notice .fps-invalid,
+  .warning {
+    border-radius: var(--d-border-radius);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  body.search-page:not(.admin-interface)
+    .search-container
+    .search-results
+    .fps-result:hover {
+    background: var(--cn-hover);
+    border-color: var(--cn-border-strong);
+    box-shadow: var(--cn-shadow-xs);
+  }
+}
+
+@media (width <= 48rem) {
+  body.search-page:not(.admin-interface) .search-container {
+    border-radius: var(--cn-radius-md);
+    box-shadow: var(--cn-shadow-xs);
+
+    .search-results .fps-result {
+      gap: var(--space-1);
+      padding: 0.65rem;
+      border-radius: var(--cn-radius-xs);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.search-page:not(.admin-interface)
+    .search-container
+    .search-results
+    .fps-result {
+    transition: none;
+  }
+}
