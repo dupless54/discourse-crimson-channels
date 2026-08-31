@@ -28,7 +28,7 @@ RSpec.describe "Crimson topic list" do
     expect(page).to have_css(".topic-list-item:not(.pinned) .cn-topic-cell__rail")
   end
 
-  context "on mobile", mobile: true do
+  context "when viewed on mobile", mobile: true do
     it "shows the compact colorful category chip in the native mobile topic row" do
       visit("/latest")
 
