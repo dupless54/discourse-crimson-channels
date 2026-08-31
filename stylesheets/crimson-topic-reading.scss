@@ -1,0 +1,118 @@
+/* Premium topic reading: cooked-content hooks Discourse intentionally
+ * preserves for theming (quotes, code blocks, oneboxes) — see the
+ * "Post-content styling" reference in AGENTS.md. Markup verified against
+ * current `discourse/discourse` core
+ * (`frontend/discourse-markdown-it/src/features/quotes.js` and `code.js`)
+ * rather than assumed. Scoped to `#topic .cooked` so it covers both the
+ * classic post stream and nested/threaded replies without duplicating
+ * selectors for each.
+ *
+ * Reactions (discourse-reactions) and solved/accepted-answer markers
+ * (discourse-solved) are optional plugins with their own class contracts;
+ * deliberately left untouched here to avoid coupling this theme to
+ * plugins that may not be installed, per the frontend scope rules.
+ */
+
+body:not(.admin-interface) {
+  #topic .cooked blockquote {
+    margin: 0;
+    padding: 0;
+    background: transparent !important;
+    border: 0 !important;
+  }
+
+  #topic .cooked aside.quote {
+    margin: 10px 0;
+    padding: 2px 14px 12px;
+    background: var(--cn-surface) !important;
+    border: 0 !important;
+    border-radius: 4px var(--cn-radius-sm) var(--cn-radius-sm) 4px;
+    border-inline-start: 3px solid
+      color-mix(in srgb, var(--tertiary) 55%, transparent) !important;
+  }
+
+  #topic .cooked aside.quote aside.quote {
+    background: color-mix(
+      in srgb,
+      var(--cn-surface) 70%,
+      transparent
+    ) !important;
+    border-inline-start-color: var(--cn-separator) !important;
+  }
+
+  #topic .cooked aside.quote .title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    margin: 10px 0 6px;
+    color: var(--cn-muted) !important;
+    font-weight: 650;
+    font-size: var(--font-down-1);
+  }
+
+  #topic .cooked aside.quote .title img.avatar {
+    border-radius: 50%;
+  }
+
+  #topic .cooked aside.quote blockquote {
+    color: var(--primary-high);
+  }
+
+  #topic .cooked pre {
+    position: relative;
+    padding: 14px 16px;
+    overflow-x: auto;
+    background: var(--cn-noir) !important;
+    border: 1px solid var(--cn-border) !important;
+    border-radius: var(--cn-radius-sm) !important;
+    box-shadow: none !important;
+  }
+
+  #topic .cooked pre code {
+    padding: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+    font-size: var(--font-down-1);
+    white-space: pre;
+  }
+
+  #topic .cooked code:not(pre code) {
+    padding: 1px 6px;
+    background: var(--cn-surface) !important;
+    border-radius: 5px;
+    font-size: 0.9em;
+  }
+
+  #topic .cooked aside.onebox {
+    display: block;
+    margin: 10px 0;
+    overflow: hidden;
+    background: var(--cn-panel) !important;
+    border: 1px solid var(--cn-border) !important;
+    border-radius: var(--cn-radius-md) !important;
+    box-shadow: var(--cn-shadow-xs) !important;
+  }
+
+  #topic .cooked aside.onebox header.source {
+    padding: 10px 14px 0;
+    color: var(--cn-muted);
+    font-size: var(--font-down-1);
+  }
+
+  #topic .cooked aside.onebox .onebox-body {
+    padding: 8px 14px 14px;
+  }
+
+  #topic .cooked aside.onebox .onebox-body h3,
+  #topic .cooked aside.onebox .onebox-body h4 {
+    margin: 4px 0;
+    font-size: var(--font-0);
+    font-weight: 650;
+  }
+
+  #topic .cooked aside.onebox img.thumbnail,
+  #topic .cooked aside.onebox img.onebox-avatar {
+    border-radius: 8px;
+  }
+}
