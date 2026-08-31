@@ -1,118 +1,45 @@
-/* Premium topic reading: cooked-content hooks Discourse intentionally
- * preserves for theming (quotes, code blocks, oneboxes) — see the
- * "Post-content styling" reference in AGENTS.md. Markup verified against
- * current `discourse/discourse` core
- * (`frontend/discourse-markdown-it/src/features/quotes.js` and `code.js`)
- * rather than assumed. Scoped to `#topic .cooked` so it covers both the
- * classic post stream and nested/threaded replies without duplicating
- * selectors for each.
+/* Premium topic reading: minimal delta over Discourse core.
  *
- * Reactions (discourse-reactions) and solved/accepted-answer markers
- * (discourse-solved) are optional plugins with their own class contracts;
- * deliberately left untouched here to avoid coupling this theme to
- * plugins that may not be installed, per the frontend scope rules.
+ * Discourse-native-first: audited against current `discourse/discourse` core
+ * CSS (`app/assets/stylesheets/common/base/{topic-post,discourse,
+ * code_highlighting,onebox}.scss`, via the same local sparse read-only
+ * clone used for JS markup checks) before writing anything here. Core
+ * already themes quotes (`aside.quote .title` background/border via the
+ * `--d-post-aside-background` / `--d-post-aside-border-left` custom
+ * properties, nested-quote dimming, circular avatars), inline/block code
+ * (color, padding, background, radius via `--inline-code-bg` /
+ * `--hljs-bg` / `--d-border-radius`, the full `.hljs-*` syntax token
+ * palette), and oneboxes (its own `onebox-shadow()` elevation mixin,
+ * per-provider layouts). A prior revision of this file reset and rebuilt
+ * all of that with `!important`, which fought the palette-aware token
+ * system for no real benefit and, in the onebox case, risked clipping
+ * core's floated preview images. See docs/ai/CURRENT_STATE.md for the
+ * full rule-by-rule classification from that audit.
+ *
+ * What's left is the one confirmed real gap and one on-brand retint of
+ * tokens core already exposes for exactly this purpose:
  */
 
 body:not(.admin-interface) {
-  #topic .cooked blockquote {
-    margin: 0;
-    padding: 0;
-    background: transparent !important;
-    border: 0 !important;
-  }
-
-  #topic .cooked aside.quote {
-    margin: 10px 0;
-    padding: 2px 14px 12px;
-    background: var(--cn-surface) !important;
-    border: 0 !important;
-    border-radius: 4px var(--cn-radius-sm) var(--cn-radius-sm) 4px;
-    border-inline-start: 3px solid
-      color-mix(in srgb, var(--tertiary) 55%, transparent) !important;
-  }
-
-  #topic .cooked aside.quote aside.quote {
-    background: color-mix(
-      in srgb,
-      var(--cn-surface) 70%,
-      transparent
-    ) !important;
-    border-inline-start-color: var(--cn-separator) !important;
-  }
-
-  #topic .cooked aside.quote .title {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 6px;
-    margin: 10px 0 6px;
-    color: var(--cn-muted) !important;
-    font-weight: 650;
-    font-size: var(--font-down-1);
-  }
-
-  #topic .cooked aside.quote .title img.avatar {
-    border-radius: 50%;
-  }
-
-  #topic .cooked aside.quote blockquote {
-    color: var(--primary-high);
-  }
+  /* Core sets no `overflow-x` anywhere on `pre`/`pre > code` (verified by
+   * grep) — a long unwrapped code line can push the page into horizontal
+   * scroll on narrow screens. */
 
   #topic .cooked pre {
-    position: relative;
-    padding: 14px 16px;
     overflow-x: auto;
-    background: var(--cn-noir) !important;
-    border: 1px solid var(--cn-border) !important;
-    border-radius: var(--cn-radius-sm) !important;
-    box-shadow: none !important;
   }
 
-  #topic .cooked pre code {
-    padding: 0 !important;
-    background: transparent !important;
-    border: 0 !important;
-    font-size: var(--font-down-1);
-    white-space: pre;
-  }
+  /* Retint the existing quote tokens toward the theme's accent instead of
+   * core's neutral default; radius/background/border structure is
+   * untouched. */
 
-  #topic .cooked code:not(pre code) {
-    padding: 1px 6px;
-    background: var(--cn-surface) !important;
-    border-radius: 5px;
-    font-size: 0.9em;
-  }
-
-  #topic .cooked aside.onebox {
-    display: block;
-    margin: 10px 0;
-    overflow: hidden;
-    background: var(--cn-panel) !important;
-    border: 1px solid var(--cn-border) !important;
-    border-radius: var(--cn-radius-md) !important;
-    box-shadow: var(--cn-shadow-xs) !important;
-  }
-
-  #topic .cooked aside.onebox header.source {
-    padding: 10px 14px 0;
-    color: var(--cn-muted);
-    font-size: var(--font-down-1);
-  }
-
-  #topic .cooked aside.onebox .onebox-body {
-    padding: 8px 14px 14px;
-  }
-
-  #topic .cooked aside.onebox .onebox-body h3,
-  #topic .cooked aside.onebox .onebox-body h4 {
-    margin: 4px 0;
-    font-size: var(--font-0);
-    font-weight: 650;
-  }
-
-  #topic .cooked aside.onebox img.thumbnail,
-  #topic .cooked aside.onebox img.onebox-avatar {
-    border-radius: 8px;
+  #topic .cooked aside.quote {
+    --d-post-aside-background: color-mix(
+      in srgb,
+      var(--cn-crimson) 6%,
+      var(--d-post-aside-background)
+    );
+    --d-post-aside-border-left: 3px solid
+      color-mix(in srgb, var(--cn-crimson) 45%, transparent);
   }
 }
