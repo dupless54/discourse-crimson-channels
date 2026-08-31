@@ -2,6 +2,7 @@
    discourse-user-cosmetics applies its ambient [data-user-card] positioning.
    The theme-owned panel ID intentionally gives this geometry higher specificity
    without changing cosmetics on normal Discourse surfaces. */
+
 #cn-community-panel
   .cn-member-list
   > a.cn-member[data-user-card]
