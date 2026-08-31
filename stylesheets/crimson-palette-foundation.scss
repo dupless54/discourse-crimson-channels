@@ -4,55 +4,36 @@
  */
 
 :root {
-  --cn-crimson: var(--tertiary);
+  --cn-p: var(--primary);
+  --cn-s: var(--secondary);
+  --cn-a: var(--tertiary);
+  --cn-crimson: var(--cn-a);
   --cn-green: var(--success);
-  --cn-noir: var(--secondary);
-  --cn-panel: color-mix(in srgb, var(--secondary) 96%, var(--primary) 4%);
-  --cn-panel-strong: color-mix(
-    in srgb,
-    var(--secondary) 92%,
-    var(--primary) 8%
-  );
-  --cn-surface: color-mix(in srgb, var(--secondary) 89%, var(--primary) 11%);
-  --cn-surface-raised: color-mix(
-    in srgb,
-    var(--secondary) 84%,
-    var(--primary) 16%
-  );
-  --cn-control: color-mix(in srgb, var(--secondary) 90%, var(--primary) 10%);
-  --cn-control-hover: color-mix(
-    in srgb,
-    var(--secondary) 85%,
-    var(--primary) 15%
-  );
-  --cn-control-outline: color-mix(in srgb, var(--primary) 10%, transparent);
-  --cn-control-outline-hover: color-mix(
-    in srgb,
-    var(--primary) 17%,
-    transparent
-  );
-  --cn-muted: color-mix(in srgb, var(--primary) 58%, transparent);
-  --cn-border: color-mix(in srgb, var(--primary) 9%, transparent);
-  --cn-border-strong: color-mix(in srgb, var(--primary) 14%, transparent);
-  --cn-separator: color-mix(in srgb, var(--primary) 8%, transparent);
-  --cn-hover: color-mix(in srgb, var(--primary) 5%, transparent);
-  --cn-active: color-mix(in srgb, var(--tertiary) 12%, transparent);
-  --cn-active-strong: color-mix(
-    in srgb,
-    var(--tertiary) 18%,
-    var(--secondary)
-  );
-  --cn-focus-ring: color-mix(in srgb, var(--tertiary) 38%, transparent);
+  --cn-noir: var(--cn-s);
+  --cn-panel: color-mix(in srgb, var(--cn-s) 96%, var(--cn-p) 4%);
+  --cn-panel-strong: color-mix(in srgb, var(--cn-s) 92%, var(--cn-p) 8%);
+  --cn-surface: color-mix(in srgb, var(--cn-s) 89%, var(--cn-p) 11%);
+  --cn-surface-raised: color-mix(in srgb, var(--cn-s) 84%, var(--cn-p) 16%);
+  --cn-control: color-mix(in srgb, var(--cn-s) 90%, var(--cn-p) 10%);
+  --cn-control-hover: color-mix(in srgb, var(--cn-s) 85%, var(--cn-p) 15%);
+  --cn-control-outline: color-mix(in srgb, var(--cn-p) 10%, transparent);
+  --cn-control-outline-hover: color-mix(in srgb, var(--cn-p) 17%, transparent);
+  --cn-muted: color-mix(in srgb, var(--cn-p) 58%, transparent);
+  --cn-border: color-mix(in srgb, var(--cn-p) 9%, transparent);
+  --cn-border-strong: color-mix(in srgb, var(--cn-p) 14%, transparent);
+  --cn-separator: color-mix(in srgb, var(--cn-p) 8%, transparent);
+  --cn-hover: color-mix(in srgb, var(--cn-p) 5%, transparent);
+  --cn-active: color-mix(in srgb, var(--cn-a) 12%, transparent);
+  --cn-active-strong: color-mix(in srgb, var(--cn-a) 18%, var(--cn-s));
+  --cn-active-border: color-mix(in srgb, var(--cn-a) 20%, transparent);
+  --cn-focus-border: color-mix(in srgb, var(--cn-a) 48%, transparent);
+  --cn-focus-ring: color-mix(in srgb, var(--cn-a) 38%, transparent);
+  --cn-accent-border: color-mix(in srgb, var(--cn-a) 74%, #fff 26%);
+  --cn-accent-hover: color-mix(in srgb, var(--cn-a) 88%, #fff 12%);
   --cn-shadow-xs: 0 1px 2px rgb(8, 11, 18, 0.08);
-  --cn-shadow-sm:
-    0 6px 18px rgb(8, 11, 18, 0.1),
-    0 1px 2px rgb(8, 11, 18, 0.08);
-  --cn-shadow-md:
-    0 14px 34px rgb(8, 11, 18, 0.14),
-    0 2px 6px rgb(8, 11, 18, 0.08);
-  --cn-shadow-lg:
-    0 24px 64px rgb(8, 11, 18, 0.18),
-    0 6px 18px rgb(8, 11, 18, 0.1);
+  --cn-shadow-sm: 0 6px 18px rgb(8, 11, 18, 0.1);
+  --cn-shadow-md: 0 14px 34px rgb(8, 11, 18, 0.14);
+  --cn-shadow-lg: 0 24px 64px rgb(8, 11, 18, 0.18);
   --cn-shadow: var(--cn-shadow-md);
   --cn-radius-xs: 8px;
   --cn-radius-sm: 11px;
@@ -60,7 +41,8 @@
   --cn-radius-lg: 20px;
 }
 
-html {
+html,
+body {
   background: var(--secondary);
 }
 
