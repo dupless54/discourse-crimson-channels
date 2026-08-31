@@ -10,7 +10,7 @@ Tercih: `symbol/search -> targeted range -> dependency`.
 
 ## Theme area router
 - `about.json`, `settings.yml`, `locales/`, `migrations/settings/`, theme assets/metadata -> `docs/ai/scopes/theme-config/AGENTS.md`.
-- `common/`, `desktop/`, `mobile/`, `javascripts/`, `scss/` -> `docs/ai/scopes/frontend/AGENTS.md`.
+- `common/`, `desktop/`, `mobile/`, `javascripts/`, `stylesheets/` -> `docs/ai/scopes/frontend/AGENTS.md`.
 - `spec/system/`, theme regression/browser validation -> `docs/ai/scopes/testing/AGENTS.md`.
 - Git/CI -> `docs/ai/WORKFLOW.md` + `docs/ai/COMMANDS.md`; add testing scope when CI is exercising theme tests.
 - Cross-plugin/API behavior -> additionally read `docs/ai/DECISIONS.md` and the exact call sites.
