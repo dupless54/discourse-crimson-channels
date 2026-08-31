@@ -30,7 +30,7 @@
   --cn-hover: color-mix(in srgb, var(--primary) 5%, transparent);
   --cn-active: color-mix(in srgb, var(--cn-crimson) 17%, transparent);
   --cn-shadow:
-    0 18px 44px color-mix(in srgb, var(--secondary) 78%, transparent),
+    0 18px 44px rgb(9, 13, 22, 0.22),
     0 0 0 1px color-mix(in srgb, var(--primary) 4%, transparent);
 }
 
@@ -62,7 +62,7 @@ body {
 .cn-server-rail,
 .cn-member-rail {
   box-shadow:
-    0 18px 42px color-mix(in srgb, var(--secondary) 72%, transparent),
+    0 18px 42px rgb(9, 13, 22, 0.18),
     inset 0 0 0 1px color-mix(in srgb, var(--primary) 3%, transparent);
 }
 
