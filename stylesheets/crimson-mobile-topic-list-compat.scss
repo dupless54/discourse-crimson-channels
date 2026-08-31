@@ -12,7 +12,10 @@
        the geometry contract here and leave the plugin-owned scale untouched. */
 
     :is(
-      .topic-list .topic-list-data > .pull-left [data-user-card]:has(img.avatar),
+      .topic-list
+        .topic-list-data
+        > .pull-left
+        [data-user-card]:has(img.avatar),
       #topic [data-user-card]:has(img.avatar),
       .cn-featured-topic__avatar[data-user-card]:has(img.avatar),
       .cn-member__avatar-wrap[data-user-card]:has(img.avatar)
