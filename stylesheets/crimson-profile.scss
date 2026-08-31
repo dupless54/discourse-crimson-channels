@@ -10,7 +10,6 @@ body:not(.admin-interface) .user-main {
   --cn-profile-gap: clamp(0.75rem, 1.5vw, 1.25rem);
   --cn-profile-avatar-size: clamp(5.5rem, 9vw, 7.5rem);
   --d-content-background: transparent;
-
   min-width: 0;
   padding-block-end: clamp(3.5rem, 7vw, 5rem);
   background: transparent;
@@ -303,10 +302,7 @@ body:not(.admin-interface) .user-main {
     background: var(--cn-hover);
   }
 
-  .user-navigation .nav-pills > li > a:is(
-      .active,
-      [aria-current="page"]
-    ),
+  .user-navigation .nav-pills > li > a:is(.active, [aria-current="page"]),
   .user-navigation .nav-pills > li.active > a {
     color: var(--secondary);
     background: var(--cn-active-strong);
@@ -329,10 +325,9 @@ body:not(.admin-interface) .user-main {
     border-block-end: 1px solid var(--cn-separator);
   }
 
-  .user-content .user-stream :is(.item, .user-stream-item):is(
-      :hover,
-      :focus-within
-    ) {
+  .user-content
+    .user-stream
+    :is(.item, .user-stream-item):is(:hover, :focus-within) {
     background: var(--cn-hover);
   }
 
@@ -359,7 +354,8 @@ body.user-summary-page:not(.admin-interface) .user-main {
     margin-block-end: var(--cn-profile-gap);
   }
 
-  .user-content :is(
+  .user-content
+    :is(
       .stats-section,
       .top-sub-section,
       .top-categories-section,
@@ -409,10 +405,10 @@ body.user-summary-page:not(.admin-interface) .user-main {
   }
 
   :is(
-      .replies-and-topics-section,
-      .links-and-replied-to-section,
-      .most-liked-section
-    ) {
+    .replies-and-topics-section,
+    .links-and-replied-to-section,
+    .most-liked-section
+  ) {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--cn-profile-gap);
@@ -535,8 +531,7 @@ body.user-summary-page:not(.admin-interface) .user-main {
       pointer-events: none;
     }
 
-    .about.collapsed-info
-      .cn-profile-nameplate-layer[data-user-card]::before {
+    .about.collapsed-info .cn-profile-nameplate-layer[data-user-card]::before {
       inset: 0;
       border-radius: inherit;
     }
@@ -578,10 +573,10 @@ body.user-summary-page:not(.admin-interface) .user-main {
 
   body.user-summary-page:not(.admin-interface) .user-main {
     :is(
-        .replies-and-topics-section,
-        .links-and-replied-to-section,
-        .most-liked-section
-      ) {
+      .replies-and-topics-section,
+      .links-and-replied-to-section,
+      .most-liked-section
+    ) {
       grid-template-columns: minmax(0, 1fr);
     }
 
