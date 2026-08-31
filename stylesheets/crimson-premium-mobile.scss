@@ -1,0 +1,162 @@
+/* Premium Graphite mobile refinement.
+ * Keep native Discourse mobile behavior while reducing cramped cards, heavy
+ * shadows and oversized chrome on narrow screens.
+ */
+
+body.mobile-view:not(.admin-interface) {
+  --cn-radius-sm: 10px;
+  --cn-radius-md: 12px;
+  --cn-radius-lg: 16px;
+
+  .d-header {
+    .contents {
+      min-height: 54px;
+    }
+
+    #site-logo,
+    #site-logo.logo-small,
+    .title img.logo-small {
+      max-height: 32px !important;
+    }
+  }
+
+  #main-outlet {
+    padding: 10px 8px 76px !important;
+  }
+
+  .navigation-container,
+  .list-controls .container,
+  .category-navigation {
+    margin-bottom: 8px;
+    padding-inline: 2px;
+  }
+
+  .topic-list,
+  #list-area .category-list,
+  .search-container,
+  .user-main,
+  .bookmarks-list,
+  .directory-table-container,
+  .cn-featured-topics,
+  .cn-featured-topics--below {
+    border-radius: 12px !important;
+    box-shadow: none !important;
+  }
+
+  .topic-list {
+    > .topic-list-body > .topic-list-item > .topic-list-data {
+      min-height: 62px;
+      padding: 9px !important;
+    }
+
+    .main-link a.title {
+      font-size: 0.94rem;
+      line-height: 1.35;
+    }
+
+    .topic-item-stats {
+      margin-top: 5px;
+      font-size: 0.7rem;
+    }
+  }
+
+  .category-list-item.category,
+  .groups-boxes .group-box,
+  .badge-card,
+  .tags-page .tag-box {
+    border-radius: 11px !important;
+  }
+
+  .topic-body {
+    padding-block: 14px 18px;
+  }
+
+  .topic-avatar {
+    padding-block-start: 16px;
+  }
+
+  .topic-post {
+    margin-inline: 0;
+  }
+
+  .topic-map,
+  .small-action,
+  .post-notice,
+  .topic-status-info {
+    border-radius: 10px !important;
+  }
+
+  .search-container {
+    padding: 12px;
+  }
+
+  .user-main {
+    .about {
+      padding: 14px !important;
+    }
+
+    .user-navigation {
+      padding-inline: 8px;
+    }
+  }
+
+  .menu-panel,
+  .user-menu,
+  .select-kit-body,
+  .fk-d-menu__inner-content,
+  .d-modal__container,
+  .composer-popup,
+  .dropdown-menu {
+    border-radius: 12px !important;
+    box-shadow: var(--cn-shadow-md) !important;
+  }
+
+  #reply-control,
+  .reply-area {
+    border-radius: 14px 14px 0 0 !important;
+    box-shadow: 0 -12px 32px rgb(8, 11, 18, 0.14) !important;
+  }
+
+  .cn-member-rail {
+    background: var(--cn-panel-strong) !important;
+    border-inline-start: 1px solid var(--cn-border) !important;
+    box-shadow: -16px 0 40px rgb(8, 11, 18, 0.16) !important;
+  }
+
+  .cn-mobile-community-backdrop {
+    background: rgb(11, 14, 21, 0.48) !important;
+    backdrop-filter: blur(5px);
+  }
+
+  .cn-mobile-community-toggle,
+  .cn-mobile-servers-link {
+    border-radius: 10px !important;
+  }
+
+  .cn-mobile-community-toggle:is(
+    :hover,
+    :focus-visible,
+    [aria-expanded="true"]
+  ) {
+    color: var(--primary) !important;
+    background: var(--cn-active-strong) !important;
+  }
+}
+
+@media (width <= 480px) {
+  body.mobile-view:not(.admin-interface) {
+    #main-outlet {
+      padding-inline: 6px !important;
+    }
+
+    .topic-list {
+      > .topic-list-body > .topic-list-item > .topic-list-data {
+        padding-inline: 7px !important;
+      }
+    }
+
+    .search-container {
+      padding: 10px;
+    }
+  }
+}

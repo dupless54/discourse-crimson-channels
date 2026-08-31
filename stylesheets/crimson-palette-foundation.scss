@@ -1,69 +1,66 @@
-/* Soft Crimson Night palette foundation.
- * Derive surfaces from Discourse palette variables so automatic color-scheme
- * switching stays native while the dark palette avoids near-black surfaces.
+/* Premium Graphite foundation.
+ * Keep Discourse color-scheme switching native while replacing the previous
+ * near-black / glow-heavy treatment with calm layered surfaces.
  */
 
 :root {
-  --cn-noir: color-mix(in srgb, var(--secondary) 92%, var(--primary) 8%);
-  --cn-panel: color-mix(in srgb, var(--secondary) 95%, var(--primary) 5%);
-  --cn-panel-strong: color-mix(
-    in srgb,
-    var(--secondary) 90%,
-    var(--primary) 10%
-  );
-  --cn-surface: color-mix(in srgb, var(--secondary) 88%, var(--primary) 12%);
-  --cn-surface-raised: color-mix(
-    in srgb,
-    var(--secondary) 82%,
-    var(--primary) 18%
-  );
-  --cn-control: color-mix(in srgb, var(--secondary) 86%, var(--primary) 14%);
-  --cn-control-outline: color-mix(in srgb, var(--primary) 11%, transparent);
-  --cn-control-outline-hover: color-mix(
-    in srgb,
-    var(--primary) 19%,
-    transparent
-  );
-  --cn-muted: color-mix(in srgb, var(--primary) 62%, transparent);
-  --cn-border: color-mix(in srgb, var(--primary) 10%, transparent);
-  --cn-separator: color-mix(in srgb, var(--primary) 9%, transparent);
-  --cn-hover: color-mix(in srgb, var(--primary) 5%, transparent);
-  --cn-active: color-mix(in srgb, var(--cn-crimson) 17%, transparent);
-  --cn-shadow:
-    0 18px 44px rgb(9, 13, 22, 0.22),
-    0 0 0 1px color-mix(in srgb, var(--primary) 4%, transparent);
+  --cn-p: var(--primary);
+  --cn-s: var(--secondary);
+  --cn-a: var(--tertiary);
+  --cn-crimson: var(--cn-a);
+  --cn-green: var(--success);
+  --cn-noir: var(--cn-s);
+  --cn-panel: color-mix(in srgb, var(--cn-s) 96%, var(--cn-p) 4%);
+  --cn-panel-strong: color-mix(in srgb, var(--cn-s) 92%, var(--cn-p) 8%);
+  --cn-surface: color-mix(in srgb, var(--cn-s) 89%, var(--cn-p) 11%);
+  --cn-surface-raised: color-mix(in srgb, var(--cn-s) 84%, var(--cn-p) 16%);
+  --cn-control: color-mix(in srgb, var(--cn-s) 90%, var(--cn-p) 10%);
+  --cn-control-hover: color-mix(in srgb, var(--cn-s) 85%, var(--cn-p) 15%);
+  --cn-control-outline: color-mix(in srgb, var(--cn-p) 10%, transparent);
+  --cn-control-outline-hover: color-mix(in srgb, var(--cn-p) 17%, transparent);
+  --cn-muted: color-mix(in srgb, var(--cn-p) 58%, transparent);
+  --cn-border: color-mix(in srgb, var(--cn-p) 9%, transparent);
+  --cn-border-strong: color-mix(in srgb, var(--cn-p) 14%, transparent);
+  --cn-separator: color-mix(in srgb, var(--cn-p) 8%, transparent);
+  --cn-hover: color-mix(in srgb, var(--cn-p) 5%, transparent);
+  --cn-active: color-mix(in srgb, var(--cn-a) 12%, transparent);
+  --cn-active-strong: color-mix(in srgb, var(--cn-a) 18%, var(--cn-s));
+  --cn-active-border: color-mix(in srgb, var(--cn-a) 20%, transparent);
+  --cn-focus-border: color-mix(in srgb, var(--cn-a) 48%, transparent);
+  --cn-focus-ring: color-mix(in srgb, var(--cn-a) 38%, transparent);
+  --cn-accent-border: color-mix(in srgb, var(--cn-a) 74%, #fff 26%);
+  --cn-accent-hover: color-mix(in srgb, var(--cn-a) 88%, #fff 12%);
+  --cn-shadow-xs: 0 1px 2px rgb(8, 11, 18, 0.08);
+  --cn-shadow-sm: 0 6px 18px rgb(8, 11, 18, 0.1);
+  --cn-shadow-md: 0 14px 34px rgb(8, 11, 18, 0.14);
+  --cn-shadow-lg: 0 24px 64px rgb(8, 11, 18, 0.18);
+  --cn-shadow: var(--cn-shadow-md);
+  --cn-radius-xs: 8px;
+  --cn-radius-sm: 11px;
+  --cn-radius-md: 15px;
+  --cn-radius-lg: 20px;
 }
 
-html {
+html,
+body {
   background: var(--secondary);
 }
 
 body {
-  background:
-    radial-gradient(
-      circle at 82% 8%,
-      color-mix(in srgb, var(--cn-crimson) 11%, transparent),
-      transparent 32rem
-    ),
-    radial-gradient(
-      circle at 14% 26%,
-      color-mix(in srgb, var(--quaternary) 5%, transparent),
-      transparent 38rem
-    ),
-    linear-gradient(
-        155deg,
-        color-mix(in srgb, var(--secondary) 98%, var(--primary) 2%) 0%,
-        color-mix(in srgb, var(--secondary) 94%, var(--cn-crimson) 6%) 58%,
-        color-mix(in srgb, var(--secondary) 90%, var(--primary) 10%) 125%
-      )
-      fixed !important;
+  color: var(--primary);
+  background: var(--secondary) !important;
+}
+
+#main,
+.background-container,
+#main-outlet-wrapper {
+  background: transparent !important;
 }
 
 .cn-server-rail,
 .cn-member-rail {
-  box-shadow:
-    0 18px 42px rgb(9, 13, 22, 0.18),
-    inset 0 0 0 1px color-mix(in srgb, var(--primary) 3%, transparent);
+  border-color: var(--cn-border) !important;
+  box-shadow: var(--cn-shadow-sm) !important;
 }
 
 .cn-server-button:not(.cn-server-button--brand),
@@ -75,11 +72,11 @@ body {
 .cn-server-button:not(.cn-server-button--brand):is(:hover, :focus-visible),
 .cn-member:is(:hover, :focus-visible),
 .cn-channel-section-link:is(:hover, :focus-visible) {
-  background: color-mix(in srgb, var(--primary) 6%, transparent);
+  background: var(--cn-hover);
 }
 
 .cn-channel-section-link.active,
 .cn-channel-section-link.--active,
 .cn-channel-section-link[aria-current="page"] {
-  background: color-mix(in srgb, var(--cn-crimson) 14%, var(--secondary));
+  background: var(--cn-active-strong);
 }

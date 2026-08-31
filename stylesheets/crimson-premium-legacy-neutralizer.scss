@@ -1,0 +1,50 @@
+/* Override legacy high-specificity visual rules that predate the premium
+ * layer. Keep behavior untouched while removing permanent glow treatments.
+ */
+
+body:not(.admin-interface) {
+  .navigation-container {
+    .topic-create-button__combo {
+      filter: none !important;
+    }
+
+    #create-topic {
+      color: #fff !important;
+      background: var(--tertiary) !important;
+      border: 1px solid var(--cn-accent-border) !important;
+      border-radius: 10px !important;
+      box-shadow: none !important;
+      filter: none !important;
+      transform: none !important;
+
+      &:is(:hover, :focus-visible) {
+        background: var(--cn-accent-hover) !important;
+        box-shadow: 0 0 0 3px var(--cn-focus-ring) !important;
+        transform: none !important;
+      }
+    }
+  }
+
+  .list-controls #create-topic {
+    color: #fff !important;
+    background: var(--tertiary) !important;
+    border: 1px solid var(--cn-accent-border) !important;
+    border-radius: 10px !important;
+    box-shadow: none !important;
+    filter: none !important;
+    transform: none !important;
+
+    &:is(:hover, :focus-visible) {
+      background: var(--cn-accent-hover) !important;
+      box-shadow: 0 0 0 3px var(--cn-focus-ring) !important;
+      transform: none !important;
+    }
+  }
+
+  .sidebar-section-link-wrapper.active .sidebar-section-link {
+    color: var(--primary) !important;
+    background: var(--cn-active-strong) !important;
+    border-color: var(--cn-active-border) !important;
+    box-shadow: inset 3px 0 0 var(--tertiary) !important;
+  }
+}
