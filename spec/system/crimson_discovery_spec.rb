@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe "Crimson discovery", system: true do
+RSpec.describe "Crimson discovery" do
   let!(:theme) { upload_theme_or_component }
   let!(:category) do
     Fabricate(
@@ -20,11 +20,14 @@ RSpec.describe "Crimson discovery", system: true do
   it "keeps native category-box markup and applies the premium card surface" do
     SiteSetting.desktop_category_page_style = "categories_boxes"
 
-    visit "/categories"
+    visit("/categories")
 
     selector = ".category-box[data-category-id='#{category.id}']"
     expect(page).to have_css("#{selector} .parent-box-link", text: category.name)
-    display = page.evaluate_script("getComputedStyle(document.querySelector('#{selector}')).display")
+    display =
+      page.evaluate_script(
+        "getComputedStyle(document.querySelector('#{selector}')).display",
+      )
     radius =
       page.evaluate_script(
         "getComputedStyle(document.querySelector('#{selector}')).borderTopLeftRadius",
@@ -37,7 +40,7 @@ RSpec.describe "Crimson discovery", system: true do
   it "keeps the native category table semantic at tablet width without horizontal overflow" do
     SiteSetting.desktop_category_page_style = "categories_with_featured_topics"
 
-    visit "/categories"
+    visit("/categories")
     page.current_window.resize_to(820, 1024)
 
     expect(page).to have_css("table.category-list tr[data-category-id='#{category.id}']")
@@ -51,11 +54,14 @@ RSpec.describe "Crimson discovery", system: true do
   end
 
   it "uses a fluid native tag grid instead of fixed floated boxes" do
-    visit "/tags"
+    visit("/tags")
 
     selector = ".tags-list .tag-box:has([data-tag-name='#{tag.name}'])"
     expect(page).to have_css(selector)
-    display = page.evaluate_script("getComputedStyle(document.querySelector('.tags-list')).display")
+    display =
+      page.evaluate_script(
+        "getComputedStyle(document.querySelector('.tags-list')).display",
+      )
     float =
       page.evaluate_script(
         "getComputedStyle(document.querySelector(\"#{selector}\")).float",
@@ -69,7 +75,7 @@ RSpec.describe "Crimson discovery", system: true do
     it "renders category boxes as one readable, non-overflowing column" do
       SiteSetting.mobile_category_page_style = "categories_boxes"
 
-      visit "/categories"
+      visit("/categories")
 
       expect(page).to have_css(".category-box[data-category-id='#{category.id}']")
       fits_list_area =

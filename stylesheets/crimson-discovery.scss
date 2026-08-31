@@ -23,7 +23,6 @@ body:not(.admin-interface) {
   .category-boxes,
   .category-boxes-with-topics {
     --category-boxes-min-width: min(100%, 18rem);
-
     gap: var(--space-4);
   }
 
