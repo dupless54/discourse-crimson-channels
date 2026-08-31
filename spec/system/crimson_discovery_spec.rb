@@ -24,14 +24,9 @@ RSpec.describe "Crimson discovery" do
 
     selector = ".category-box[data-category-id='#{category.id}']"
     expect(page).to have_css("#{selector} .parent-box-link", text: category.name)
-    display =
-      page.evaluate_script(
-        "getComputedStyle(document.querySelector('#{selector}')).display",
-      )
-    radius =
-      page.evaluate_script(
-        "getComputedStyle(document.querySelector('#{selector}')).borderTopLeftRadius",
-      )
+    node = "document.querySelector('#{selector}')"
+    display = page.evaluate_script("getComputedStyle(#{node}).display")
+    radius = page.evaluate_script("getComputedStyle(#{node}).borderTopLeftRadius")
 
     expect(display).to eq("flex")
     expect(radius).not_to eq("0px")
@@ -44,13 +39,12 @@ RSpec.describe "Crimson discovery" do
     page.current_window.resize_to(820, 1024)
 
     expect(page).to have_css("table.category-list tr[data-category-id='#{category.id}']")
-    fits_list_area =
-      page.evaluate_script(
-        "document.querySelector('table.category-list').getBoundingClientRect().right <= " \
-          "document.querySelector('#list-area').getBoundingClientRect().right + 1",
-      )
+    table = "document.querySelector('table.category-list')"
+    list_area = "document.querySelector('#list-area')"
+    table_right = page.evaluate_script("#{table}.getBoundingClientRect().right")
+    list_right = page.evaluate_script("#{list_area}.getBoundingClientRect().right")
 
-    expect(fits_list_area).to eq(true)
+    expect(table_right <= list_right + 1).to eq(true)
   end
 
   it "uses a fluid native tag grid instead of fixed floated boxes" do
@@ -58,11 +52,10 @@ RSpec.describe "Crimson discovery" do
 
     selector = ".tags-list .tag-box:has([data-tag-name='#{tag.name}'])"
     expect(page).to have_css(selector)
-    display = page.evaluate_script("getComputedStyle(document.querySelector('.tags-list')).display")
-    float =
-      page.evaluate_script(
-        "getComputedStyle(document.querySelector(\"#{selector}\")).float",
-      )
+    list = "document.querySelector('.tags-list')"
+    tag_box = "document.querySelector(\"#{selector}\")"
+    display = page.evaluate_script("getComputedStyle(#{list}).display")
+    float = page.evaluate_script("getComputedStyle(#{tag_box}).float")
 
     expect(display).to eq("grid")
     expect(float).to eq("none")
@@ -75,13 +68,12 @@ RSpec.describe "Crimson discovery" do
       visit("/categories")
 
       expect(page).to have_css(".category-box[data-category-id='#{category.id}']")
-      fits_list_area =
-        page.evaluate_script(
-          "document.querySelector('.category-boxes').getBoundingClientRect().width <= " \
-            "document.querySelector('#list-area').getBoundingClientRect().width + 1",
-        )
+      boxes = "document.querySelector('.category-boxes')"
+      list_area = "document.querySelector('#list-area')"
+      boxes_width = page.evaluate_script("#{boxes}.getBoundingClientRect().width")
+      list_width = page.evaluate_script("#{list_area}.getBoundingClientRect().width")
 
-      expect(fits_list_area).to eq(true)
+      expect(boxes_width <= list_width + 1).to eq(true)
     end
   end
 end
