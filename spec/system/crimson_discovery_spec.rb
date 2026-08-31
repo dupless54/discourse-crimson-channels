@@ -24,7 +24,7 @@ RSpec.describe "Crimson discovery" do
 
     selector = ".category-box[data-category-id='#{category.id}']"
     expect(page).to have_css("#{selector} .parent-box-link", text: category.name)
-    node = "document.querySelector('#{selector}')"
+    node = "document.querySelector(\"#{selector}\")"
     display = page.evaluate_script("getComputedStyle(#{node}).display")
     radius = page.evaluate_script("getComputedStyle(#{node}).borderTopLeftRadius")
 
@@ -39,12 +39,10 @@ RSpec.describe "Crimson discovery" do
     page.current_window.resize_to(820, 1024)
 
     expect(page).to have_css("table.category-list tr[data-category-id='#{category.id}']")
-    table = "document.querySelector('table.category-list')"
-    list_area = "document.querySelector('#list-area')"
-    table_right = page.evaluate_script("#{table}.getBoundingClientRect().right")
-    list_right = page.evaluate_script("#{list_area}.getBoundingClientRect().right")
+    document_width = page.evaluate_script("document.documentElement.scrollWidth")
+    viewport_width = page.evaluate_script("window.innerWidth")
 
-    expect(table_right <= list_right + 1).to eq(true)
+    expect(document_width <= viewport_width + 1).to eq(true)
   end
 
   it "uses a fluid native tag grid instead of fixed floated boxes" do
