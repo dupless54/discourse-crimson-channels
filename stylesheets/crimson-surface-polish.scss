@@ -1,0 +1,47 @@
+/* Refine high-visibility forum surfaces on top of the palette foundation.
+ * Keep Crimson as an interaction accent while using neutral slate elevation
+ * for the persistent shell and floating UI.
+ */
+
+body:not(.admin-interface) .d-header {
+  border-bottom-color: var(--cn-separator);
+  box-shadow:
+    0 10px 30px color-mix(in srgb, var(--secondary) 74%, transparent),
+    inset 0 -1px 0 color-mix(in srgb, var(--primary) 4%, transparent) !important;
+}
+
+body:not(.admin-interface) .sidebar-wrapper {
+  --scrollbarThumbBg: color-mix(in srgb, var(--primary) 18%, transparent);
+
+  border-inline-end-color: var(--cn-separator);
+  box-shadow:
+    12px 0 34px color-mix(in srgb, var(--secondary) 72%, transparent),
+    inset -1px 0 0 color-mix(in srgb, var(--primary) 3%, transparent);
+}
+
+body:not(.admin-interface) #reply-control,
+body:not(.admin-interface) .reply-area {
+  border-color: var(--cn-separator) !important;
+  box-shadow:
+    0 -18px 42px color-mix(in srgb, var(--secondary) 74%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--primary) 4%, transparent) !important;
+}
+
+body:not(.admin-interface) .menu-panel,
+body:not(.admin-interface) .user-menu,
+body:not(.admin-interface) .select-kit-body,
+body:not(.admin-interface) .fk-d-menu__inner-content,
+body:not(.admin-interface) .d-modal__container,
+body:not(.admin-interface) .composer-popup,
+body:not(.admin-interface) .dropdown-menu {
+  border-color: var(--cn-separator) !important;
+  box-shadow: var(--cn-shadow) !important;
+  backdrop-filter: blur(18px) saturate(110%);
+}
+
+body:not(.admin-interface) .menu-panel::before,
+body:not(.admin-interface) .user-menu::before,
+body:not(.admin-interface) .select-kit-body::before,
+body:not(.admin-interface) .d-modal__container::before {
+  border-color: color-mix(in srgb, var(--primary) 5%, transparent);
+}
