@@ -11,19 +11,14 @@ body:not(.admin-interface) {
     #create-topic {
       color: #fff !important;
       background: var(--tertiary) !important;
-      border: 1px solid
-        color-mix(in srgb, var(--tertiary) 74%, #fff 26%) !important;
+      border: 1px solid var(--cn-accent-border) !important;
       border-radius: 10px !important;
       box-shadow: none !important;
       filter: none !important;
       transform: none !important;
 
       &:is(:hover, :focus-visible) {
-        background: color-mix(
-          in srgb,
-          var(--tertiary) 88%,
-          #fff 12%
-        ) !important;
+        background: var(--cn-accent-hover) !important;
         box-shadow: 0 0 0 3px var(--cn-focus-ring) !important;
         transform: none !important;
       }
@@ -33,19 +28,14 @@ body:not(.admin-interface) {
   .list-controls #create-topic {
     color: #fff !important;
     background: var(--tertiary) !important;
-    border: 1px solid
-      color-mix(in srgb, var(--tertiary) 74%, #fff 26%) !important;
+    border: 1px solid var(--cn-accent-border) !important;
     border-radius: 10px !important;
     box-shadow: none !important;
     filter: none !important;
     transform: none !important;
 
     &:is(:hover, :focus-visible) {
-      background: color-mix(
-        in srgb,
-        var(--tertiary) 88%,
-        #fff 12%
-      ) !important;
+      background: var(--cn-accent-hover) !important;
       box-shadow: 0 0 0 3px var(--cn-focus-ring) !important;
       transform: none !important;
     }
@@ -54,11 +44,7 @@ body:not(.admin-interface) {
   .sidebar-section-link-wrapper.active .sidebar-section-link {
     color: var(--primary) !important;
     background: var(--cn-active-strong) !important;
-    border-color: color-mix(
-      in srgb,
-      var(--tertiary) 20%,
-      transparent
-    ) !important;
+    border-color: var(--cn-active-border) !important;
     box-shadow: inset 3px 0 0 var(--tertiary) !important;
   }
 }
