@@ -19,7 +19,7 @@ Tercih: `symbol/search -> targeted range -> dependency`.
 - This repository is a Discourse **theme**, not a backend plugin. Do not add server authorization/business logic here.
 - Preserve native Discourse routing, accessibility, theme variables, light/dark behavior, mobile behavior, and safe upgrade paths.
 - Prefer current supported Discourse theme APIs/primitives over DOM monkey-patching when an equivalent supported API exists.
-- Crimson Community owns online-member/profile-visit server truth. This theme consumes its public JSON seams only and must fail gracefully when that plugin/endpoint is unavailable.
+- Crimson Community is an independent optional plugin. The Crimson Channels shell must not depend on or recreate its online-member/profile-visitor rail or poll `/crimson-community/*` endpoints unless a future task explicitly reintroduces a reviewed integration.
 - Custom shell elements must never make core Discourse navigation or topic reading unusable.
 - Keep AI context files outside runtime-compiled theme paths. Never place `AGENTS.md`, `CLAUDE.md`, or `GEMINI.md` under `javascripts/`, `common/`, `desktop/`, `mobile/`, `stylesheets/`, or `assets/`.
 
@@ -34,7 +34,7 @@ Cross-plugin contracts, privacy, external requests, destructive operations, or b
 - latest exact PR head required Discourse/theme CI is authoritative; new commits invalidate old CI evidence
 - any additional required Discourse-owned check must also be GREEN
 - `NO_CI`, missing, skipped, pending, cancelled, stale-head, or failed checks are not GREEN
-- when latest exact head required CI is GREEN and no unresolved security/product/architecture blocker remains, the agent is authorized to merge without further user confirmation
+- when latest exact PR head required CI is GREEN and no unresolved security/product/architecture blocker remains, the agent is authorized to merge without further user confirmation
 - prefer squash + exact `expected_head_sha` when supported
 - force/destructive Git actions still need separate explicit authorization
 
