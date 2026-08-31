@@ -8,11 +8,7 @@ body:not(.admin-interface) {
   --d-sidebar-highlight-background: var(--cn-hover);
 
   .d-header {
-    background: color-mix(
-      in srgb,
-      var(--header_background) 94%,
-      transparent
-    ) !important;
+    background: var(--header_background) !important;
     border-bottom: 1px solid var(--cn-border) !important;
     box-shadow: var(--cn-shadow-xs) !important;
     backdrop-filter: blur(16px) saturate(115%);
@@ -47,7 +43,7 @@ body:not(.admin-interface) {
   }
 
   .sidebar-wrapper {
-    --scrollbarThumbBg: color-mix(in srgb, var(--primary) 16%, transparent);
+    --scrollbarThumbBg: color-mix(in srgb, var(--cn-p) 16%, transparent);
   }
 
   .sidebar-section-header {
@@ -81,11 +77,7 @@ body:not(.admin-interface) {
   .cn-channel-section-link[aria-current="page"] {
     color: var(--primary) !important;
     background: var(--cn-active-strong) !important;
-    border-color: color-mix(
-      in srgb,
-      var(--tertiary) 20%,
-      transparent
-    ) !important;
+    border-color: var(--cn-active-border) !important;
     box-shadow: inset 3px 0 0 var(--tertiary) !important;
   }
 
@@ -114,7 +106,7 @@ body:not(.admin-interface) {
   .cn-server-button--brand {
     color: #fff !important;
     background: var(--tertiary) !important;
-    border-color: color-mix(in srgb, #fff 14%, transparent) !important;
+    border-color: var(--cn-accent-border) !important;
     box-shadow: none !important;
   }
 
@@ -127,11 +119,7 @@ body:not(.admin-interface) {
   }
 
   .cn-member__avatar {
-    background: color-mix(
-      in srgb,
-      var(--tertiary) 70%,
-      var(--quaternary) 30%
-    );
+    background: var(--tertiary);
   }
 
   #main-outlet {
@@ -174,15 +162,10 @@ body:not(.admin-interface) {
   .btn-primary {
     color: #fff !important;
     background: var(--tertiary) !important;
-    border: 1px solid
-      color-mix(in srgb, var(--tertiary) 74%, #fff 26%) !important;
+    border: 1px solid var(--cn-accent-border) !important;
 
     &:is(:hover, :focus-visible) {
-      background: color-mix(
-        in srgb,
-        var(--tertiary) 88%,
-        #fff 12%
-      ) !important;
+      background: var(--cn-accent-hover) !important;
       box-shadow: 0 0 0 3px var(--cn-focus-ring) !important;
     }
   }
@@ -218,11 +201,7 @@ body:not(.admin-interface) {
   input[type="number"]:focus,
   textarea:focus,
   .d-editor-textarea-wrapper:focus-within {
-    border-color: color-mix(
-      in srgb,
-      var(--tertiary) 48%,
-      transparent
-    ) !important;
+    border-color: var(--cn-focus-border) !important;
     box-shadow: 0 0 0 3px var(--cn-focus-ring) !important;
     outline: 0 !important;
   }
@@ -234,11 +213,7 @@ body:not(.admin-interface) {
   .d-modal__container,
   .composer-popup,
   .dropdown-menu {
-    background: color-mix(
-      in srgb,
-      var(--cn-panel-strong) 96%,
-      transparent
-    ) !important;
+    background: var(--cn-panel-strong) !important;
     border: 1px solid var(--cn-border) !important;
     border-radius: 14px !important;
     box-shadow: var(--cn-shadow-lg) !important;
