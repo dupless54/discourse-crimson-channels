@@ -10,16 +10,18 @@ Use this file for `common/`, `desktop/`, `mobile/`, `javascripts/`, `stylesheets
 5. Only then adjacent theme code or current Discourse core/API definitions.
 
 ## Runtime map
-- `common/body_tag.html`: persistent custom shell fallback markup (server rail + community member rail).
-- `javascripts/discourse/api-initializers/crimson-channels.js`: shell/community orchestration; continue decomposing large responsibilities into `javascripts/discourse/lib/crimson/*` modules.
+- `common/body_tag.html`: persistent custom shell fallback markup for the left server/navigation rail only; the old right Community/member rail is intentionally absent.
+- `javascripts/discourse/api-initializers/crimson-channels.js`: legacy shared shell/profile-card orchestration; continue decomposing large responsibilities into `javascripts/discourse/lib/crimson/*` modules and do not revive its retired Community rail behavior.
+- `javascripts/discourse/api-initializers/zz-crimson-community-removal.js`: compatibility neutralizer that keeps legacy Community rail/toggle hooks inert while the older initializer is progressively decomposed.
 - `javascripts/discourse/lib/crimson/featured-topics.js`: featured-topic runtime isolated from the main initializer.
 - `javascripts/discourse/lib/crimson/settings.js`: shared setting and same-origin URL helpers.
 - `javascripts/discourse/lib/crimson/cache.js`: shared bounded-cache helper.
 - `javascripts/discourse/api-initializers/crimson-navigation-settings.js`: structured navigation rendering/sync.
 - `common/common.scss`: main shared CSS entrypoint; keep it small and import cohesive modules from `stylesheets/` rather than growing a monolith.
+- `stylesheets/crimson-community-removal.scss`: final compatibility layer that prevents legacy right-rail geometry from reserving desktop/mobile space.
 - `stylesheets/`: responsibility-focused shared stylesheet modules imported by theme entrypoints.
-- `desktop/desktop.scss`: wide-screen rail/content geometry when a breakpoint-specific entrypoint is genuinely needed.
-- `mobile/mobile.scss`: compact navigation, community drawer, and mobile-only overrides when common breakpoint styling is insufficient.
+- `desktop/desktop.scss`: wide-screen left-rail/content geometry when a breakpoint-specific entrypoint is genuinely needed; legacy right-member selectors are inert compatibility code until a later cleanup removes them.
+- `mobile/mobile.scss`: compact navigation and mobile-only overrides when common breakpoint styling is insufficient; do not add a Crimson Community drawer back into the shell.
 
 ## Current Discourse frontend conventions
 - Discourse theme JS can be split across `/javascripts` and follows the same file/folder conventions as current Discourse core/plugins. Prefer small responsibility-focused modules over one large initializer.
@@ -41,9 +43,9 @@ When using level 3 or 4, record why supported seams were insufficient and keep s
 - Preserve native Discourse SPA routing. Use Discourse URL helpers for internal links and maintain subfolder support.
 - Avoid new global listeners, intervals, or MutationObservers unless a supported API cannot represent the behavior. Scope observers to the smallest stable root and relevant mutations.
 - Register user-card/click behavior through the Plugin API when possible rather than synthesizing parallel card systems.
-- Render untrusted user/community/topic data with DOM text properties, not raw HTML injection.
-- Treat `/crimson-community/*` as an optional cross-plugin dependency: failures, 429s, missing plugin, or malformed payloads must degrade to empty/non-blocking UI and never break core forum navigation/reading.
-- Any endpoint-path/payload assumption change is T2 and requires `docs/ai/DECISIONS.md` plus exact call-site review.
+- Render untrusted user/topic data with DOM text properties, not raw HTML injection.
+- The theme shell must not poll `/crimson-community/*` or depend on Crimson Community presence/profile-visitor payloads. Treat `discourse-crimson-community` as an independent optional plugin unless a future explicit task reintroduces a reviewed integration.
+- Any future endpoint-path/payload assumption change is T2 and requires `docs/ai/DECISIONS.md` plus exact call-site review.
 
 ## SCSS/CSS organization
 - Current Discourse theme CSS uses `common/common.scss` as the main entrypoint. For complex themes, put cohesive additional SCSS modules under root `stylesheets/` and import them from the appropriate common/desktop/mobile entrypoint (for example `@import "my-styles";`).
