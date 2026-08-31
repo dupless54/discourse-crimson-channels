@@ -1,0 +1,380 @@
+/* Premium Graphite page surfaces.
+ * Use one restrained visual language across lists, reading views, discovery,
+ * profiles and community pages without replacing native Discourse structure.
+ */
+
+body:not(.admin-interface) .topic-list,
+body:not(.admin-interface) #list-area .category-list,
+body:not(.admin-interface) .category-boxes .category-box,
+body:not(.admin-interface) .search-container,
+body:not(.admin-interface) .user-main,
+body:not(.admin-interface) .group-details-container,
+body:not(.admin-interface) .groups-boxes .group-box,
+body:not(.admin-interface) .badge-card,
+body:not(.admin-interface) .tags-page .tag-box,
+body:not(.admin-interface) .bookmarks-list,
+body:not(.admin-interface) .cn-featured-topics,
+body:not(.admin-interface) .cn-featured-topics--below {
+  background: var(--cn-panel) !important;
+  border: 1px solid var(--cn-border) !important;
+  border-radius: var(--cn-radius-md) !important;
+  box-shadow: var(--cn-shadow-xs) !important;
+}
+
+body:not(.admin-interface) .topic-list {
+  overflow: hidden;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+body:not(.admin-interface) .topic-list-header {
+  color: var(--cn-muted) !important;
+  background: color-mix(in srgb, var(--cn-panel) 94%, var(--primary) 6%) !important;
+}
+
+body:not(.admin-interface) .topic-list-header th {
+  padding-block: 11px !important;
+  border-bottom: 1px solid var(--cn-separator) !important;
+  font-size: var(--font-down-1);
+  font-weight: 700;
+  letter-spacing: 0.025em;
+}
+
+body:not(.admin-interface) .topic-list-item {
+  background: transparent !important;
+  transition: background-color 120ms ease;
+}
+
+body:not(.admin-interface) .topic-list-item > td {
+  border-bottom: 1px solid var(--cn-separator) !important;
+}
+
+body:not(.admin-interface) .topic-list-item:last-child > td {
+  border-bottom: 0 !important;
+}
+
+body:not(.admin-interface) .topic-list-item:is(:hover, :focus-within) {
+  background: var(--cn-hover) !important;
+}
+
+body:not(.admin-interface) .topic-list .main-link a.title,
+body:not(.admin-interface) .latest-topic-list-item .main-link a.title {
+  color: var(--primary) !important;
+  font-weight: 650;
+  letter-spacing: -0.012em;
+}
+
+body:not(.admin-interface) .topic-list .topic-excerpt,
+body:not(.admin-interface) .topic-list .post-excerpt,
+body:not(.admin-interface) .topic-list .topic-item-stats {
+  color: var(--cn-muted) !important;
+}
+
+body:not(.admin-interface) .badge-category__wrapper,
+body:not(.admin-interface) .discourse-tag,
+body:not(.admin-interface) .topic-list .badge-posts,
+body:not(.admin-interface) .topic-list .badge-notification {
+  border-radius: 999px !important;
+}
+
+body:not(.admin-interface) .discourse-tag {
+  padding: 2px 7px;
+  color: var(--primary-medium) !important;
+  background: var(--cn-surface) !important;
+  border: 1px solid var(--cn-border) !important;
+}
+
+body:not(.admin-interface) .category-boxes .category-box {
+  overflow: hidden;
+  transition:
+    border-color 120ms ease,
+    transform 120ms ease,
+    box-shadow 120ms ease;
+}
+
+body:not(.admin-interface) .category-boxes .category-box:is(:hover, :focus-within) {
+  border-color: var(--cn-border-strong) !important;
+  box-shadow: var(--cn-shadow-sm) !important;
+  transform: translateY(-1px);
+}
+
+body:not(.admin-interface) #list-area .category-list {
+  overflow: hidden;
+}
+
+body:not(.admin-interface) #list-area .category-list tbody tr {
+  background: transparent !important;
+}
+
+body:not(.admin-interface) #list-area .category-list tbody tr:is(:hover, :focus-within) {
+  background: var(--cn-hover) !important;
+}
+
+body:not(.admin-interface) #list-area .category-list td,
+body:not(.admin-interface) #list-area .category-list th {
+  border-color: var(--cn-separator) !important;
+}
+
+body:not(.admin-interface) .category-list .category-name,
+body:not(.admin-interface) .category-list .badge-category__name {
+  font-weight: 700 !important;
+  letter-spacing: -0.01em;
+}
+
+body:not(.admin-interface) .category-list .category-description {
+  color: var(--cn-muted) !important;
+}
+
+body:not(.admin-interface) #topic,
+body:not(.admin-interface) #topic.nested-view,
+body:not(.admin-interface) #main-outlet > .regular {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body:not(.admin-interface) .topic-post article.boxed,
+body:not(.admin-interface) .topic-post .topic-body,
+body:not(.admin-interface) .topic-post .topic-avatar {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+body:not(.admin-interface) .topic-post {
+  border-bottom: 1px solid var(--cn-separator);
+}
+
+body:not(.admin-interface) .topic-post:last-of-type {
+  border-bottom: 0;
+}
+
+body:not(.admin-interface) .topic-body {
+  padding-block: 18px 22px;
+}
+
+body:not(.admin-interface) .topic-avatar {
+  padding-block-start: 20px;
+}
+
+body:not(.admin-interface) .topic-meta-data {
+  color: var(--cn-muted);
+}
+
+body:not(.admin-interface) .topic-map,
+body:not(.admin-interface) .small-action,
+body:not(.admin-interface) .post-notice,
+body:not(.admin-interface) .gap,
+body:not(.admin-interface) .topic-status-info {
+  background: var(--cn-panel) !important;
+  border: 1px solid var(--cn-border) !important;
+  border-radius: 12px !important;
+  box-shadow: none !important;
+}
+
+body:not(.admin-interface) .post-controls .actions button,
+body:not(.admin-interface) .topic-map button {
+  border-radius: 9px !important;
+}
+
+body:not(.admin-interface) .post-controls .actions button:is(:hover, :focus-visible) {
+  color: var(--primary) !important;
+  background: var(--cn-hover) !important;
+}
+
+body:not(.admin-interface) .timeline-container .topic-timeline .timeline-scrollarea {
+  border-color: var(--cn-border) !important;
+}
+
+body:not(.admin-interface) .timeline-container .topic-timeline .timeline-handle {
+  background: var(--tertiary) !important;
+  box-shadow: none !important;
+}
+
+body:not(.admin-interface) .search-container {
+  padding: 18px;
+}
+
+body:not(.admin-interface) .search-container .search-header,
+body:not(.admin-interface) .search-container .search-bar,
+body:not(.admin-interface) .search-container .search-filters {
+  background: transparent !important;
+  border-color: var(--cn-separator) !important;
+}
+
+body:not(.admin-interface) .search-results .fps-result,
+body:not(.admin-interface) .search-results .search-result {
+  padding-block: 16px;
+  border-bottom: 1px solid var(--cn-separator) !important;
+}
+
+body:not(.admin-interface) .search-results .fps-result:last-child,
+body:not(.admin-interface) .search-results .search-result:last-child {
+  border-bottom: 0 !important;
+}
+
+body:not(.admin-interface) .search-results .fps-result:is(:hover, :focus-within),
+body:not(.admin-interface) .search-results .search-result:is(:hover, :focus-within) {
+  background: var(--cn-hover) !important;
+}
+
+body:not(.admin-interface) .user-main {
+  overflow: hidden;
+}
+
+body:not(.admin-interface) .user-main .about,
+body:not(.admin-interface) .user-main .details,
+body:not(.admin-interface) .user-main .user-navigation,
+body:not(.admin-interface) .user-main .user-content,
+body:not(.admin-interface) .user-main .user-preferences {
+  background: transparent !important;
+  border-color: var(--cn-separator) !important;
+  box-shadow: none !important;
+}
+
+body:not(.admin-interface) .user-main .about {
+  padding: 20px !important;
+}
+
+body:not(.admin-interface) .user-main .user-navigation {
+  border-bottom: 1px solid var(--cn-separator) !important;
+}
+
+body:not(.admin-interface) .user-main .nav-pills > li > a,
+body:not(.admin-interface) .user-main .nav-pills > li > button {
+  border-radius: 9px !important;
+}
+
+body:not(.admin-interface) .user-main .nav-pills > li > a.active,
+body:not(.admin-interface) .user-main .nav-pills > li > button.active {
+  color: var(--primary) !important;
+  background: var(--cn-active-strong) !important;
+}
+
+body:not(.admin-interface) .user-stream .item,
+body:not(.admin-interface) .user-stream-item,
+body:not(.admin-interface) .user-list-item {
+  border-color: var(--cn-separator) !important;
+}
+
+body:not(.admin-interface) .user-stream .item:is(:hover, :focus-within),
+body:not(.admin-interface) .user-stream-item:is(:hover, :focus-within) {
+  background: var(--cn-hover) !important;
+}
+
+body:not(.admin-interface) .groups-boxes .group-box,
+body:not(.admin-interface) .badge-card,
+body:not(.admin-interface) .tags-page .tag-box {
+  padding: 16px;
+  transition:
+    border-color 120ms ease,
+    box-shadow 120ms ease,
+    transform 120ms ease;
+}
+
+body:not(.admin-interface) .groups-boxes .group-box:is(:hover, :focus-within),
+body:not(.admin-interface) .badge-card:is(:hover, :focus-within),
+body:not(.admin-interface) .tags-page .tag-box:is(:hover, :focus-within) {
+  border-color: var(--cn-border-strong) !important;
+  box-shadow: var(--cn-shadow-sm) !important;
+  transform: translateY(-1px);
+}
+
+body:not(.admin-interface) .group-members .directory-table-container,
+body:not(.admin-interface) .directory-table-container,
+body:not(.admin-interface) .directory-table {
+  background: var(--cn-panel) !important;
+  border: 1px solid var(--cn-border) !important;
+  border-radius: var(--cn-radius-md) !important;
+  box-shadow: var(--cn-shadow-xs) !important;
+  overflow: hidden;
+}
+
+body:not(.admin-interface) .directory-table tbody tr:is(:hover, :focus-within) {
+  background: var(--cn-hover) !important;
+}
+
+body:not(.admin-interface) .directory-table td,
+body:not(.admin-interface) .directory-table th {
+  border-color: var(--cn-separator) !important;
+}
+
+body:not(.admin-interface) .bookmarks-list {
+  overflow: hidden;
+}
+
+body:not(.admin-interface) .bookmark-list-item,
+body:not(.admin-interface) .bookmark-list-item-row {
+  border-color: var(--cn-separator) !important;
+}
+
+body:not(.admin-interface) .bookmark-list-item:is(:hover, :focus-within),
+body:not(.admin-interface) .bookmark-list-item-row:is(:hover, :focus-within) {
+  background: var(--cn-hover) !important;
+}
+
+body:not(.admin-interface) .nav-pills > li > a,
+body:not(.admin-interface) .nav-pills > li > button,
+body:not(.admin-interface) .horizontal-overflow-nav .nav-pills > li > a {
+  border-radius: 9px !important;
+}
+
+body:not(.admin-interface) .nav-pills > li > a:is(:hover, :focus-visible),
+body:not(.admin-interface) .nav-pills > li > button:is(:hover, :focus-visible) {
+  background: var(--cn-hover) !important;
+}
+
+body:not(.admin-interface) .nav-pills > li > a.active,
+body:not(.admin-interface) .nav-pills > li > button.active,
+body:not(.admin-interface) .navigation-toggle .toggle-link.active {
+  color: var(--primary) !important;
+  background: var(--cn-active-strong) !important;
+}
+
+body:not(.admin-interface) .chat-drawer,
+body:not(.admin-interface) .chat-channel,
+body:not(.admin-interface) .chat-channel-list,
+body:not(.admin-interface) .chat-composer,
+body:not(.admin-interface) .chat-message-container,
+body:not(.admin-interface) .chat-side-panel {
+  border-color: var(--cn-border) !important;
+}
+
+body:not(.admin-interface) .chat-drawer,
+body:not(.admin-interface) .chat-channel,
+body:not(.admin-interface) .chat-side-panel {
+  background: var(--cn-panel) !important;
+  box-shadow: var(--cn-shadow-md) !important;
+}
+
+body:not(.admin-interface) .chat-channel-row:is(:hover, :focus-within),
+body:not(.admin-interface) .chat-message-container:is(:hover, :focus-within) {
+  background: var(--cn-hover) !important;
+}
+
+body:not(.admin-interface) .cn-featured-topics,
+body:not(.admin-interface) .cn-featured-topics--below {
+  overflow: hidden;
+}
+
+body:not(.admin-interface) .cn-featured-topics__header {
+  background: color-mix(in srgb, var(--cn-panel) 94%, var(--primary) 6%) !important;
+  border-bottom: 1px solid var(--cn-separator) !important;
+}
+
+body:not(.admin-interface) .cn-featured-topic {
+  border-color: var(--cn-separator) !important;
+}
+
+body:not(.admin-interface) .cn-featured-topic:is(:hover, :focus-within) {
+  background: var(--cn-hover) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body:not(.admin-interface) .topic-list-item,
+  body:not(.admin-interface) .category-boxes .category-box,
+  body:not(.admin-interface) .groups-boxes .group-box,
+  body:not(.admin-interface) .badge-card,
+  body:not(.admin-interface) .tags-page .tag-box {
+    transition: none;
+  }
+}
