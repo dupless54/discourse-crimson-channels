@@ -4,84 +4,86 @@
 - repository: `dupless54/discourse-crimson-channels`
 - base branch: `main`
 - main SHA at start of current work: `816e034fd4b6a4e3530373a83c2b7bd903e508c3`
+- Phase 1–2 audit polish (PR #41, squash commit `1f0c912`) merged into `main` since: dedupes
+  design tokens between `crimson-common.scss` and `crimson-palette-foundation.scss`, drops the
+  dead glow-heavy `body` background, replaces a hardcoded Discord-blurple color in the default
+  profile banner. Verdict of that audit: the token/header/sidebar/left-rail/dark-light
+  foundation is sound — no rewrite needed.
 - delivery gate: latest exact PR head must have Official Discourse Theme CI `completed / success`
 
 ## Active work
-- branch: `claude/crimson-phase1-2-audit-polish`
-- scope: the multi-phase premium redesign explicitly requires auditing the existing "Premium
-  Graphite" design-token/header/sidebar/left-rail/dark-light foundation (Phase 1–2) before
-  starting Phase 5 (topic reading page), rather than assuming it's already correct. This branch
-  is that audit's output: a small, controlled polish PR, not a rewrite — the foundation itself
-  was judged adequate.
-- effort/risk: bounded CSS-only change; no markup/class-name change, no JS touched, no visible
-  behavior change except one intentional color fix (see below)
-- runs in parallel with `claude/crimson-channels-redesign-968c75` (Phase 3–4, PR #40, topic
-  list) — both are based on the same `main` SHA and touch disjoint files
-  (`stylesheets/crimson-common.scss` here vs. `crimson-topic-list.scss` +
-  `desktop/desktop.scss` there), so either can merge first without conflicting.
+- branch: `claude/crimson-channels-redesign-968c75` (PR #40)
+- scope: multi-phase premium visual redesign requested end-to-end (design system, topic list,
+  topic page, discovery, profile, composer, search, responsive/dark-light parity). This branch
+  delivers **Phase 3–4: the topic list** (explicitly the highest-priority surface in the
+  request), desktop/tablet and mobile, light and dark.
+- effort/risk: bounded frontend/CSS change; no server logic, no public-contract change
+- this branch was merged against updated `main` after PR #41 landed, to resolve a conflict in
+  this file (both PRs touched `docs/ai/CURRENT_STATE.md`); no other file conflicted
+  (`stylesheets/crimson-topic-list.scss`, `desktop/desktop.scss` here vs.
+  `stylesheets/crimson-common.scss` there — disjoint).
 
-## What the audit found and fixed
-- `stylesheets/crimson-common.scss`'s `:root` block duplicated ~19 color/radius/surface/shadow
-  tokens (`--cn-crimson`, `--cn-radius-*`, `--cn-panel*`, `--cn-surface*`, `--cn-control*`,
-  `--cn-muted`, `--cn-border`, `--cn-separator`, `--cn-hover`, `--cn-active`, `--cn-shadow`)
-  that `stylesheets/crimson-palette-foundation.scss` (imported *after* it in
-  `common/common.scss`) already redefines with different values. Same specificity + later
-  source order means palette-foundation's values always won in practice, so the duplicates in
-  crimson-common.scss were dead — but confusing and risky to maintain (editing a token there
-  silently did nothing). Removed; kept only the 5 layout tokens
-  (`--cn-server-rail-width` etc.) that nothing else defines. Verified every removed variable
-  name still has exactly one live definition in `crimson-palette-foundation.scss`, so the
-  rendered cascade is unchanged.
-- Same file's plain `body { background: <radial+linear gradient> !important; }` was the old
-  "glow-heavy" background that `crimson-palette-foundation.scss`'s own header comment says it
-  replaced with a calm flat `var(--secondary)` — but the old gradient rule was never deleted,
-  just shadowed (same reasoning: equal specificity, both `!important`, later import wins).
-  Removed; `min-height: 100vh` is all `body` still needed here.
-- The default user-card profile banner gradient (shown before a cosmetic plugin overrides it)
-  hardcoded Discord's literal brand blurple `#5865f2`, directly against the brief's "avoid
-  obvious Discord copy" direction. Replaced with an on-brand gradient built from
-  `var(--cn-noir)` / `var(--cn-crimson)` (same visual structure: radial highlight + diagonal
-  gradient, different source colors).
-- Checked and found **not** a bug (left alone): the unscoped-looking global `.btn` /
-  `.btn-primary` / input/select rules in `crimson-common.scss` — `crimson-common.scss` around
-  line ~2394 has a dedicated `body.admin-interface` section that deliberately keeps the brand
-  primary/danger buttons but neutralizes border/shadow noise elsewhere in admin; this is an
-  intentional, working strategy, not an oversight. Left untouched.
-- Checked hover/focus pairing on the left rail (`.cn-server-button`), touch target sizing
-  (44–46px, meets the 44px minimum), and `prefers-color-scheme` usage (none — the theme
-  correctly relies on Discourse's own color-scheme custom properties) — no issues found.
+## What Phase 3–4 actually fixed
+- `javascripts/discourse/api-initializers/crimson-topic-list-v2.js` +
+  `javascripts/discourse/components/crimson-topic-cell.gjs` (a prior session's work) already
+  replace the core desktop "topic" column with `CrimsonTopicCell`, but **no stylesheet anywhere
+  targeted its markup** (`.cn-topic-cell`, `.link-top-line`, `.link-bottom-line`) — verified by
+  grepping every `stylesheets/*.scss`, `desktop/desktop.scss`, `mobile/mobile.scss` for those
+  classes before this change (zero matches). The desktop topic list was effectively unstyled by
+  Crimson.
+- `desktop/desktop.scss` also carried a large dead block (`.cn-topic-author` /
+  `.cn-topic-author-header`) styling a `crimson-topic-author` column that
+  `crimson-topic-list-v2.js` deletes — confirmed by reading current
+  `discourse/discourse` core (`frontend/discourse/app/components/topic-list/item.gjs` and
+  `item/topic-cell.gjs`, fetched via a local sparse read-only clone) to establish the real,
+  current DOM. That dead block is removed; a small genuinely-breakpoint-specific rule
+  (`.cn-topic-cell__author` avatar upsizing at `>=1440px`) replaces it.
+- New `stylesheets/crimson-topic-list.scss` (imported from `common/common.scss` after
+  `crimson-premium-pages`) styles: the `.cn-topic-cell` avatar+content layout, title/status row,
+  category/tag/participant/likes row, pinned rail accent, unread/selected/bulk-selected states,
+  keyboard focus ring on the title link, and a shared premium category-chip treatment
+  (`.topic-list .badge-category__wrapper`) that colors itself from the topic's own category via
+  the `--category-badge-color` / `--category-badge-text-color` custom properties Discourse core
+  already sets inline (`frontend/discourse/app/helpers/category-variables.js`) — this is the
+  concrete mechanism behind the "colorful compact category chip" requirement for both desktop
+  cards and the native mobile row (`mobile/mobile.scss`'s existing `.pull-left` /
+  `.topic-item-metadata` / `.topic-item-stats` markup was already correct and untouched; it only
+  lacked color).
+- Mobile's own hard-coded topic-list markup (core `item.gjs`'s `useMobileLayout` branch) was
+  verified separately from the desktop `@columns` path and left as-is structurally.
 
-## Known gap deferred to Phase 10 (not fixed here — out of this PR's controlled scope)
-- Crimson's desktop shell (left rail, channel sidebar width, content gutter) only activates at
-  `@media (width >= 1000px)` in `desktop/desktop.scss`. Discourse's own mobile/desktop boundary
-  is lower (~768px). Between ~768px and 999px the page currently gets neither the mobile-tuned
-  layout nor the Crimson desktop shell — a real tablet gap matching the brief's explicit 768/
-  820/1024 tablet requirement. This needs deliberate tablet-specific shell rules, which is
-  Phase 10 (Responsive desktop/tablet/mobile polish) scope, not a one-line fix; flagging it now
-  so it isn't silently missed.
+## Compatibility strategy (carried over, unchanged by this session)
+- `common/body_tag.html` no longer emits Community/member markup.
+- `stylesheets/crimson-community-removal.scss` neutralizes old right-rail geometry; legacy
+  `.cn-member-rail*` selectors intentionally remain (documented, inert) in
+  `desktop/desktop.scss` — do not remove them casually; they are a separate, already-reviewed
+  cleanup item, not part of this session's topic-list scope. Do not reintroduce the right rail.
 
 ## Regression coverage
-- No new system spec: this change is a pure token/dead-code cleanup plus one hardcoded-color
-  swap, with no markup, class name, or JS change — nothing new to assert structurally.
-  `pnpm lint:css` / `lint:css:fix` / `lint:prettier` confirm the SCSS still compiles/parses and
-  every removed variable resolves elsewhere.
-- Existing shell/navigation/community-removal/topic-list specs are unaffected (no shared
-  selectors touched).
+- `spec/system/crimson_topic_list_spec.rb`: asserts `.cn-topic-cell` + avatar render on
+  `/latest`, the category chip carries the topic's actual `--category-badge-color`, the pinned
+  rail accent is scoped to pinned rows only, and the mobile layout still renders the colored
+  category chip through its own (non-`cn-topic-cell`) markup.
+- Prior shell/navigation/community-removal coverage untouched.
 
 ## Validation
-- `pnpm lint:css`, `pnpm lint:prettier`: ran locally, clean.
-- Manually confirmed (via `grep -c`) that all 19 removed `--cn-*` variable names still have
-  exactly one live definition in `crimson-palette-foundation.scss`.
-- `spec/system/`: **NOT RUN** locally — no local Rails/Capybara harness in this theme-only repo
-  (`Gemfile` only carries `rubocop-discourse` + `syntax_tree`). Official Discourse Theme CI on
-  the exact PR head is authoritative.
+- `pnpm lint:css`, `pnpm lint:css:fix`, `pnpm lint:prettier`, `pnpm lint:js`: ran locally, clean.
+- CI (`ci / linting`) caught one real issue this session didn't catch locally: RuboCop's
+  `RSpec/ContextWording` rejected `context "on mobile", mobile: true` in the new spec (must
+  start with when/with/without/for/while/if/as/after/in). Fixed by rewording to
+  `"when viewed on mobile"`; re-verified locally afterward with the exact rubocop invocation CI
+  uses (`bundle exec rubocop .`, 6 files, no offenses) plus stree/eslint/stylelint/prettier.
+- Official Discourse Theme CI (`ci / check_for_tests`, `ci / linting`, `ci / backend_tests`,
+  `ci / system_tests`) all green on head `ced78ac` before the merge-conflict-resolution commit
+  described above; re-validate on the new exact head after that commit per governance (a new
+  commit invalidates prior CI evidence).
 
 ## Known blockers
-- none; merge gated on latest-exact-head Official Discourse Theme CI GREEN, same as every PR in
-  this repo.
+- none; merge gated on latest-exact-head Official Discourse Theme CI GREEN.
 
 ## Next action
-- Open the PR, get exact-head Official Discourse Theme CI GREEN, squash merge.
+- Push the merge-conflict-resolution commit, get exact-head Official Discourse Theme CI GREEN
+  again, squash merge PR #40.
 - Then continue the roadmap: Phase 5 (topic reading page) onward, each phase its own PR.
 
 Rules: source/tests beat this document; refresh stale SHA/CI claims; `NO_CI != GREEN`.

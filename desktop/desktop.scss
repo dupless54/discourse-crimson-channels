@@ -304,140 +304,15 @@
 }
 
 /* ============================================================
-   Social topic feed V2: native author identity + activity states
+   Topic list: avatar now lives inside `.cn-topic-cell` itself
+   (see stylesheets/crimson-topic-list.scss); this used to be a
+   separate `crimson-topic-author` column, which
+   crimson-topic-list-v2.js retired in favor of the CrimsonTopicCell
+   component. Only genuinely breakpoint-specific card geometry
+   belongs here.
    ============================================================ */
 
 @media (width >= 700px) {
-  body:not(.admin-interface)
-    #main-outlet
-    :is(.list-container, .topic-list-container)
-    .cn-topic-author-header,
-  body:not(.admin-interface)
-    #main-outlet
-    :is(.list-container, .topic-list-container)
-    .cn-topic-author {
-    width: 70px;
-    min-width: 70px;
-    max-width: 70px;
-    box-sizing: border-box;
-    padding-inline: 10px !important;
-  }
-
-  body:not(.admin-interface)
-    #main-outlet
-    :is(.list-container, .topic-list-container)
-    .cn-topic-author-header {
-    text-align: center;
-  }
-
-  .cn-topic-author-header__label {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
-    border: 0;
-  }
-
-  body:not(.admin-interface)
-    #main-outlet
-    :is(.list-container, .topic-list-container)
-    .cn-topic-author {
-    position: relative;
-    vertical-align: middle;
-  }
-
-  .cn-topic-author__link {
-    display: flex;
-    min-width: 0;
-    align-items: center;
-    justify-content: center;
-    color: var(--primary-high);
-    text-decoration: none;
-  }
-
-  .cn-topic-author__link img.avatar {
-    width: 40px;
-    height: 40px;
-    flex: 0 0 40px;
-    box-sizing: border-box;
-    object-fit: cover;
-    border: 2px solid color-mix(in srgb, var(--primary) 12%, transparent);
-    border-radius: 50%;
-    box-shadow: 0 5px 14px rgb(0 0 0 / 16%);
-    transition:
-      border-color 150ms ease,
-      box-shadow 150ms ease,
-      transform 150ms ease;
-  }
-
-  .cn-topic-author__link:is(:hover, :focus-visible) img.avatar {
-    border-color: color-mix(in srgb, var(--cn-crimson) 58%, transparent);
-    box-shadow: 0 7px 18px rgb(0 0 0 / 20%);
-    transform: translateY(-1px);
-  }
-
-  .cn-topic-author__identity {
-    display: none;
-    min-width: 0;
-    overflow: hidden;
-    font-size: var(--font-down-1, 0.84rem);
-    font-weight: 650;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  body:not(.admin-interface)
-    #main-outlet
-    :is(.list-container, .topic-list-container)
-    .topic-list-item
-    > .cn-topic-author
-    + .main-link {
-    padding-inline-start: 16px !important;
-  }
-
-  body:not(.admin-interface)
-    #main-outlet
-    :is(.list-container, .topic-list-container)
-    .topic-list-item
-    > .cn-topic-author
-    + .main-link::before,
-  body:not(.admin-interface)
-    #main-outlet
-    :is(.list-container, .topic-list-container)
-    .topic-list-item
-    > .cn-topic-author
-    + .main-link::after {
-    display: none !important;
-    content: none !important;
-  }
-
-  body:not(.admin-interface)
-    #main-outlet
-    :is(.list-container, .topic-list-container)
-    .topic-list-item:is(.pinned, .pinned-globally)
-    > .cn-topic-author::before {
-    position: absolute;
-    inset-block: 10px;
-    inset-inline-start: 0;
-    width: 3px;
-    content: "";
-    background: var(--cn-crimson);
-    border-radius: 999px;
-    box-shadow: 0 0 12px var(--cn-active);
-  }
-
-  body:not(.admin-interface)
-    #main-outlet
-    :is(.list-container, .topic-list-container)
-    .topic-list-item:is(.pinned, .pinned-globally)
-    .cn-topic-author__link
-    img.avatar {
-    border-color: color-mix(in srgb, var(--cn-crimson) 54%, transparent);
-  }
-
   body:not(.admin-interface)
     #main-outlet
     :is(.list-container, .topic-list-container)
@@ -445,45 +320,11 @@
     > td {
     border-color: var(--tertiary-low) !important;
   }
-
-  body:not(.admin-interface)
-    #main-outlet
-    :is(.list-container, .topic-list-container)
-    .topic-list
-    td.posters {
-    min-width: 92px;
-  }
 }
 
 @media (width >= 1440px) {
-  body:not(.admin-interface)
-    #main-outlet
-    :is(.list-container, .topic-list-container)
-    .cn-topic-author-header,
-  body:not(.admin-interface)
-    #main-outlet
-    :is(.list-container, .topic-list-container)
-    .cn-topic-author {
-    width: 138px;
-    min-width: 138px;
-    max-width: 138px;
-  }
-
-  .cn-topic-author-header__label {
-    position: static;
-    width: auto;
-    height: auto;
-    overflow: visible;
-    clip-path: none;
-    white-space: normal;
-  }
-
-  .cn-topic-author__link {
-    gap: 9px;
-    justify-content: flex-start;
-  }
-
-  .cn-topic-author__identity {
-    display: block;
+  body:not(.admin-interface) .cn-topic-cell__author img.avatar {
+    width: 46px;
+    height: 46px;
   }
 }
