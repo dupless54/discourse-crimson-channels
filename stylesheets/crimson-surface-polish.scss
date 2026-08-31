@@ -12,7 +12,6 @@ body:not(.admin-interface) .d-header {
 
 body:not(.admin-interface) .sidebar-wrapper {
   --scrollbarThumbBg: color-mix(in srgb, var(--primary) 18%, transparent);
-
   border-inline-end-color: var(--cn-separator);
   box-shadow:
     12px 0 34px color-mix(in srgb, var(--secondary) 72%, transparent),
