@@ -19,25 +19,26 @@ RSpec.describe "Crimson topic list" do
   end
 
   it "keeps the topic avatar and its user-link wrapper on the same square reference box" do
-    geometry_for = lambda do
-      page.evaluate_script(<<~JS)
-        (() => {
-          const wrapper = document.querySelector(".cn-topic-cell__author");
-          const avatar = wrapper.querySelector("img.avatar");
-          const wrapperRect = wrapper.getBoundingClientRect();
-          const avatarRect = avatar.getBoundingClientRect();
+    geometry_for =
+      lambda do
+        page.evaluate_script(<<~JS)
+          (() => {
+            const wrapper = document.querySelector(".cn-topic-cell__author");
+            const avatar = wrapper.querySelector("img.avatar");
+            const wrapperRect = wrapper.getBoundingClientRect();
+            const avatarRect = avatar.getBoundingClientRect();
 
-          return [
-            wrapperRect.width,
-            wrapperRect.height,
-            avatarRect.width,
-            avatarRect.height,
-            avatarRect.left - wrapperRect.left,
-            avatarRect.top - wrapperRect.top,
-          ];
-        })()
-      JS
-    end
+            return [
+              wrapperRect.width,
+              wrapperRect.height,
+              avatarRect.width,
+              avatarRect.height,
+              avatarRect.left - wrapperRect.left,
+              avatarRect.top - wrapperRect.top,
+            ];
+          })()
+        JS
+      end
 
     page.current_window.resize_to(1366, 900)
     visit("/latest")
