@@ -3,11 +3,14 @@
 RSpec.describe "Crimson Channels shell" do
   let!(:theme) { upload_theme_or_component }
 
-  it "renders the shell and structured default navigation" do
+  it "renders the shell and structured default navigation without a Community rail" do
     visit("/")
 
     expect(page).to have_css(".cn-server-rail")
-    expect(page).to have_css("#cn-community-panel")
+    expect(page).to have_no_css("#cn-community-panel", visible: :all)
+    expect(page).to have_no_css(".cn-server-button--members", visible: :all)
+    expect(page).to have_no_css(".cn-mobile-community-toggle-item", visible: :all)
+    expect(page).to have_no_css(".cn-mobile-community-backdrop", visible: :all)
     expect(page).to have_css(".cn-server-rail a[data-cn-object-navigation='true']", count: 5)
     expect(page).to have_css(".cn-server-rail a[data-cn-object-navigation='true'][href='/']")
     expect(page).to have_css(
@@ -20,7 +23,6 @@ RSpec.describe "Crimson Channels shell" do
 
   it "applies administrator shell settings" do
     theme.update_setting(:brand_initial, "CC")
-    theme.update_setting(:member_rail_enabled, false)
     theme.save!
 
     visit("/")
