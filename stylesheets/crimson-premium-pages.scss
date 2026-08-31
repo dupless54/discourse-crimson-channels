@@ -5,7 +5,6 @@
 
 body:not(.admin-interface) {
   .topic-list,
-  .search-container,
   .group-details-container,
   .groups-boxes .group-box,
   .badge-card,
@@ -145,33 +144,6 @@ body:not(.admin-interface) {
     .timeline-handle {
       background: var(--tertiary) !important;
       box-shadow: none !important;
-    }
-  }
-
-  .search-container {
-    padding: 18px;
-
-    .search-header,
-    .search-bar,
-    .search-filters {
-      background: transparent !important;
-      border-color: var(--cn-separator) !important;
-    }
-  }
-
-  .search-results {
-    .fps-result,
-    .search-result {
-      padding-block: 16px;
-      border-bottom: 1px solid var(--cn-separator) !important;
-
-      &:last-child {
-        border-bottom: 0 !important;
-      }
-
-      &:is(:hover, :focus-within) {
-        background: var(--cn-hover) !important;
-      }
     }
   }
 
