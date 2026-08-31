@@ -27,6 +27,8 @@ const communityRateLimitUntil = new Map();
 let memberRailRenderVersion = 0;
 const DEFAULT_COMMUNITY_BACKOFF_MS = 30_000;
 const MAX_COMMUNITY_BACKOFF_MS = 5 * 60_000;
+const ONLINE_MEMBER_CACHE_MS = 30_000;
+const MEMBER_REFRESH_INTERVAL_MS = 60_000;
 let mobileCommunityReturnFocus = null;
 
 const MEMBER_CARD_HOVER_SELECTOR = [
@@ -537,7 +539,7 @@ async function loadCommunityMembers(profileUsername) {
 
   const payload = await fetchCommunityPayload(
     "/crimson-community/online.json",
-    5_000
+    ONLINE_MEMBER_CACHE_MS
   );
 
   return {
@@ -894,9 +896,10 @@ export default apiInitializer((api) => {
         return;
       }
 
-      communityRequestCache.delete("/crimson-community/online.json");
+      // Let the normal bounded request cache coalesce route/visibility/timer
+      // renders instead of force-invalidating the same endpoint every cycle.
       scheduleMemberRender();
-    }, 15_000);
+    }, MEMBER_REFRESH_INTERVAL_MS);
   };
 
   const clearMemberRailCardPlacement = () => {
