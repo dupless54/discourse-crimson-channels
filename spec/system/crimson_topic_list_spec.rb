@@ -18,6 +18,37 @@ RSpec.describe "Crimson topic list" do
     )
   end
 
+  it "keeps the topic avatar and its user-link wrapper on the same square reference box" do
+    geometry_for = lambda do
+      page.evaluate_script(<<~JS)
+        (() => {
+          const wrapper = document.querySelector(".cn-topic-cell__author");
+          const avatar = wrapper.querySelector("img.avatar");
+          const wrapperRect = wrapper.getBoundingClientRect();
+          const avatarRect = avatar.getBoundingClientRect();
+
+          return [
+            wrapperRect.width,
+            wrapperRect.height,
+            avatarRect.width,
+            avatarRect.height,
+            avatarRect.left - wrapperRect.left,
+            avatarRect.top - wrapperRect.top,
+          ];
+        })()
+      JS
+    end
+
+    page.current_window.resize_to(1366, 900)
+    visit("/latest")
+
+    expect(geometry_for.call).to eq([42, 42, 42, 42, 0, 0])
+
+    page.current_window.resize_to(1440, 900)
+
+    expect(geometry_for.call).to eq([46, 46, 46, 46, 0, 0])
+  end
+
   it "shows the pinned accent only on pinned topic rows" do
     pinned_topic = Fabricate(:topic, category: category, pinned_at: Time.zone.now)
     Fabricate(:post, topic: pinned_topic)
