@@ -14,10 +14,7 @@ function disableLegacyCommunityState() {
     return;
   }
 
-  if (!body.classList.contains("cn-member-rail-disabled")) {
-    body.classList.add("cn-member-rail-disabled");
-  }
-
+  body.classList.add("cn-member-rail-disabled");
   body.classList.remove(
     "cn-member-rail-collapsed",
     "cn-mobile-community-open",
@@ -49,16 +46,6 @@ function scheduleLegacyCommunityCleanup() {
 }
 
 export default apiInitializer((api) => {
-  const body = document.body;
-
-  if (body) {
-    const classObserver = new MutationObserver(disableLegacyCommunityState);
-    classObserver.observe(body, {
-      attributes: true,
-      attributeFilter: ["class"],
-    });
-  }
-
   scheduleLegacyCommunityCleanup();
   api.onPageChange(scheduleLegacyCommunityCleanup);
 });
