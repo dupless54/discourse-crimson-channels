@@ -1,58 +1,63 @@
 /* Premium topic list — desktop/tablet social cards + compact colorful mobile rows.
  *
- * `javascripts/discourse/api-initializers/crimson-topic-list-v2.js` replaces the
- * core "topic" column with `CrimsonTopicCell` (`.cn-topic-cell`) on non-mobile
- * layouts. That component intentionally mirrors core's
- * `topic-list/item/topic-cell.gjs` markup (`.link-top-line` / `.link-bottom-line`
- * / `dCategoryLink` / `dDiscourseTags`) and only adds an inline avatar, so this
- * file targets the *current* core class names rather than the pre-refactor
- * `.cn-topic-author` column CSS it replaces.
+ * Discourse-native-first: audited against current `discourse/discourse` core
+ * CSS (`app/assets/stylesheets/common/base/_topic-list.scss`, `discourse.scss`)
+ * before writing this. The native "topic" column (TopicCell) is kept
+ * entirely intact — no copied/replaced component. The avatar is injected via
+ * the `topic-list-before-link` outlet
+ * (`javascripts/discourse/connectors/topic-list-before-link/crimson-topic-avatar.gjs`)
+ * and floated beside the native content on the native `<td class="main-link
+ * topic-list-data">`, so this file targets *unmodified* core class names
+ * (`.link-top-line`, `.link-bottom-line`, `.raw-topic-link`, `.topic-status`,
+ * `.badge-posts`) rather than a parallel component's markup.
+ *
+ * Most of what a first pass at this file added duplicated or fought core's
+ * own themeable tokens (`--title-color`, `--topic-title-font-weight`,
+ * `--metadata-color`, the `.link-bottom-line`/`.participant-group`/
+ * `.badge-posts`/`bulk-selected` rules already in `_topic-list.scss`) — see
+ * `docs/ai/CURRENT_STATE.md` for the rule-by-rule classification. What's
+ * left below is either a genuine gap (category color, avatar layout) or a
+ * documented, minimal retint of an existing core token.
  *
  * On mobile, core's `topic-list/item.gjs` renders its own hard-coded markup
  * instead of `@columns` (`.pull-left` / `.topic-item-metadata` /
- * `.topic-item-stats`, already handled in `mobile/mobile.scss`); this file adds
- * the colorful category-chip treatment shared by both layouts.
+ * `.topic-item-stats`, already handled in `mobile/mobile.scss`); this file
+ * adds the colorful category-chip treatment shared by both layouts.
  */
 
 body:not(.admin-interface) {
+  /* Premium title hierarchy: retint core's own themeable tokens (used by
+     every visited/anon/read-state variant in _topic-list.scss) rather than
+     re-declaring color/font-weight with a competing selector. */
+
+  .topic-list {
+    --title-color: var(--primary-high);
+    --topic-title-font-weight: 650;
+  }
+
+  .topic-list-item:is(.unseen-topic, .unread-posts) {
+    --topic-title-font-weight: 800;
+  }
+
   /* ----------------------------------------------------------------------
-     Desktop/tablet: CrimsonTopicCell card internals
+     Desktop/tablet: avatar + native TopicCell content. The outlet-injected
+     avatar floats beside the native content instead of using `display:
+     flex/grid` directly on the `<td>` — setting either there would replace
+     its table-cell box generation and risk breaking the row's table layout
+     (column widths, row-height alignment with sibling cells). A float lets
+     `.link-top-line` (native `<span>`, inline) and `.link-bottom-line`
+     (native `<div>`, already `display: flex` internally but still a normal
+     block box from the outside) wrap beside/below it with zero markup or
+     `display` changes to anything native.
      ---------------------------------------------------------------------- */
 
-  .cn-topic-cell {
+  .topic-list td.main-link.topic-list-data {
     position: relative;
-    padding-block: 12px !important;
-    padding-inline: 16px 14px !important;
-    vertical-align: top;
   }
 
-  .cn-topic-cell__rail {
-    position: absolute;
-    inset-block: 9px;
-    inset-inline-start: 4px;
-    width: 3px;
-    background: transparent;
-    border-radius: 999px;
-    transition:
-      background-color 150ms ease,
-      box-shadow 150ms ease;
-  }
-
-  .topic-list-item:is(.pinned, .pinned-globally) .cn-topic-cell__rail {
-    background: var(--cn-crimson);
-    box-shadow: 0 0 10px var(--cn-active);
-  }
-
-  .cn-topic-cell__layout {
-    display: flex;
-    min-width: 0;
-    align-items: flex-start;
-    gap: 12px;
-  }
-
-  .cn-topic-cell__author {
-    display: block;
-    flex: 0 0 auto;
+  .topic-list td.main-link.topic-list-data > .cn-topic-cell__author {
+    float: inline-start;
+    margin-inline-end: 12px;
     line-height: 0;
   }
 
@@ -74,129 +79,64 @@ body:not(.admin-interface) {
     transform: translateY(-1px);
   }
 
-  .cn-topic-cell__content {
-    min-width: 0;
-    flex: 1 1 auto;
+  /* Pinned accent as a pseudo-element on the native cell — no extra markup
+     needed since the `<td>` is already `position: relative`. */
+
+  .topic-list-item:is(.pinned, .pinned-globally)
+    td.main-link.topic-list-data::before {
+    position: absolute;
+    inset-block: 9px;
+    inset-inline-start: 4px;
+    width: 3px;
+    content: "";
+    background: var(--cn-crimson);
+    border-radius: 999px;
+    box-shadow: 0 0 10px var(--cn-active);
   }
 
-  .cn-topic-cell .link-top-line {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 3px 6px;
-    line-height: 1.35;
-  }
+  /* _topic-list.scss deliberately removes the native focus outline here
+     ("we have a custom focus indicator via .selected"), relying on the
+     `.selected`/`:focus-within` row background alone. That tint doesn't
+     meet a clearly visible keyboard-focus bar on its own, so this restores
+     a real outline as a documented, minimal exception. */
 
-  .cn-topic-cell .raw-topic-link.title {
-    color: var(--primary-high);
-    font-weight: 650;
-    letter-spacing: -0.01em;
-  }
-
-  .cn-topic-cell .raw-topic-link.title:hover {
-    color: var(--tertiary);
-  }
-
-  .cn-topic-cell .raw-topic-link.title:focus-visible {
+  .topic-list .raw-topic-link.title:focus-visible {
     border-radius: 4px;
     outline: 2px solid var(--cn-focus-border);
     outline-offset: 2px;
   }
 
-  .cn-topic-cell .topic-statuses {
-    display: inline-flex;
-    gap: 3px;
-    color: var(--cn-muted);
-  }
+  /* Core leaves pinned/bookmarked topic-status icons at the same neutral
+     --primary-medium as every other status; giving pinned specifically the
+     brand accent is the one deliberate premium-identity delta here. */
 
-  .cn-topic-cell .topic-status.--pinned {
+  .topic-list .topic-status.--pinned {
     color: var(--cn-crimson);
   }
 
-  .cn-topic-cell .topic-status.--bookmarked {
+  .topic-list .topic-status.--bookmarked {
     color: var(--cn-a);
   }
 
-  .topic-list-item.unseen-topic .cn-topic-cell .raw-topic-link.title,
-  .topic-list-item.unread-posts .cn-topic-cell .raw-topic-link.title {
-    font-weight: 750;
-  }
+  /* Numeric columns: core already bolds/sizes/centers .badge-posts and its
+     containing .num cell; add only the chip background the card language
+     wants. */
 
-  .cn-topic-cell .link-bottom-line {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    min-width: 0;
-    gap: 6px;
-    margin-top: 6px;
-  }
-
-  .cn-topic-cell .participant-group-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-  }
-
-  .cn-topic-cell .participant-group .user-group {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 2px 8px;
-    color: var(--cn-muted);
+  .topic-list .topic-list-data.num .badge-posts {
     background: var(--cn-surface);
     border-radius: 999px;
-    font-size: var(--font-down-1);
-    text-decoration: none;
   }
 
-  .cn-topic-cell .post-actions.likes {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    color: var(--cn-muted);
-    font-size: var(--font-down-1);
-  }
-
-  .cn-topic-cell .post-actions.likes .d-icon {
-    color: color-mix(in srgb, var(--cn-crimson) 70%, var(--cn-muted));
-  }
-
-  .topic-list-item.bulk-selected .cn-topic-cell {
-    background: var(--cn-active) !important;
-  }
-
-  /* ----------------------------------------------------------------------
-     Numeric columns (replies / likes / activity) read as part of the card row
-     ---------------------------------------------------------------------- */
-
-  .topic-list .topic-list-data.num {
-    vertical-align: middle;
-  }
-
-  .topic-list .badge-posts {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 30px;
-    padding: 3px 9px;
-    color: var(--primary-high) !important;
-    background: var(--cn-surface);
-    font-weight: 600;
-  }
-
-  .topic-list-item:is(:hover, :focus-within) .badge-posts {
+  .topic-list-item:is(:hover, :focus-within) .topic-list-data.num .badge-posts {
     background: var(--cn-surface-raised);
-  }
-
-  .topic-list .post-activity {
-    color: var(--cn-muted);
   }
 
   /* ----------------------------------------------------------------------
      Category chip — shared by desktop cards and mobile compact rows.
-     Color always comes from the topic's own category via the
-     `--category-badge-color` / `--category-badge-text-color` custom
-     properties Discourse core sets inline on the wrapper element.
+     Core does not theme `.badge-category` color at all; color always comes
+     from the topic's own category via the `--category-badge-color` /
+     `--category-badge-text-color` custom properties Discourse core sets
+     inline on the wrapper element.
      ---------------------------------------------------------------------- */
 
   .topic-list .badge-category__wrapper {
@@ -271,7 +211,10 @@ body:not(.admin-interface) {
     white-space: nowrap;
   }
 
-  /* Tags stay secondary to the category identity. */
+  /* `.discourse-tags` is a bare `<ul>`; core doesn't reset list semantics
+     for it (verified: no generic `ul, li { list-style: none }` in core
+     base), so it needs one here to sit inline with the category chip. */
+
   .topic-list .discourse-tags {
     display: inline-flex;
     flex-wrap: wrap;

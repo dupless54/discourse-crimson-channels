@@ -7,35 +7,44 @@ RSpec.describe "Crimson topic list" do
 
   before { Fabricate(:post, topic: topic) }
 
-  it "renders the premium topic cell with the author avatar and the topic's own category color" do
+  it "renders the outlet-injected author avatar beside the native topic cell, with the topic's own category color" do
     visit("/latest")
 
-    expect(page).to have_css(".topic-list .cn-topic-cell")
-    expect(page).to have_css(".cn-topic-cell .cn-topic-cell__author img.avatar")
-    expect(page).to have_css(".cn-topic-cell .link-top-line a.raw-topic-link.title")
+    cell = ".topic-list td.main-link.topic-list-data"
+    expect(page).to have_css("#{cell} .cn-topic-cell__author img.avatar")
+    expect(page).to have_css("#{cell} .link-top-line a.raw-topic-link.title")
     expect(page).to have_css(
-      ".cn-topic-cell .link-bottom-line .badge-category__wrapper[style*='--category-badge-color: #12AB34']",
+      "#{cell} .link-bottom-line .badge-category__wrapper[style*='--category-badge-color: #12AB34']",
     )
   end
 
-  it "keeps the pinned rail indicator scoped to pinned topics" do
+  it "shows the pinned accent only on pinned topic rows" do
     pinned_topic = Fabricate(:topic, category: category, pinned_at: Time.zone.now)
     Fabricate(:post, topic: pinned_topic)
 
     visit("/latest")
 
-    expect(page).to have_css(".topic-list-item.pinned .cn-topic-cell__rail")
-    expect(page).to have_css(".topic-list-item:not(.pinned) .cn-topic-cell__rail")
+    pinned_background =
+      page.evaluate_script(
+        "getComputedStyle(document.querySelector('.topic-list-item.pinned td.main-link'), '::before').backgroundColor",
+      )
+    unpinned_background =
+      page.evaluate_script(
+        "getComputedStyle(document.querySelector('.topic-list-item:not(.pinned) td.main-link'), '::before').backgroundColor",
+      )
+
+    expect(pinned_background).not_to eq("rgba(0, 0, 0, 0)")
+    expect(unpinned_background).to eq("rgba(0, 0, 0, 0)")
   end
 
   context "when viewed on mobile", mobile: true do
-    it "shows the compact colorful category chip in the native mobile topic row" do
+    it "shows the compact colorful category chip in the native mobile topic row, without the desktop avatar connector" do
       visit("/latest")
 
       expect(page).to have_css(
         ".topic-item-stats__category-tags .badge-category__wrapper[style*='--category-badge-color: #12AB34']",
       )
-      expect(page).to have_no_css(".cn-topic-cell")
+      expect(page).to have_no_css(".cn-topic-cell__author")
     end
   end
 end
