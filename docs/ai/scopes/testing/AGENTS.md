@@ -17,11 +17,11 @@ Add or extend system coverage when a change can break any of these surfaces:
 - light and dark/color-scheme behavior
 - homepage/latest/categories/topic/profile/chat/server-list navigation
 - sidebar/header navigation compatibility when relevant
-- member rail open/collapse/mobile drawer + focus restoration
+- absence of the retired right Community/member rail, member toggle, and mobile Community drawer
 - user-card click/hover behavior
 - featured-topic rendering and empty/failure states
 - structured navigation and group-resolved visibility
-- Crimson Community installed, unavailable, rate-limited, or returning an error: the theme shell must remain usable
+- optional companion plugins unavailable or removed: the theme shell must remain usable without them
 
 ## Navigation-mode checks
 - When manually validating navigation-related styling, use Discourse's current `?navigation_menu=sidebar` and `?navigation_menu=header_dropdown` preview modes when supported by the target core.

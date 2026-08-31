@@ -1,0 +1,20 @@
+/* Crimson Community's right member rail is intentionally not part of the
+   theme shell anymore. Keep legacy rail selectors inert while older client
+   code is phased out, and make sure no desktop width is reserved for it. */
+
+:root {
+  --cn-member-rail-width: 0px;
+}
+
+.cn-member-rail,
+.cn-mobile-community-backdrop,
+.cn-mobile-community-toggle-item,
+.cn-server-button--members {
+  display: none !important;
+}
+
+@media (width >= 1280px) {
+  body:not(.admin-interface, .cn-shell-hidden) #main-outlet-wrapper {
+    padding-inline-end: 0 !important;
+  }
+}

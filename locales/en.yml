@@ -2,10 +2,7 @@ en:
   theme_metadata:
     description: "A Discord-inspired Discourse theme for senin.me with a calm blue-violet visual system."
     settings:
-      brand_initial: "Short text displayed in the community rail brand button."
-      member_panel_title: "Heading shown above the online-member rail on regular pages."
-      member_rail_enabled: "Show the right member rail on wide screens."
-      member_rail_limit: "Maximum number of online members to display."
+      brand_initial: "Short text displayed in the quick-navigation rail brand button."
       forum_width_percent: "Desktop forum content width (40–100%)."
       visual_surface_style: "Surface hierarchy preset: balanced keeps a calm modern look, flat reduces decorative depth, and glass increases translucent separation without replacing native Discourse surfaces."
       visual_accent_color: "Primary blue accent as a 3- or 6-digit hex color. Colors that do not keep sufficient contrast with white action text fall back to the safe default blue."
@@ -16,9 +13,6 @@ en:
       visual_corner_style: "Global corner-radius preset: compact, soft, or rounded."
       member_hover_card_enabled: "Automatically open a user card after hovering a forum avatar or username."
       member_hover_card_delay_seconds: "Delay before automatically opening the hovered user card (seconds)."
-      recent_profiles_enabled: "Show the members who most recently visited the viewed profile."
-      recent_profiles_title: "Heading used by the right rail while showing profile visitors."
-      recent_profiles_limit: "Maximum number of profile visitors to display."
       featured_topic_lists:
         description: "Add separate topic sections shown only on the homepage. Create as many as needed, reorder them, and place each section above or below the main topic list."
         schema:
