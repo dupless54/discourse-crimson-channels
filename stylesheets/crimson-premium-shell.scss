@@ -6,265 +6,286 @@ body:not(.admin-interface) {
   --d-sidebar-background: var(--cn-panel);
   --d-sidebar-active-background: var(--cn-active-strong);
   --d-sidebar-highlight-background: var(--cn-hover);
-}
 
-body:not(.admin-interface) .d-header {
-  background: color-mix(in srgb, var(--header_background) 94%, transparent) !important;
-  border-bottom: 1px solid var(--cn-border) !important;
-  box-shadow: var(--cn-shadow-xs) !important;
-  backdrop-filter: blur(16px) saturate(115%);
-}
+  .d-header {
+    background: color-mix(
+      in srgb,
+      var(--header_background) 94%,
+      transparent
+    ) !important;
+    border-bottom: 1px solid var(--cn-border) !important;
+    box-shadow: var(--cn-shadow-xs) !important;
+    backdrop-filter: blur(16px) saturate(115%);
 
-body:not(.admin-interface) .d-header .contents {
-  min-height: 58px;
-}
+    .contents {
+      min-height: 58px;
+    }
+  }
 
-body:not(.admin-interface) .d-header-icons .icon {
-  border: 1px solid transparent;
-  border-radius: 10px;
-  transition:
-    color 120ms ease,
-    background-color 120ms ease,
-    border-color 120ms ease;
-}
+  .d-header-icons .icon {
+    border: 1px solid transparent;
+    border-radius: 10px;
+    transition:
+      color 120ms ease,
+      background-color 120ms ease,
+      border-color 120ms ease;
 
-body:not(.admin-interface) .d-header-icons .icon:is(:hover, :focus-visible) {
-  color: var(--primary) !important;
-  background: var(--cn-hover) !important;
-  border-color: var(--cn-border) !important;
-}
+    &:is(:hover, :focus-visible) {
+      color: var(--primary) !important;
+      background: var(--cn-hover) !important;
+      border-color: var(--cn-border) !important;
+    }
+  }
 
-body:not(.admin-interface) .cn-server-rail,
-body:not(.admin-interface) .cn-member-rail,
-body:not(.admin-interface) .sidebar-wrapper {
-  background: var(--cn-panel) !important;
-  border-color: var(--cn-border) !important;
-  box-shadow: none !important;
-  backdrop-filter: blur(14px) saturate(108%);
-}
+  .cn-server-rail,
+  .cn-member-rail,
+  .sidebar-wrapper {
+    background: var(--cn-panel) !important;
+    border-color: var(--cn-border) !important;
+    box-shadow: none !important;
+    backdrop-filter: blur(14px) saturate(108%);
+  }
 
-body:not(.admin-interface) .sidebar-wrapper {
-  --scrollbarThumbBg: color-mix(in srgb, var(--primary) 16%, transparent);
-}
+  .sidebar-wrapper {
+    --scrollbarThumbBg: color-mix(in srgb, var(--primary) 16%, transparent);
+  }
 
-body:not(.admin-interface) .sidebar-section-header {
-  color: var(--cn-muted) !important;
-  font-size: var(--font-down-2);
-  font-weight: 700;
-  letter-spacing: 0.055em;
-  text-transform: uppercase;
-}
+  .sidebar-section-header {
+    color: var(--cn-muted) !important;
+    font-size: var(--font-down-2);
+    font-weight: 700;
+    letter-spacing: 0.055em;
+    text-transform: uppercase;
+  }
 
-body:not(.admin-interface) .sidebar-section-link,
-body:not(.admin-interface) .cn-channel-section-link {
-  min-height: 36px;
-  border: 1px solid transparent !important;
-  border-radius: 9px !important;
-  transition:
-    color 120ms ease,
-    background-color 120ms ease,
-    border-color 120ms ease;
-}
+  .sidebar-section-link,
+  .cn-channel-section-link {
+    min-height: 36px;
+    border: 1px solid transparent !important;
+    border-radius: 9px !important;
+    transition:
+      color 120ms ease,
+      background-color 120ms ease,
+      border-color 120ms ease;
 
-body:not(.admin-interface) .sidebar-section-link:is(:hover, :focus-visible),
-body:not(.admin-interface) .cn-channel-section-link:is(:hover, :focus-visible) {
-  background: var(--cn-hover) !important;
-  border-color: var(--cn-border) !important;
-}
+    &:is(:hover, :focus-visible) {
+      background: var(--cn-hover) !important;
+      border-color: var(--cn-border) !important;
+    }
+  }
 
-body:not(.admin-interface) .sidebar-section-link.active,
-body:not(.admin-interface) .sidebar-section-link.--active,
-body:not(.admin-interface) .cn-channel-section-link.active,
-body:not(.admin-interface) .cn-channel-section-link.--active,
-body:not(.admin-interface) .cn-channel-section-link[aria-current="page"] {
-  color: var(--primary) !important;
-  background: var(--cn-active-strong) !important;
-  border-color: color-mix(in srgb, var(--tertiary) 20%, transparent) !important;
-  box-shadow: inset 3px 0 0 var(--tertiary) !important;
-}
+  .sidebar-section-link.active,
+  .sidebar-section-link.--active,
+  .cn-channel-section-link.active,
+  .cn-channel-section-link.--active,
+  .cn-channel-section-link[aria-current="page"] {
+    color: var(--primary) !important;
+    background: var(--cn-active-strong) !important;
+    border-color: color-mix(
+      in srgb,
+      var(--tertiary) 20%,
+      transparent
+    ) !important;
+    box-shadow: inset 3px 0 0 var(--tertiary) !important;
+  }
 
-body:not(.admin-interface) .cn-server-button {
-  background: var(--cn-surface) !important;
-  border: 1px solid var(--cn-border) !important;
-  border-radius: 14px !important;
-  box-shadow: none !important;
-  transform: none !important;
-}
+  .cn-server-button {
+    background: var(--cn-surface) !important;
+    border: 1px solid var(--cn-border) !important;
+    border-radius: 14px !important;
+    box-shadow: none !important;
+    transform: none !important;
 
-body:not(.admin-interface) .cn-server-button::before {
-  width: 3px;
-  background: var(--tertiary);
-  box-shadow: none;
-}
+    &::before {
+      width: 3px;
+      background: var(--tertiary);
+      box-shadow: none;
+    }
 
-body:not(.admin-interface) .cn-server-button:not(.cn-server-button--brand):is(
-    :hover,
-    :focus-visible,
-    .is-active
-  ) {
-  color: var(--primary) !important;
-  background: var(--cn-surface-raised) !important;
-  border-color: var(--cn-border-strong) !important;
-  border-radius: 12px !important;
-  box-shadow: var(--cn-shadow-xs) !important;
-}
+    &:not(.cn-server-button--brand):is(:hover, :focus-visible, .is-active) {
+      color: var(--primary) !important;
+      background: var(--cn-surface-raised) !important;
+      border-color: var(--cn-border-strong) !important;
+      border-radius: 12px !important;
+      box-shadow: var(--cn-shadow-xs) !important;
+    }
+  }
 
-body:not(.admin-interface) .cn-server-button--brand {
-  color: #fff !important;
-  background: var(--tertiary) !important;
-  border-color: color-mix(in srgb, #fff 14%, transparent) !important;
-  box-shadow: none !important;
-}
+  .cn-server-button--brand {
+    color: #fff !important;
+    background: var(--tertiary) !important;
+    border-color: color-mix(in srgb, #fff 14%, transparent) !important;
+    box-shadow: none !important;
+  }
 
-body:not(.admin-interface) .cn-member {
-  border-radius: 9px !important;
-}
+  .cn-member {
+    border-radius: 9px !important;
 
-body:not(.admin-interface) .cn-member:is(:hover, :focus-visible) {
-  background: var(--cn-hover) !important;
-}
+    &:is(:hover, :focus-visible) {
+      background: var(--cn-hover) !important;
+    }
+  }
 
-body:not(.admin-interface) .cn-member__avatar {
-  background: color-mix(in srgb, var(--tertiary) 70%, var(--quaternary) 30%);
-}
+  .cn-member__avatar {
+    background: color-mix(
+      in srgb,
+      var(--tertiary) 70%,
+      var(--quaternary) 30%
+    );
+  }
 
-body:not(.admin-interface) #main-outlet {
-  padding-block-end: 48px;
-}
+  #main-outlet {
+    padding-block-end: 48px;
+  }
 
-body:not(.admin-interface) .navigation-container,
-body:not(.admin-interface) .list-controls .container,
-body:not(.admin-interface) .category-navigation {
-  gap: 10px;
-}
+  .navigation-container,
+  .list-controls .container,
+  .category-navigation {
+    gap: 10px;
+  }
 
-body:not(.admin-interface) .btn-default,
-body:not(.admin-interface) .btn-primary,
-body:not(.admin-interface) .btn-danger,
-body:not(.admin-interface) .btn-flat,
-body:not(.admin-interface) .select-kit-header {
-  border-radius: 10px !important;
-  box-shadow: none !important;
-  transition:
-    color 120ms ease,
-    background-color 120ms ease,
-    border-color 120ms ease,
-    box-shadow 120ms ease;
-}
+  .btn-default,
+  .btn-primary,
+  .btn-danger,
+  .btn-flat,
+  .select-kit-header {
+    border-radius: 10px !important;
+    box-shadow: none !important;
+    transition:
+      color 120ms ease,
+      background-color 120ms ease,
+      border-color 120ms ease,
+      box-shadow 120ms ease;
+  }
 
-body:not(.admin-interface) .btn-default,
-body:not(.admin-interface) .select-kit-header {
-  color: var(--primary-high) !important;
-  background: var(--cn-control) !important;
-  border: 1px solid var(--cn-control-outline) !important;
-}
+  .btn-default,
+  .select-kit-header {
+    color: var(--primary-high) !important;
+    background: var(--cn-control) !important;
+    border: 1px solid var(--cn-control-outline) !important;
 
-body:not(.admin-interface) .btn-default:is(:hover, :focus-visible),
-body:not(.admin-interface) .select-kit-header:is(:hover, :focus-visible) {
-  color: var(--primary) !important;
-  background: var(--cn-control-hover) !important;
-  border-color: var(--cn-control-outline-hover) !important;
-}
+    &:is(:hover, :focus-visible) {
+      color: var(--primary) !important;
+      background: var(--cn-control-hover) !important;
+      border-color: var(--cn-control-outline-hover) !important;
+    }
+  }
 
-body:not(.admin-interface) .btn-primary {
-  color: #fff !important;
-  background: var(--tertiary) !important;
-  border: 1px solid color-mix(in srgb, var(--tertiary) 74%, #fff 26%) !important;
-}
+  .btn-primary {
+    color: #fff !important;
+    background: var(--tertiary) !important;
+    border: 1px solid
+      color-mix(in srgb, var(--tertiary) 74%, #fff 26%) !important;
 
-body:not(.admin-interface) .btn-primary:is(:hover, :focus-visible) {
-  background: color-mix(in srgb, var(--tertiary) 88%, #fff 12%) !important;
-  box-shadow: 0 0 0 3px var(--cn-focus-ring) !important;
-}
+    &:is(:hover, :focus-visible) {
+      background: color-mix(
+        in srgb,
+        var(--tertiary) 88%,
+        #fff 12%
+      ) !important;
+      box-shadow: 0 0 0 3px var(--cn-focus-ring) !important;
+    }
+  }
 
-body:not(.admin-interface) .btn-danger {
-  border-radius: 10px !important;
-}
+  .btn-danger {
+    border-radius: 10px !important;
+  }
 
-body:not(.admin-interface) .btn-flat:is(:hover, :focus-visible) {
-  background: var(--cn-hover) !important;
-}
+  .btn-flat:is(:hover, :focus-visible) {
+    background: var(--cn-hover) !important;
+  }
 
-body:not(.admin-interface) input[type="text"],
-body:not(.admin-interface) input[type="search"],
-body:not(.admin-interface) input[type="email"],
-body:not(.admin-interface) input[type="password"],
-body:not(.admin-interface) input[type="url"],
-body:not(.admin-interface) input[type="number"],
-body:not(.admin-interface) textarea,
-body:not(.admin-interface) .d-editor-textarea-wrapper {
-  color: var(--primary) !important;
-  background: var(--cn-control) !important;
-  border: 1px solid var(--cn-control-outline) !important;
-  border-radius: 11px !important;
-  box-shadow: none !important;
-}
+  input[type="text"],
+  input[type="search"],
+  input[type="email"],
+  input[type="password"],
+  input[type="url"],
+  input[type="number"],
+  textarea,
+  .d-editor-textarea-wrapper {
+    color: var(--primary) !important;
+    background: var(--cn-control) !important;
+    border: 1px solid var(--cn-control-outline) !important;
+    border-radius: 11px !important;
+    box-shadow: none !important;
+  }
 
-body:not(.admin-interface) input[type="text"]:focus,
-body:not(.admin-interface) input[type="search"]:focus,
-body:not(.admin-interface) input[type="email"]:focus,
-body:not(.admin-interface) input[type="password"]:focus,
-body:not(.admin-interface) input[type="url"]:focus,
-body:not(.admin-interface) input[type="number"]:focus,
-body:not(.admin-interface) textarea:focus,
-body:not(.admin-interface) .d-editor-textarea-wrapper:focus-within {
-  border-color: color-mix(in srgb, var(--tertiary) 48%, transparent) !important;
-  box-shadow: 0 0 0 3px var(--cn-focus-ring) !important;
-  outline: 0 !important;
-}
+  input[type="text"]:focus,
+  input[type="search"]:focus,
+  input[type="email"]:focus,
+  input[type="password"]:focus,
+  input[type="url"]:focus,
+  input[type="number"]:focus,
+  textarea:focus,
+  .d-editor-textarea-wrapper:focus-within {
+    border-color: color-mix(
+      in srgb,
+      var(--tertiary) 48%,
+      transparent
+    ) !important;
+    box-shadow: 0 0 0 3px var(--cn-focus-ring) !important;
+    outline: 0 !important;
+  }
 
-body:not(.admin-interface) .menu-panel,
-body:not(.admin-interface) .user-menu,
-body:not(.admin-interface) .select-kit-body,
-body:not(.admin-interface) .fk-d-menu__inner-content,
-body:not(.admin-interface) .d-modal__container,
-body:not(.admin-interface) .composer-popup,
-body:not(.admin-interface) .dropdown-menu {
-  background: color-mix(in srgb, var(--cn-panel-strong) 96%, transparent) !important;
-  border: 1px solid var(--cn-border) !important;
-  border-radius: 14px !important;
-  box-shadow: var(--cn-shadow-lg) !important;
-  backdrop-filter: blur(18px) saturate(108%);
-}
+  .menu-panel,
+  .user-menu,
+  .select-kit-body,
+  .fk-d-menu__inner-content,
+  .d-modal__container,
+  .composer-popup,
+  .dropdown-menu {
+    background: color-mix(
+      in srgb,
+      var(--cn-panel-strong) 96%,
+      transparent
+    ) !important;
+    border: 1px solid var(--cn-border) !important;
+    border-radius: 14px !important;
+    box-shadow: var(--cn-shadow-lg) !important;
+    backdrop-filter: blur(18px) saturate(108%);
+  }
 
-body:not(.admin-interface) .select-kit-row,
-body:not(.admin-interface) .menu-panel li > a,
-body:not(.admin-interface) .menu-panel li > button,
-body:not(.admin-interface) .user-menu .quick-access-panel li {
-  border-radius: 9px;
-}
+  .select-kit-row,
+  .menu-panel li > a,
+  .menu-panel li > button,
+  .user-menu .quick-access-panel li {
+    border-radius: 9px;
+  }
 
-body:not(.admin-interface) .select-kit-row:is(.is-highlighted, :hover),
-body:not(.admin-interface) .menu-panel li > a:hover,
-body:not(.admin-interface) .menu-panel li > button:hover,
-body:not(.admin-interface) .user-menu .quick-access-panel li:hover {
-  background: var(--cn-hover) !important;
-}
+  .select-kit-row:is(.is-highlighted, :hover),
+  .menu-panel li > a:hover,
+  .menu-panel li > button:hover,
+  .user-menu .quick-access-panel li:hover {
+    background: var(--cn-hover) !important;
+  }
 
-body:not(.admin-interface) #reply-control,
-body:not(.admin-interface) .reply-area {
-  background: var(--cn-panel-strong) !important;
-  border: 1px solid var(--cn-border) !important;
-  border-radius: 18px 18px 0 0 !important;
-  box-shadow: var(--cn-shadow-lg) !important;
-}
+  #reply-control,
+  .reply-area {
+    background: var(--cn-panel-strong) !important;
+    border: 1px solid var(--cn-border) !important;
+    border-radius: 18px 18px 0 0 !important;
+    box-shadow: var(--cn-shadow-lg) !important;
+  }
 
-body:not(.admin-interface) #reply-control .grippie {
-  background: var(--cn-separator) !important;
-}
+  #reply-control .grippie {
+    background: var(--cn-separator) !important;
+  }
 
-body:not(.admin-interface) :focus-visible {
-  outline-color: var(--tertiary);
+  :focus-visible {
+    outline-color: var(--tertiary);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  body:not(.admin-interface) .d-header-icons .icon,
-  body:not(.admin-interface) .sidebar-section-link,
-  body:not(.admin-interface) .cn-channel-section-link,
-  body:not(.admin-interface) .btn-default,
-  body:not(.admin-interface) .btn-primary,
-  body:not(.admin-interface) .btn-flat,
-  body:not(.admin-interface) .select-kit-header {
-    transition: none;
+  body:not(.admin-interface) {
+    .d-header-icons .icon,
+    .sidebar-section-link,
+    .cn-channel-section-link,
+    .btn-default,
+    .btn-primary,
+    .btn-flat,
+    .select-kit-header {
+      transition: none;
+    }
   }
 }
