@@ -1,0 +1,110 @@
+@use "lib/viewport";
+
+/* Mobile compatibility fixes for current Discourse topic-list markup and
+ * discourse-user-cosmetics ambient avatar frames. Keep this layer narrow:
+ * desktop/topic-card presentation remains owned by the existing stylesheets. */
+
+@include viewport.until(md) {
+  body:not(.admin-interface) {
+    /* User Cosmetics now anchors ambient frames to a square avatar reference box
+       with top/left + width + scale. The older theme mobile cap used an
+       !important negative inset, which shifts that square up/left. Restore only
+       the geometry contract here and leave the plugin-owned scale untouched. */
+
+    :is(
+      .topic-list
+        .topic-list-data
+        > .pull-left
+        [data-user-card]:has(img.avatar),
+      #topic [data-user-card]:has(img.avatar),
+      .cn-featured-topic__avatar[data-user-card]:has(img.avatar),
+      .cn-member__avatar-wrap[data-user-card]:has(img.avatar)
+    )::after {
+      inset: auto !important;
+      top: 0 !important;
+      right: auto !important;
+      bottom: auto !important;
+      left: 0 !important;
+    }
+
+    /* Core renders bullet tags as inline-flex items. When many tags share the
+       narrow metadata row, flex shrinking can collapse the label while leaving
+       the 9px bullet visible as an anonymous square. Give tags a real remaining
+       width, ellipsize their text, and show at most two meaningful labels. */
+
+    .topic-list .topic-item-stats__category-tags {
+      display: flex;
+      min-width: 0;
+      max-width: none;
+      flex: 1 1 auto;
+      align-items: center;
+      gap: 4px;
+      overflow: hidden;
+      text-overflow: clip;
+      white-space: nowrap;
+    }
+
+    .topic-list .topic-item-stats__category-tags > .badge-category__wrapper {
+      min-width: 0;
+      max-width: 34vw;
+      flex: 0 1 auto;
+      margin-inline-end: 0;
+    }
+
+    .topic-list .topic-item-stats__category-tags > .discourse-tags {
+      display: flex;
+      min-width: 0;
+      max-width: none;
+      flex: 1 1 96px;
+      flex-wrap: nowrap;
+      align-items: center;
+      gap: 4px;
+      margin: 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .topic-list .topic-item-stats__category-tags > .discourse-tags > li {
+      display: flex;
+      min-width: 32px;
+      max-width: min(18vw, 84px);
+      flex: 1 1 0;
+      flex-wrap: nowrap;
+      overflow: hidden;
+    }
+
+    .topic-list
+      .topic-item-stats__category-tags
+      > .discourse-tags
+      > li:nth-child(n + 3) {
+      display: none;
+    }
+
+    .topic-list
+      .topic-item-stats__category-tags
+      > .discourse-tags
+      > li
+      > .discourse-tag {
+      display: block;
+      width: 100%;
+      min-width: 0;
+      max-width: 100%;
+      box-sizing: border-box;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .topic-list .topic-item-stats__category-tags .discourse-tag.bullet::before {
+      display: none;
+    }
+
+    .topic-list
+      .topic-item-stats__category-tags
+      > .discourse-tags:has(> li:nth-child(3))::after {
+      flex: 0 0 auto;
+      color: var(--primary-medium);
+      content: "…";
+    }
+  }
+}
