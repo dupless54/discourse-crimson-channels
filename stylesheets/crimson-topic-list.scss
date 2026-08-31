@@ -64,8 +64,15 @@ body:not(.admin-interface) {
     box-sizing: border-box;
     float: inline-start;
     flex: 0 0 var(--cn-topic-avatar-size);
+    margin-block: 0;
     margin-inline-end: 12px;
+    padding: 0;
+    overflow: visible;
     line-height: 0;
+    border-radius: 50%;
+    outline: 1px solid color-mix(in srgb, var(--primary) 9%, transparent);
+    outline-offset: 2px;
+    transition: transform 150ms ease;
   }
 
   .cn-topic-cell__author img.avatar {
@@ -78,14 +85,15 @@ body:not(.admin-interface) {
     border: 2px solid color-mix(in srgb, var(--primary) 10%, transparent);
     border-radius: 50%;
     box-shadow: var(--cn-shadow-xs);
-    transition:
-      border-color 150ms ease,
-      transform 150ms ease;
+    transition: border-color 150ms ease;
+  }
+
+  .cn-topic-cell__author:is(:hover, :focus-visible) {
+    transform: translateY(-1px);
   }
 
   .cn-topic-cell__author:is(:hover, :focus-visible) img.avatar {
     border-color: color-mix(in srgb, var(--cn-crimson) 55%, transparent);
-    transform: translateY(-1px);
   }
 
   /* Pinned accent as a pseudo-element on the native cell — no extra markup
@@ -236,6 +244,15 @@ body:not(.admin-interface) {
 
   .topic-list .discourse-tags__tag-separator {
     display: none;
+  }
+}
+
+@media (width >= 1440px) {
+  body:not(.admin-interface)
+    .topic-list
+    td.main-link.topic-list-data
+    > .cn-topic-cell__author {
+    --cn-topic-avatar-size: 46px;
   }
 }
 
