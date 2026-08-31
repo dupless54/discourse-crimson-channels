@@ -5,7 +5,7 @@ RSpec.describe "Crimson profile" do
   let!(:user) { Fabricate(:user, username: "premium_profile", name: "Premium Profile") }
 
   it "keeps native profile structure and applies the premium hierarchy" do
-    visit("/u/#{user.username}")
+    visit("/u/#{user.username}/summary")
 
     expect(page).to have_css(".user-main .about .user-profile-avatar img.avatar")
     expect(page).to have_css(".user-main .about .primary-textual", text: user.name)
