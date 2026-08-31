@@ -8,40 +8,23 @@
 
 A Discord-inspired full Discourse theme used as the visual shell for the senin.me community while preserving native Discourse routing, content, accessibility, and upgrade-safe behavior.
 
-## Main Branch Status
-
-The repository bootstrap has been merged to `main`. The current baseline includes the imported Crimson Channels theme, Minimum Token Context v3 development guidance, and official Discourse theme tooling/CI.
-
 ## Current Experience
 
 - Discord-like left server/navigation rail.
 - Native Discourse content and sidebar behavior preserved in the main content area.
-- Contextual online-member and recent-profile-visitor rail.
-- Desktop and mobile-specific layouts.
-- Compact mobile community drawer.
+- No theme-owned right member/community rail.
+- No mobile Crimson Community drawer or member toggle.
+- Desktop and mobile-specific layouts without reserving space for a right rail.
 - Custom Discord-style user-card presentation.
 - Featured topic sections configurable by category.
 - Light and dark Crimson color schemes.
-- Optional integration with [`discourse-crimson-community`](https://github.com/dupless54/discourse-crimson-community) for authenticated live community/profile-visitor data.
 - Responsive layouts built around Discourse theme variables instead of a separate application shell.
 
-## In Progress — Not Yet on `main`
+## Crimson Community Separation
 
-PR #2, **Crimson Channels security, SEO and performance hardening**, is currently open.
+Crimson Channels no longer renders or polls a Crimson Community member rail. The theme shell does not need `/crimson-community/online.json` or profile-visitor data to render its navigation/content layout.
 
-Its current scope includes:
-
-- keeping configured shell navigation on same-origin Discourse routes;
-- bounding long-lived community/profile and featured-topic caches;
-- retrying transient profile-banner failures;
-- improved mobile community-drawer focus handling, RTL behavior, light-mode overscroll, and narrow-width controls;
-- subfolder-safe internal routes/fetches through Discourse URL helpers;
-- preserving Discourse core ownership of canonical tags, metadata, JSON-LD, sitemaps, and crawler HTML instead of adding competing SEO output in the theme;
-- excluding dynamic community-rail boilerplate from search-result snippets with `data-nosnippet` while leaving native content indexable;
-- reducing unnecessary main-outlet mutation work and refreshing community data only while the rail is visible;
-- avatar intrinsic dimensions/async decoding and mobile repaint-cost reductions.
-
-These changes are not considered shipped until PR #2 is merged.
+If `discourse-crimson-community` is installed for its own `/community` experience or other plugin features, it remains independent. Removing the theme rail does not delete or modify that plugin's backend routes, data, privacy rules, or persistence.
 
 ## Security and SEO Principles
 
@@ -49,19 +32,8 @@ Crimson Channels is a **theme**, not a backend authorization layer.
 
 - User/topic text should continue to render through safe DOM/text APIs.
 - The theme should not introduce `eval`, dynamic function execution, or `javascript:` navigation.
-- Community/profile APIs remain same-origin and server-authorized by their owning plugins.
 - Canonical URLs, robots behavior, sitemap generation, structured data, and crawler HTML remain Discourse core/server responsibilities unless a specifically reviewed integration requires otherwise.
-- The theme must remain usable when optional companion endpoints are unavailable.
-
-## Crimson Community Integration
-
-The theme can consume public/authenticated contracts from `discourse-crimson-community` for:
-
-- online-member information;
-- recent profile visitors;
-- profile-background presentation data.
-
-Crimson Community owns that server truth. Crimson Channels should fail gracefully instead of inventing presence or visitor data in the browser.
+- Optional companion plugins must never be required for core forum navigation or reading.
 
 ## Installation
 
@@ -72,12 +44,6 @@ https://github.com/dupless54/discourse-crimson-channels
 ```
 
 After installation, review the theme settings and enable the matching light/dark color schemes as appropriate for your forum.
-
-For the full community rail/profile-visitor experience, install the companion plugin:
-
-```text
-https://github.com/dupless54/discourse-crimson-community
-```
 
 ## Development
 
