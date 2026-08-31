@@ -58,10 +58,7 @@ RSpec.describe "Crimson discovery" do
 
     selector = ".tags-list .tag-box:has([data-tag-name='#{tag.name}'])"
     expect(page).to have_css(selector)
-    display =
-      page.evaluate_script(
-        "getComputedStyle(document.querySelector('.tags-list')).display",
-      )
+    display = page.evaluate_script("getComputedStyle(document.querySelector('.tags-list')).display")
     float =
       page.evaluate_script(
         "getComputedStyle(document.querySelector(\"#{selector}\")).float",
