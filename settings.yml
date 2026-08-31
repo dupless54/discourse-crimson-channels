@@ -2,20 +2,6 @@ brand_initial:
   type: string
   default: "S"
 
-member_panel_title:
-  type: string
-  default: "ÇEVRİMİÇİ"
-
-member_rail_enabled:
-  type: bool
-  default: true
-
-member_rail_limit:
-  type: integer
-  default: 12
-  min: 4
-  max: 24
-
 forum_width_percent:
   type: integer
   default: 100
@@ -73,20 +59,6 @@ member_hover_card_delay_seconds:
   default: 3
   min: 1
   max: 10
-
-recent_profiles_enabled:
-  type: bool
-  default: true
-
-recent_profiles_title:
-  type: string
-  default: "SON PROFİL ZİYARETÇİLERİ"
-
-recent_profiles_limit:
-  type: integer
-  default: 12
-  min: 4
-  max: 24
 
 featured_topic_lists:
   type: objects
