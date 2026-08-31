@@ -47,8 +47,10 @@ RSpec.describe "Crimson mobile topic-list compatibility", mobile: true do
     expect(page.evaluate_script("#{frame_host}.getBoundingClientRect().height")).to eq(36)
     expect(page.evaluate_script("#{frame_style}.top")).to eq("0px")
     expect(page.evaluate_script("#{frame_style}.left")).to eq("0px")
-    expect(page.evaluate_script("#{frame_style}.right")).to eq("auto")
-    expect(page.evaluate_script("#{frame_style}.bottom")).to eq("auto")
+    expect(page.evaluate_script("#{frame_style}.width")).to eq("36px")
+    expect(page.evaluate_script("#{frame_style}.height")).to eq("36px")
+    expect(page.evaluate_script("#{frame_style}.aspectRatio")).to eq("1 / 1")
+    expect(page.evaluate_script("#{frame_style}.transform")).not_to eq("none")
   end
 
   it "keeps overflowing mobile tags readable instead of collapsing them to bullet squares" do
