@@ -10,20 +10,13 @@ RSpec.describe "Crimson Channels mobile shell", mobile: true do
     expect(page).to have_css(".cn-mobile-servers-link[href='/servers']", visible: true)
   end
 
-  it "opens and closes the community drawer from the header toggle" do
+  it "does not render the retired Community drawer controls" do
     visit("/")
 
-    toggle = find(".cn-mobile-community-toggle", visible: true)
-    expect(toggle["aria-expanded"]).to eq("false")
-
-    toggle.click
-
-    expect(page).to have_css("body.cn-mobile-community-open", visible: :all)
-    expect(page).to have_css(".cn-mobile-community-toggle[aria-expanded='true']", visible: true)
-
-    toggle.click
-
+    expect(page).to have_no_css(".cn-mobile-community-toggle", visible: :all)
+    expect(page).to have_no_css(".cn-mobile-community-toggle-item", visible: :all)
+    expect(page).to have_no_css(".cn-mobile-community-backdrop", visible: :all)
+    expect(page).to have_no_css("#cn-community-panel", visible: :all)
     expect(page).to have_no_css("body.cn-mobile-community-open", visible: :all)
-    expect(page).to have_css(".cn-mobile-community-toggle[aria-expanded='false']", visible: true)
   end
 end
