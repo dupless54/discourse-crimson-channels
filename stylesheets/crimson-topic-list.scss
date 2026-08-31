@@ -1,0 +1,314 @@
+/* Premium topic list — desktop/tablet social cards + compact colorful mobile rows.
+ *
+ * `javascripts/discourse/api-initializers/crimson-topic-list-v2.js` replaces the
+ * core "topic" column with `CrimsonTopicCell` (`.cn-topic-cell`) on non-mobile
+ * layouts. That component intentionally mirrors core's
+ * `topic-list/item/topic-cell.gjs` markup (`.link-top-line` / `.link-bottom-line`
+ * / `dCategoryLink` / `dDiscourseTags`) and only adds an inline avatar, so this
+ * file targets the *current* core class names rather than the pre-refactor
+ * `.cn-topic-author` column CSS it replaces.
+ *
+ * On mobile, core's `topic-list/item.gjs` renders its own hard-coded markup
+ * instead of `@columns` (`.pull-left` / `.topic-item-metadata` /
+ * `.topic-item-stats`, already handled in `mobile/mobile.scss`); this file adds
+ * the colorful category-chip treatment shared by both layouts.
+ */
+
+body:not(.admin-interface) {
+  /* ----------------------------------------------------------------------
+     Desktop/tablet: CrimsonTopicCell card internals
+     ---------------------------------------------------------------------- */
+
+  .cn-topic-cell {
+    position: relative;
+    padding-block: 12px !important;
+    padding-inline: 16px 14px !important;
+    vertical-align: top;
+  }
+
+  .cn-topic-cell__rail {
+    position: absolute;
+    inset-block: 9px;
+    inset-inline-start: 4px;
+    width: 3px;
+    background: transparent;
+    border-radius: 999px;
+    transition:
+      background-color 150ms ease,
+      box-shadow 150ms ease;
+  }
+
+  .topic-list-item:is(.pinned, .pinned-globally) .cn-topic-cell__rail {
+    background: var(--cn-crimson);
+    box-shadow: 0 0 10px var(--cn-active);
+  }
+
+  .cn-topic-cell__layout {
+    display: flex;
+    min-width: 0;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .cn-topic-cell__author {
+    display: block;
+    flex: 0 0 auto;
+    line-height: 0;
+  }
+
+  .cn-topic-cell__author img.avatar {
+    width: 42px;
+    height: 42px;
+    box-sizing: border-box;
+    object-fit: cover;
+    border: 2px solid color-mix(in srgb, var(--primary) 10%, transparent);
+    border-radius: 50%;
+    box-shadow: var(--cn-shadow-xs);
+    transition:
+      border-color 150ms ease,
+      transform 150ms ease;
+  }
+
+  .cn-topic-cell__author:is(:hover, :focus-visible) img.avatar {
+    border-color: color-mix(in srgb, var(--cn-crimson) 55%, transparent);
+    transform: translateY(-1px);
+  }
+
+  .cn-topic-cell__content {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  .cn-topic-cell .link-top-line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 3px 6px;
+    line-height: 1.35;
+  }
+
+  .cn-topic-cell .raw-topic-link.title {
+    color: var(--primary-high);
+    font-weight: 650;
+    letter-spacing: -0.01em;
+  }
+
+  .cn-topic-cell .raw-topic-link.title:hover {
+    color: var(--tertiary);
+  }
+
+  .cn-topic-cell .raw-topic-link.title:focus-visible {
+    border-radius: 4px;
+    outline: 2px solid var(--cn-focus-border);
+    outline-offset: 2px;
+  }
+
+  .cn-topic-cell .topic-statuses {
+    display: inline-flex;
+    gap: 3px;
+    color: var(--cn-muted);
+  }
+
+  .cn-topic-cell .topic-status.--pinned {
+    color: var(--cn-crimson);
+  }
+
+  .cn-topic-cell .topic-status.--bookmarked {
+    color: var(--cn-a);
+  }
+
+  .topic-list-item.unseen-topic .cn-topic-cell .raw-topic-link.title,
+  .topic-list-item.unread-posts .cn-topic-cell .raw-topic-link.title {
+    font-weight: 750;
+  }
+
+  .cn-topic-cell .link-bottom-line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    min-width: 0;
+    gap: 6px;
+    margin-top: 6px;
+  }
+
+  .cn-topic-cell .participant-group-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .cn-topic-cell .participant-group .user-group {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    color: var(--cn-muted);
+    background: var(--cn-surface);
+    border-radius: 999px;
+    font-size: var(--font-down-1);
+    text-decoration: none;
+  }
+
+  .cn-topic-cell .post-actions.likes {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--cn-muted);
+    font-size: var(--font-down-1);
+  }
+
+  .cn-topic-cell .post-actions.likes .d-icon {
+    color: color-mix(in srgb, var(--cn-crimson) 70%, var(--cn-muted));
+  }
+
+  .topic-list-item.bulk-selected .cn-topic-cell {
+    background: var(--cn-active) !important;
+  }
+
+  /* ----------------------------------------------------------------------
+     Numeric columns (replies / likes / activity) read as part of the card row
+     ---------------------------------------------------------------------- */
+
+  .topic-list .topic-list-data.num {
+    vertical-align: middle;
+  }
+
+  .topic-list .badge-posts {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 30px;
+    padding: 3px 9px;
+    color: var(--primary-high) !important;
+    background: var(--cn-surface);
+    font-weight: 600;
+  }
+
+  .topic-list-item:is(:hover, :focus-within) .badge-posts {
+    background: var(--cn-surface-raised);
+  }
+
+  .topic-list .post-activity {
+    color: var(--cn-muted);
+  }
+
+  /* ----------------------------------------------------------------------
+     Category chip — shared by desktop cards and mobile compact rows.
+     Color always comes from the topic's own category via the
+     `--category-badge-color` / `--category-badge-text-color` custom
+     properties Discourse core sets inline on the wrapper element.
+     ---------------------------------------------------------------------- */
+
+  .topic-list .badge-category__wrapper {
+    display: inline-flex;
+    align-items: center;
+    max-width: 100%;
+    padding: 3px 9px 3px 7px;
+    overflow: hidden;
+    color: color-mix(
+      in srgb,
+      var(--category-badge-color, var(--cn-muted)) 78%,
+      var(--primary) 22%
+    );
+    text-decoration: none;
+    background: color-mix(
+      in srgb,
+      var(--category-badge-color, var(--cn-muted)) 12%,
+      var(--cn-surface)
+    );
+    border: 1px solid
+      color-mix(
+        in srgb,
+        var(--category-badge-color, var(--cn-muted)) 32%,
+        transparent
+      );
+    border-radius: 999px;
+    transition:
+      background-color 120ms ease,
+      border-color 120ms ease;
+  }
+
+  .topic-list .badge-category__wrapper:is(:hover, :focus-visible) {
+    background: color-mix(
+      in srgb,
+      var(--category-badge-color, var(--cn-muted)) 22%,
+      var(--cn-surface)
+    );
+    border-color: color-mix(
+      in srgb,
+      var(--category-badge-color, var(--cn-muted)) 48%,
+      transparent
+    );
+  }
+
+  .topic-list .badge-category {
+    display: contents;
+  }
+
+  .topic-list .badge-category__wrapper:not(:has(.d-icon, img))::before {
+    width: 7px;
+    height: 7px;
+    flex: 0 0 auto;
+    margin-inline-end: 5px;
+    content: "";
+    background: var(--category-badge-color, var(--cn-muted));
+    border-radius: 50%;
+  }
+
+  .topic-list .badge-category .d-icon {
+    width: 0.68em;
+    height: 0.68em;
+    margin-inline-end: 5px;
+    color: var(--category-badge-color, currentcolor);
+  }
+
+  .topic-list .badge-category__name {
+    overflow: hidden;
+    color: inherit;
+    font-weight: 600;
+    font-size: var(--font-down-1);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Tags stay secondary to the category identity. */
+  .topic-list .discourse-tags {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .topic-list .discourse-tags__tag-separator {
+    display: none;
+  }
+}
+
+/* ----------------------------------------------------------------------
+   Mobile: compact, colorful, fast to scan.
+   ---------------------------------------------------------------------- */
+
+body.mobile-view:not(.admin-interface) {
+  .topic-list .badge-category__wrapper {
+    padding: 2px 7px 2px 6px;
+    font-size: var(--font-down-1);
+  }
+
+  .topic-list .badge-category__wrapper::before {
+    width: 6px;
+    height: 6px;
+    margin-inline-end: 4px;
+  }
+
+  .topic-list .badge-category__name {
+    max-width: 34vw;
+  }
+
+  .topic-list .discourse-tag {
+    padding: 1px 6px !important;
+    font-size: 0.68rem !important;
+  }
+}

@@ -3,46 +3,75 @@
 ## Main
 - repository: `dupless54/discourse-crimson-channels`
 - base branch: `main`
-- main SHA at start of current work: `a2b7d8735d5b31861e73a25c8b17695bdbb6bc33`
+- main SHA at start of current work: `816e034fd4b6a4e3530373a83c2b7bd903e508c3`
 - delivery gate: latest exact PR head must have Official Discourse Theme CI `completed / success`
 
 ## Active work
-- branch: `refactor/remove-community-rail`
-- scope: remove the Crimson Community right member rail from the theme shell and make the theme independent from Community presence/profile-visitor data
-- effort/risk: bounded frontend/config/test refactor; cross-plugin behavior is being removed rather than expanded
+- branch: `claude/crimson-channels-redesign-968c75`
+- scope: multi-phase premium visual redesign requested end-to-end (design system, topic list,
+  topic page, discovery, profile, composer, search, responsive/dark-light parity). This session
+  delivers **Phase 1: the topic list** (explicitly the highest-priority surface in the request),
+  desktop/tablet and mobile, light and dark. Remaining phases are follow-up work, not yet started.
+- effort/risk: bounded frontend/CSS change; no server logic, no public-contract change
 
-## Intended shipped behavior
-- keep the Discord-like left quick-navigation/server rail
-- keep native Discourse sidebar/content/header behavior
-- remove `#cn-community-panel` and the desktop right member rail
-- remove the server-rail member toggle
-- remove the mobile Community drawer/backdrop/header toggle
-- reserve zero desktop width for the retired member rail
-- remove Community-rail-specific theme settings and locale descriptions
-- do not require `/crimson-community/online.json` or profile-visitor payloads for the theme shell
-- leave `discourse-crimson-community` itself untouched and independent if installed
-- keep unrelated profile-card/banner, navigation, featured-topic, and visual features
+## What Phase 1 actually fixed
+- `javascripts/discourse/api-initializers/crimson-topic-list-v2.js` +
+  `javascripts/discourse/components/crimson-topic-cell.gjs` (a prior session's work) already
+  replace the core desktop "topic" column with `CrimsonTopicCell`, but **no stylesheet anywhere
+  targeted its markup** (`.cn-topic-cell`, `.link-top-line`, `.link-bottom-line`) — verified by
+  grepping every `stylesheets/*.scss`, `desktop/desktop.scss`, `mobile/mobile.scss` for those
+  classes before this change (zero matches). The desktop topic list was effectively unstyled by
+  Crimson.
+- `desktop/desktop.scss` also carried a large dead block (`.cn-topic-author` /
+  `.cn-topic-author-header`) styling a `crimson-topic-author` column that
+  `crimson-topic-list-v2.js` deletes — confirmed by reading current
+  `discourse/discourse` core (`frontend/discourse/app/components/topic-list/item.gjs` and
+  `item/topic-cell.gjs`, fetched via a local sparse read-only clone) to establish the real,
+  current DOM. That dead block is removed; a small genuinely-breakpoint-specific rule
+  (`.cn-topic-cell__author` avatar upsizing at `>=1440px`) replaces it.
+- New `stylesheets/crimson-topic-list.scss` (imported from `common/common.scss` after
+  `crimson-premium-pages`) styles: the `.cn-topic-cell` avatar+content layout, title/status row,
+  category/tag/participant/likes row, pinned rail accent, unread/selected/bulk-selected states,
+  keyboard focus ring on the title link, and a shared premium category-chip treatment
+  (`.topic-list .badge-category__wrapper`) that colors itself from the topic's own category via
+  the `--category-badge-color` / `--category-badge-text-color` custom properties Discourse core
+  already sets inline (`frontend/discourse/app/helpers/category-variables.js`) — this is the
+  concrete mechanism behind the "colorful compact category chip" requirement for both desktop
+  cards and the native mobile row (`mobile/mobile.scss`'s existing `.pull-left` /
+  `.topic-item-metadata` / `.topic-item-stats` markup was already correct and untouched; it only
+  lacked color).
+- Mobile's own hard-coded topic-list markup (core `item.gjs`'s `useMobileLayout` branch) was
+  verified separately from the desktop `@columns` path and left as-is structurally.
 
-## Compatibility strategy
+## Compatibility strategy (carried over, unchanged by this session)
 - `common/body_tag.html` no longer emits Community/member markup.
-- `stylesheets/crimson-community-removal.scss` is loaded last and neutralizes old rail geometry while legacy selectors remain in older shared/desktop/mobile stylesheets.
-- `javascripts/discourse/api-initializers/zz-crimson-community-removal.js` keeps old dynamically-created Community controls inert and maintains `cn-member-rail-disabled`; this prevents the legacy initializer from polling Community endpoints while its unrelated responsibilities are still present.
-- The older monolithic `crimson-channels.js` should be decomposed in a later dedicated cleanup rather than risk deleting unrelated user-card/profile/navigation behavior in this removal task.
+- `stylesheets/crimson-community-removal.scss` neutralizes old right-rail geometry; legacy
+  `.cn-member-rail*` selectors intentionally remain (documented, inert) in
+  `desktop/desktop.scss` — do not remove them casually; they are a separate, already-reviewed
+  cleanup item, not part of this session's topic-list scope. Do not reintroduce the right rail.
 
 ## Regression coverage
-- system shell spec asserts the right Community panel, member button, mobile toggle, and backdrop are absent
-- structured navigation, brand setting, empty navigation configuration, and group-restricted navigation remain covered
+- New `spec/system/crimson_topic_list_spec.rb`: asserts `.cn-topic-cell` + avatar render on
+  `/latest`, the category chip carries the topic's actual `--category-badge-color`, the pinned
+  rail accent is scoped to pinned rows only, and the mobile layout still renders the colored
+  category chip through its own (non-`cn-topic-cell`) markup.
+- Prior shell/navigation/community-removal coverage untouched.
 
 ## Validation
-- exact changed-path review required before PR
-- Official Discourse Theme CI required on the latest exact PR head
-- lint/build/system-test failures must be fixed at their first actionable root cause; do not weaken regression coverage
+- `pnpm lint:css`, `pnpm lint:css:fix`, `pnpm lint:prettier`, `pnpm lint:js`: ran locally, clean.
+- `spec/system/crimson_topic_list_spec.rb` and the rest of `spec/system/`: **NOT RUN** locally —
+  this repo has no local Rails/Capybara harness (`Gemfile` only carries `rubocop-discourse` +
+  `syntax_tree`); Ruby syntax was checked (`ruby -c`, OK). Official Discourse Theme CI on the
+  exact PR head is the authoritative run.
+- Exact changed-path review still required before PR per repo governance.
 
 ## Known blockers
-- no product blocker: the user explicitly requested removal of the theme right bar and Crimson Community shell section
-- merge remains blocked until latest exact-head Official Discourse Theme CI is GREEN
+- none for Phase 1; merge remains gated on latest-exact-head Official Discourse Theme CI GREEN.
 
 ## Next action
-- verify branch diff, open PR, run exact-head Official Discourse Theme CI, remediate if needed, then squash merge with `expected_head_sha`
+- Open the PR for Phase 1, get exact-head Official Discourse Theme CI GREEN, remediate if needed.
+- Follow-up phases (not started): topic reading page, categories/tags/discovery, profile/user
+  cards, composer/forms, search/menus/overlays, remaining dark/light + tablet parity audit across
+  the rest of the surfaces listed in the original request.
 
 Rules: source/tests beat this document; refresh stale SHA/CI claims; `NO_CI != GREEN`.
