@@ -4,82 +4,46 @@
 
 - repository: `dupless54/discourse-crimson-channels`
 - base branch: `main`
-- main SHA: `6c6333c57f32ffb2c6a882d19c69ecdc7d65cd1a`
-- latest landed phase: PR #44, native `TopicCell` + outlet-injected topic author avatar
-- delivery gate: latest exact PR head Official Discourse Theme CI must be `completed / success`
+- latest landed phase: PR #45, core-native premium category, tag, and discovery surfaces
+- delivery gate: the latest exact PR head must pass the required Official Discourse Theme CI
 
-## Active task packet
+## Active work
 
-- Goal: Phase 6 premium categories, tags, and discovery surfaces on desktop, tablet, mobile,
-  and narrow screens without replacing current Discourse structure.
-- Branch: `codex/premium-discovery-phase6`
-- Allowed paths: `common/common.scss`, `stylesheets/crimson-common.scss`,
-  `stylesheets/crimson-premium-pages.scss`, `stylesheets/crimson-premium-mobile.scss`,
-  `stylesheets/crimson-discovery.scss`, `spec/system/crimson_discovery_spec.rb`, this file.
-- Acceptance: native category box/table/tag markup remains intact; no fixed translated pseudo-text;
-  no topic-list/avatar-cosmetic regression; fluid layout at desktop, 820px tablet, and mobile.
-- Validation: diff/path check, CSS/format/Ruby lint, targeted system specs, exact-head Official CI.
-- Risk: CSS cascade and responsive overflow only; no backend, persistence, or cross-plugin contract.
-- Effort tier: T1.
-- Escalation: unexpected current-core markup mismatch, optional-plugin ownership, or repeated CI failure.
+- no open implementation PR
+- no known product, security, architecture, or compatibility blocker
 
-## Native-source audit — Phase 6
+## Current implementation
 
-- Official guides consulted:
-  - Developing Themes & Theme Components
-  - Theme Developer Quick Reference
-  - Structure of themes and theme components
-  - Use Discourse Core Variables in your Theme
-  - Minimizing Maintenance on Theme Customizations
-  - Designing for Responsive Widths
-  - Designing for Different Devices (Touch & Hover)
-  - End-to-end system testing for themes
-- Current core implementation consulted:
-  - `frontend/discourse/app/components/discovery/layout.gjs`
-  - `frontend/discourse/app/components/discovery/categories-display.gjs`
-  - `frontend/discourse/app/components/categories-boxes.gjs`
-  - `frontend/discourse/app/components/categories-boxes-with-topics.gjs`
-  - `frontend/discourse/app/components/tag-list.gjs`
-  - `app/assets/stylesheets/common/base/category-list.scss`
-  - `app/assets/stylesheets/common/base/tagging.scss`
-  - official Horizon `themes/horizon/scss/categories-view.scss` as a maintained design reference
-- Core already owns:
-  - responsive category auto-fit grids and mobile category modes;
-  - category table semantics, category-color rail, descriptions, subcategories, and topic counts;
-  - tag links/counts and tag metadata;
-  - discovery routing, accessibility, and plugin outlets.
-- Theme delta:
-  - remove the legacy 500+ line XenForo category reconstruction that converted tables to custom
-    grids and inserted hard-coded Turkish labels with pseudo-elements;
-  - add one focused `crimson-discovery.scss` module that retints native variables/surfaces,
-    polishes category cards and tables, and turns core tag boxes into a fluid CSS grid;
-  - enable hover elevation only for `.discourse-no-touch`; touch layouts remain fully usable
-    without hover;
-  - use a mobile-first narrow-width adjustment at the current core `md` boundary (`48rem`);
-  - add no `!important` declarations in the new module.
-
-## Compatibility invariants
-
+- The premium shell, topic list, topic-reading surfaces, category directory, and tag directory are
+  delivered as focused modules over current Discourse structure.
+- Topic rows use native `TopicCell`; the author avatar is outlet-injected through `DUserLink` and
+  keeps the `[data-user-card]` + `img.avatar` anchors used by avatar cosmetics.
+- Category tables, category boxes, tags, routes, accessibility, and plugin outlets remain
+  core-owned. The theme adds semantic-variable retinting and responsive surface polish only.
+- The retired category reconstruction and its fixed pseudo-labels are removed.
+- Discovery layouts cover desktop, 820px tablet, mobile, and narrow screens without document-level
+  horizontal overflow.
+- Hover elevation is limited to `.discourse-no-touch`; reduced-motion behavior remains available.
 - The theme remains frontend-only and does not depend on Crimson Community endpoints.
-- PR #44's native topic cell and `DUserLink` avatar connector remain untouched.
-- Avatar cosmetic anchors (`[data-user-card]` + `img.avatar`) remain unchanged.
-- Native routes, focus behavior, category links, tag links, and admin interface remain core-owned.
-- Light/dark behavior continues through semantic Discourse CSS custom properties.
 
-## Validation status
+## Validation evidence
 
-- Local dependency install: blocked by the workspace network policy; not counted as passing.
-- Local Ruby toolchain: unavailable in this workspace; not counted as passing.
-- `git diff --check`: pending final run.
-- Official Discourse Theme CI: `NO_CI` until the branch is pushed and PR opened.
+- PR #45 exact head `5ef6244786c6d19cdada0508cfd187e37bd2f3fc`:
+  - `ci / linting`: success
+  - `ci / check_for_tests`: success
+  - `ci / backend_tests`: success
+  - `ci / system_tests`: success
+- Discovery system coverage includes native category cards, 820px tablet overflow, fluid tags, and
+  mobile category cards.
+- Existing core-feature, shell, topic-list/avatar, and topic-reading system coverage also passed on
+  the same exact head.
 
 ## Next action
 
-1. Finalize the scoped diff and run all locally available checks.
-2. Push the branch through the GitHub connector and open a PR.
-3. Use exact-head Official Discourse Theme CI for lint, build, and responsive system tests.
-4. Apply at most three smallest-root-cause remediation rounds; never weaken tests.
-5. Squash merge only when the exact head is green and no blocker remains.
+1. Audit remaining profile, search, composer, chat, and server-list surfaces against current core.
+2. Keep only evidenced visual deltas; remove legacy selector overrides before adding new polish.
+3. Add route-level responsive coverage for any changed surface.
+4. Deliver the next bounded phase through PR and fresh exact-head CI.
 
-Rules: current source/tests beat this document; a new commit invalidates old CI evidence;
-`NO_CI != GREEN`.
+Rules: current source/tests beat this document; a new implementation commit invalidates old CI
+evidence; `NO_CI != GREEN`.
