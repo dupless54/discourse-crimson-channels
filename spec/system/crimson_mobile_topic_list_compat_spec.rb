@@ -6,7 +6,7 @@ RSpec.describe "Crimson mobile topic-list compatibility", mobile: true do
   it "keeps User Cosmetics ambient avatar frames centered on the square avatar box" do
     visit("/")
 
-    page.execute_script(<<~JS)
+    page.execute_script <<~JS
       const style = document.createElement("style");
       style.textContent = `
         [data-user-card="frame-test"]:has(img.avatar):not(.main-avatar) {
@@ -40,8 +40,7 @@ RSpec.describe "Crimson mobile topic-list compatibility", mobile: true do
       document.body.appendChild(fixture);
     JS
 
-    frame_host =
-      "document.querySelector('[data-user-card=\"frame-test\"]')"
+    frame_host = "document.querySelector('[data-user-card=\"frame-test\"]')"
     frame_style = "getComputedStyle(#{frame_host}, '::after')"
 
     expect(page.evaluate_script("#{frame_host}.getBoundingClientRect().width")).to eq(36)
@@ -55,7 +54,7 @@ RSpec.describe "Crimson mobile topic-list compatibility", mobile: true do
   it "keeps overflowing mobile tags readable instead of collapsing them to bullet squares" do
     visit("/")
 
-    page.execute_script(<<~JS)
+    page.execute_script <<~JS
       const fixture = document.createElement("div");
       fixture.className = "topic-list";
       fixture.innerHTML = `
