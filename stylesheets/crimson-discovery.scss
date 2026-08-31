@@ -1,0 +1,264 @@
+/* Premium discovery surfaces for categories and tags.
+ *
+ * Native-first audit:
+ * - category markup: current core categories-boxes.gjs / category-list.scss
+ * - tag markup: current core tagging.scss
+ * - responsive behavior: current viewport guidance (xs–2xl, mobile first)
+ *
+ * Core keeps ownership of tables, category boxes, links, counts, and mobile
+ * rendering. This module only retints semantic variables and adds card-level
+ * polish. It intentionally contains no translated pseudo-element text and no
+ * desktop-table-to-grid reconstruction.
+ */
+
+body:not(.admin-interface) {
+  .categories-list,
+  .tags-page {
+    --d-category-box-background-color: var(--cn-panel);
+    --category-boxes-description-text-color: var(--cn-muted);
+    --tag-text-color: var(--primary-high);
+  }
+
+  /* Category boxes already use a responsive auto-fit grid in core. */
+  .category-boxes,
+  .category-boxes-with-topics {
+    --category-boxes-min-width: min(100%, 18rem);
+
+    gap: var(--space-4);
+  }
+
+  .category-boxes .category-box,
+  .category-boxes-with-topics .category-box {
+    overflow: clip;
+    background: var(--cn-panel);
+    border-color: var(--category-badge-color, var(--cn-border-strong));
+    border-radius: var(--cn-radius-md);
+    box-shadow: var(--cn-shadow-xs);
+    transition:
+      border-color 140ms ease,
+      box-shadow 140ms ease,
+      transform 140ms ease;
+  }
+
+  .category-boxes .category-box-inner,
+  .category-boxes-with-topics .category-box-inner {
+    min-width: 0;
+    background: transparent;
+    border-color: var(--cn-border);
+    border-start-end-radius: var(--cn-radius-md);
+    border-end-end-radius: var(--cn-radius-md);
+  }
+
+  .category-boxes .category-box-heading,
+  .category-boxes-with-topics .category-box-heading {
+    margin-block-end: var(--space-2);
+  }
+
+  .category-boxes .category-box-heading h3,
+  .category-boxes-with-topics .category-box-heading h3 {
+    margin: 0;
+    color: var(--primary);
+    font-size: var(--font-up-1);
+    font-weight: 750;
+    letter-spacing: -0.015em;
+    text-align: start;
+  }
+
+  .category-boxes .description,
+  .category-boxes-with-topics .description,
+  .categories-list .category-description {
+    color: var(--cn-muted);
+    line-height: var(--line-height-large);
+    text-align: start;
+  }
+
+  .category-boxes .subcategories,
+  .category-boxes-with-topics .subcategories,
+  .category-list .subcategories {
+    gap: var(--space-1) var(--space-2);
+  }
+
+  .category-boxes .subcategory .badge-category__wrapper,
+  .category-boxes-with-topics .subcategory .badge-category__wrapper,
+  .category-list .subcategory .badge-category__wrapper {
+    padding: 0.2em 0.55em;
+    background: color-mix(
+      in srgb,
+      var(--category-badge-color, var(--primary)) 9%,
+      var(--cn-surface)
+    );
+    border: 1px solid
+      color-mix(
+        in srgb,
+        var(--category-badge-color, var(--primary)) 24%,
+        transparent
+      );
+    border-radius: 999px;
+  }
+
+  /* Preserve core's table semantics and category-color rail. */
+  #list-area .category-list {
+    overflow: hidden;
+    background: var(--cn-panel);
+    border: 1px solid var(--cn-border);
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: var(--cn-radius-md);
+    box-shadow: var(--cn-shadow-xs);
+  }
+
+  #list-area .category-list > thead th {
+    background: var(--cn-surface);
+    border-color: var(--cn-separator);
+    color: var(--d-topic-list-header-text-color);
+    font-size: var(--font-down-1);
+    font-weight: 700;
+  }
+
+  #list-area .category-list > tbody > tr {
+    background: transparent;
+    transition: background-color 120ms ease;
+  }
+
+  #list-area .category-list > tbody > tr:is(:hover, :focus-within) {
+    background: var(--cn-hover);
+  }
+
+  #list-area .category-list td,
+  #list-area .category-list th {
+    border-color: var(--cn-separator);
+  }
+
+  #list-area .category-list .category-name {
+    color: var(--primary);
+    font-weight: 750;
+    letter-spacing: -0.012em;
+  }
+
+  #list-area .category-list .featured-topic .title {
+    color: var(--primary-high);
+    font-weight: 600;
+  }
+
+  /* Replace core's fixed-width floated tag boxes with a fluid card grid. */
+  .tags-index .tags-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+    gap: var(--space-2);
+    margin-block-start: var(--space-6);
+    padding-block-end: var(--space-4);
+    border-color: var(--cn-separator);
+  }
+
+  .tags-index .tags-list h3 {
+    grid-column: 1 / -1;
+    margin-block-end: var(--space-2);
+    color: var(--primary);
+    font-size: var(--font-up-1);
+  }
+
+  .tags-index .tags-list .tag-box {
+    display: flex;
+    float: none;
+    width: auto;
+    min-width: 0;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+    box-sizing: border-box;
+    margin: 0;
+    padding: var(--space-3);
+    background: var(--cn-panel);
+    border: 1px solid var(--cn-border);
+    border-radius: var(--cn-radius-sm);
+    box-shadow: var(--cn-shadow-xs);
+    transition:
+      background-color 120ms ease,
+      border-color 120ms ease,
+      transform 120ms ease;
+  }
+
+  .tags-index .tags-list .tag-box .discourse-tag {
+    min-width: 0;
+    color: var(--primary-high);
+    font-weight: 650;
+  }
+
+  .tags-index .tags-list .tag-box .tag-count {
+    flex: 0 0 auto;
+    color: var(--cn-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .tags-index .tags-list > .clearfix {
+    display: none;
+  }
+
+  section.tag-info {
+    padding: var(--space-4);
+    background: var(--cn-panel);
+    border: 1px solid var(--cn-border);
+    border-radius: var(--cn-radius-md);
+    box-shadow: var(--cn-shadow-xs);
+  }
+}
+
+html.discourse-no-touch body:not(.admin-interface) {
+  .category-boxes .category-box:is(:hover, :focus-within),
+  .category-boxes-with-topics .category-box:is(:hover, :focus-within) {
+    border-color: color-mix(
+      in srgb,
+      var(--category-badge-color, var(--cn-crimson)) 62%,
+      var(--cn-border)
+    );
+    box-shadow: var(--cn-shadow-sm);
+    transform: translateY(-2px);
+  }
+
+  .tags-index .tags-list .tag-box:is(:hover, :focus-within) {
+    background: var(--cn-surface);
+    border-color: var(--cn-border-strong);
+    transform: translateY(-1px);
+  }
+}
+
+@media (width < 48rem) {
+  body:not(.admin-interface) {
+    .category-boxes,
+    .category-boxes-with-topics {
+      gap: var(--space-3);
+      margin-block-start: var(--space-3);
+    }
+
+    .category-boxes .category-box-inner,
+    .category-boxes-with-topics .category-box-inner {
+      padding: var(--space-4);
+    }
+
+    #list-area .category-list,
+    section.tag-info {
+      border-radius: var(--cn-radius-sm);
+      box-shadow: none;
+    }
+
+    .tags-index .tags-list {
+      grid-template-columns: 1fr;
+      gap: var(--space-2);
+    }
+
+    .tags-index .tags-list .tag-box {
+      min-height: 44px;
+      padding: var(--space-3);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body:not(.admin-interface) {
+    .category-boxes .category-box,
+    .category-boxes-with-topics .category-box,
+    .tags-index .tags-list .tag-box {
+      transition: none;
+    }
+  }
+}

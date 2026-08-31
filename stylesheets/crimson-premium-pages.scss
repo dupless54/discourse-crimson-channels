@@ -5,14 +5,11 @@
 
 body:not(.admin-interface) {
   .topic-list,
-  #list-area .category-list,
-  .category-boxes .category-box,
   .search-container,
   .user-main,
   .group-details-container,
   .groups-boxes .group-box,
   .badge-card,
-  .tags-page .tag-box,
   .bookmarks-list,
   .cn-featured-topics,
   .cn-featured-topics--below {
@@ -83,61 +80,6 @@ body:not(.admin-interface) {
     color: var(--primary) !important;
     font-weight: 650;
     letter-spacing: -0.012em;
-  }
-
-  .badge-category__wrapper,
-  .discourse-tag {
-    border-radius: 999px !important;
-  }
-
-  .discourse-tag {
-    padding: 2px 7px;
-    color: var(--primary-medium) !important;
-    background: var(--cn-surface) !important;
-    border: 1px solid var(--cn-border) !important;
-  }
-
-  .category-boxes .category-box {
-    overflow: hidden;
-    transition:
-      border-color 120ms ease,
-      transform 120ms ease,
-      box-shadow 120ms ease;
-
-    &:is(:hover, :focus-within) {
-      border-color: var(--cn-border-strong) !important;
-      box-shadow: var(--cn-shadow-sm) !important;
-      transform: translateY(-1px);
-    }
-  }
-
-  #list-area .category-list {
-    overflow: hidden;
-
-    tbody tr {
-      background: transparent !important;
-
-      &:is(:hover, :focus-within) {
-        background: var(--cn-hover) !important;
-      }
-    }
-
-    td,
-    th {
-      border-color: var(--cn-separator) !important;
-    }
-  }
-
-  .category-list {
-    .category-name,
-    .badge-category__name {
-      font-weight: 700 !important;
-      letter-spacing: -0.01em;
-    }
-
-    .category-description {
-      color: var(--cn-muted) !important;
-    }
   }
 
   #topic,
@@ -278,8 +220,7 @@ body:not(.admin-interface) {
   }
 
   .groups-boxes .group-box,
-  .badge-card,
-  .tags-page .tag-box {
+  .badge-card {
     padding: 16px;
     transition:
       border-color 120ms ease,
@@ -392,10 +333,8 @@ body:not(.admin-interface) {
 @media (prefers-reduced-motion: reduce) {
   body:not(.admin-interface) {
     .topic-list-item,
-    .category-boxes .category-box,
     .groups-boxes .group-box,
-    .badge-card,
-    .tags-page .tag-box {
+    .badge-card {
       transition: none;
     }
   }

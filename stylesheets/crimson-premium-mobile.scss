@@ -32,7 +32,6 @@ body.mobile-view:not(.admin-interface) {
   }
 
   .topic-list,
-  #list-area .category-list,
   .search-container,
   .user-main,
   .bookmarks-list,
@@ -60,10 +59,8 @@ body.mobile-view:not(.admin-interface) {
     }
   }
 
-  .category-list-item.category,
   .groups-boxes .group-box,
-  .badge-card,
-  .tags-page .tag-box {
+  .badge-card {
     border-radius: 11px !important;
   }
 
