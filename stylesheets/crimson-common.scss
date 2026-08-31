@@ -2,59 +2,32 @@
    senin.me Crimson Channels — shared visual system
    ============================================================ */
 
+/* Layout-only tokens live here since nothing downstream redefines them.
+ * Every color/radius/surface/shadow token is owned by
+ * `crimson-palette-foundation.scss` (loaded after this file, so it is the
+ * value that actually wins) — it used to be duplicated here with different
+ * values, which meant editing a token in one file silently had no effect on
+ * the rendered page. Removed for real; the visible cascade is unchanged.
+ */
+
 :root {
-  --cn-crimson: #c50337;
-  --cn-noir: #02060e;
-  --cn-green: #57f287;
   --cn-server-rail-width: 72px;
   --cn-channel-rail-width: 260px;
   --cn-member-rail-width: 248px;
   --cn-forum-width: 100%;
   --cn-rail-z-index: 90;
-  --cn-radius-xs: 6px;
-  --cn-radius-sm: 10px;
-  --cn-radius-md: 14px;
-  --cn-radius-lg: 18px;
-  --cn-panel: rgb(var(--secondary-rgb), 0.82);
-  --cn-panel-strong: rgb(var(--secondary-rgb), 0.95);
-  --cn-surface: color-mix(in srgb, var(--secondary) 94%, var(--primary) 6%);
-  --cn-surface-raised: color-mix(
-    in srgb,
-    var(--secondary) 88%,
-    var(--primary) 12%
-  );
-  --cn-control: color-mix(in srgb, var(--secondary) 90%, var(--primary) 10%);
-  --cn-control-outline: color-mix(in srgb, var(--primary) 13%, transparent);
-  --cn-control-outline-hover: color-mix(
-    in srgb,
-    var(--primary) 22%,
-    transparent
-  );
-  --cn-muted: color-mix(in srgb, var(--primary) 58%, transparent);
-  --cn-border: color-mix(in srgb, var(--cn-crimson) 52%, transparent);
-  --cn-separator: color-mix(in srgb, var(--primary) 10%, transparent);
-  --cn-hover: color-mix(in srgb, var(--cn-crimson) 16%, transparent);
-  --cn-active: color-mix(in srgb, var(--cn-crimson) 26%, transparent);
-  --cn-shadow:
-    0 14px 34px rgb(2, 6, 14, 0.3), 0 0 22px rgb(197, 3, 55, 0.13),
-    inset 0 1px 0 color-mix(in srgb, var(--primary) 8%, transparent);
 }
 
 html {
   background: var(--secondary);
 }
 
+/* The calm flat background lives in crimson-palette-foundation.scss, which
+ * intentionally replaced the glow-heavy radial/linear gradient that used to
+ * be here (see that file's header comment). min-height still belongs here. */
+
 body {
   min-height: 100vh;
-  background:
-    radial-gradient(circle at 78% 12%, rgb(197, 3, 55, 0.2), transparent 34rem),
-    linear-gradient(
-        155deg,
-        color-mix(in srgb, var(--secondary) 96%, var(--cn-noir) 4%) 0%,
-        color-mix(in srgb, var(--secondary) 76%, var(--cn-crimson) 24%) 58%,
-        color-mix(in srgb, var(--secondary) 48%, var(--cn-crimson) 52%) 125%
-      )
-      fixed !important;
 }
 
 #main,
@@ -1295,14 +1268,19 @@ select:focus,
   inset: 0 0 auto;
   height: var(--cn-user-card-banner-height);
   content: "";
-  background-color: #5865f2;
+  background-color: var(--cn-noir);
   background-image:
     radial-gradient(
       circle at 82% 12%,
       rgb(255, 255, 255, 0.22),
       transparent 34%
     ),
-    linear-gradient(125deg, #5865f2, #8c2f67 58%, var(--cn-crimson));
+    linear-gradient(
+      125deg,
+      var(--cn-noir),
+      color-mix(in srgb, var(--cn-crimson) 55%, var(--cn-noir) 45%) 58%,
+      var(--cn-crimson)
+    );
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
