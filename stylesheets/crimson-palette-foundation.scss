@@ -37,7 +37,11 @@
   --cn-separator: color-mix(in srgb, var(--primary) 8%, transparent);
   --cn-hover: color-mix(in srgb, var(--primary) 5%, transparent);
   --cn-active: color-mix(in srgb, var(--tertiary) 12%, transparent);
-  --cn-active-strong: color-mix(in srgb, var(--tertiary) 18%, var(--secondary));
+  --cn-active-strong: color-mix(
+    in srgb,
+    var(--tertiary) 18%,
+    var(--secondary)
+  );
   --cn-focus-ring: color-mix(in srgb, var(--tertiary) 38%, transparent);
   --cn-shadow-xs: 0 1px 2px rgb(8, 11, 18, 0.08);
   --cn-shadow-sm:
@@ -62,13 +66,7 @@ html {
 
 body {
   color: var(--primary);
-  background:
-    linear-gradient(
-        180deg,
-        color-mix(in srgb, var(--secondary) 96%, var(--primary) 4%) 0,
-        var(--secondary) 320px
-      )
-      fixed !important;
+  background: var(--secondary) !important;
 }
 
 #main,
