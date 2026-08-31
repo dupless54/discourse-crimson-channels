@@ -83,9 +83,7 @@ RSpec.describe "Crimson mobile topic-list compatibility", mobile: true do
     expect(page.evaluate_script("getComputedStyle(#{first_item}).minWidth")).to eq("32px")
     expect(page.evaluate_script("getComputedStyle(#{second_item}).minWidth")).to eq("32px")
     expect(page.evaluate_script("getComputedStyle(#{third_item}).display")).to eq("none")
-    expect(page.evaluate_script("getComputedStyle(#{first_tag}, '::before').display")).to eq(
-      "none",
-    )
+    expect(page.evaluate_script("getComputedStyle(#{first_tag}, '::before').display")).to eq("none")
     expect(page.evaluate_script("getComputedStyle(#{tags}, '::after').content")).to include("…")
   end
 end
