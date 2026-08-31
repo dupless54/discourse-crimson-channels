@@ -5,7 +5,7 @@ RSpec.describe "Crimson profile" do
   let!(:user) { Fabricate(:user, username: "premium_profile", name: "Premium Profile") }
 
   it "keeps native profile structure and applies the premium hierarchy" do
-    visit(user.path)
+    visit("/u/#{user.username}")
 
     expect(page).to have_css(".user-main .about .user-profile-avatar img.avatar")
     expect(page).to have_css(".user-main .about .primary-textual", text: user.name)
@@ -19,7 +19,7 @@ RSpec.describe "Crimson profile" do
   end
 
   it "keeps the cosmetic nameplate anchor on the native collapsed profile" do
-    visit("#{user.path}/activity")
+    visit("/u/#{user.username}/activity")
 
     selector = ".cn-profile-nameplate-host > .cn-profile-nameplate-layer"
     expect(page).to have_css("#{selector}[data-user-card='#{user.username}']", visible: :all)
@@ -28,7 +28,7 @@ RSpec.describe "Crimson profile" do
 
   it "fits the profile and navigation inside an 820px tablet viewport" do
     page.current_window.resize_to(820, 1024)
-    visit(user.path)
+    visit("/u/#{user.username}")
 
     document_width = page.evaluate_script("document.documentElement.scrollWidth")
     viewport_width = page.evaluate_script("window.innerWidth")
@@ -39,7 +39,7 @@ RSpec.describe "Crimson profile" do
 
   context "when viewed on mobile", mobile: true do
     it "keeps the avatar, controls, and content in one non-overflowing profile" do
-      visit(user.path)
+      visit("/u/#{user.username}")
 
       document_width = page.evaluate_script("document.documentElement.scrollWidth")
       viewport_width = page.evaluate_script("window.innerWidth")
