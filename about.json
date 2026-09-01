@@ -4,7 +4,7 @@
   "license_url": null,
   "about_url": null,
   "authors": "dupless54",
-  "theme_version": "0.5.1",
+  "theme_version": "0.5.2",
   "minimum_discourse_version": null,
   "maximum_discourse_version": null,
   "assets": {},
@@ -108,6 +108,8 @@
       "love": "F47BAF"
     }
   },
-  "modifiers": {},
+  "modifiers": {
+    "only_theme_color_schemes": true
+  },
   "learn_more": "https://meta.discourse.org/t/beginners-guide-to-using-discourse-themes/91966"
 }
