@@ -1,6 +1,8 @@
 import { apiInitializer } from "discourse/lib/api";
 
-const LEGACY_COMMUNITY_UI_SELECTOR = [
+const LEGACY_SHELL_UI_SELECTOR = [
+  ".cn-server-rail",
+  ".cn-mobile-servers-link-item",
   ".cn-member-rail",
   ".cn-mobile-community-backdrop",
   ".cn-mobile-community-toggle-item",
@@ -23,29 +25,29 @@ function disableLegacyCommunityState() {
   document.documentElement.style.removeProperty("--cn-member-user-card-top");
 }
 
-function removeLegacyCommunityUi() {
+function removeLegacyShellUi() {
   disableLegacyCommunityState();
 
-  for (const element of document.querySelectorAll(
-    LEGACY_COMMUNITY_UI_SELECTOR
-  )) {
+  for (const element of document.querySelectorAll(LEGACY_SHELL_UI_SELECTOR)) {
     element.remove();
   }
 
   try {
     window.localStorage.removeItem("cn-member-rail-collapsed");
   } catch {
-    // Browser storage is optional; the removed rail must stay disabled anyway.
+    // Browser storage is optional; retired shell UI must stay disabled anyway.
   }
 }
 
-function scheduleLegacyCommunityCleanup() {
-  removeLegacyCommunityUi();
-  window.setTimeout(removeLegacyCommunityUi, 0);
-  window.setTimeout(removeLegacyCommunityUi, 250);
+function scheduleLegacyShellCleanup() {
+  removeLegacyShellUi();
+  window.setTimeout(removeLegacyShellUi, 0);
+  window.setTimeout(removeLegacyShellUi, 250);
+  window.setTimeout(removeLegacyShellUi, 750);
+  window.setTimeout(removeLegacyShellUi, 1250);
 }
 
 export default apiInitializer((api) => {
-  scheduleLegacyCommunityCleanup();
-  api.onPageChange(scheduleLegacyCommunityCleanup);
+  scheduleLegacyShellCleanup();
+  api.onPageChange(scheduleLegacyShellCleanup);
 });

@@ -1,5 +1,5 @@
 /* ============================================================
-   Desktop shell: community rail | channels | content | members
+   Desktop shell: channels | content
    ============================================================ */
 
 @media (width >= 1000px) {
@@ -18,39 +18,13 @@
     );
   }
 
-  body:not(.admin-interface, .cn-shell-hidden) .cn-server-rail {
-    position: fixed;
-    z-index: var(--cn-rail-z-index);
-    inset-block: var(--header-offset, 60px) 0;
-    inset-inline-start: 0;
-    display: flex;
-    width: var(--cn-server-rail-width);
-    gap: 8px;
-    padding-block: 14px;
-    box-shadow:
-      inset -1px 0 0 var(--cn-desktop-section-border),
-      7px 0 24px rgb(2 6 14 / 16%);
-  }
-
-  body:not(.admin-interface, .cn-shell-hidden) .cn-server-button {
-    width: 44px;
-    height: 44px;
-    flex-basis: 44px;
-    border-radius: var(--cn-radius-sm);
-  }
-
-  body:not(.admin-interface, .cn-shell-hidden)
-    .cn-server-button:is(:hover, :focus-visible, .is-active) {
-    border-radius: var(--cn-radius-xs);
-  }
-
   body:not(.admin-interface, .cn-shell-hidden) #main-outlet-wrapper {
     width: 100% !important;
     max-width: none !important;
     min-height: calc(100vh - var(--header-offset, 60px));
     box-sizing: border-box;
     margin: 0 !important;
-    padding-inline-start: var(--cn-server-rail-width) !important;
+    padding-inline-start: 0 !important;
     padding-inline-end: 0 !important;
   }
 
@@ -84,7 +58,7 @@
     width: 100%;
     max-width: none;
     box-sizing: border-box;
-    padding-inline-start: calc(var(--cn-server-rail-width) + 18px);
+    padding-inline-start: 18px;
     padding-inline-end: 18px;
   }
 
@@ -294,12 +268,6 @@
 
   body:not(.admin-interface, .cn-shell-hidden) #main-outlet {
     padding-inline: clamp(28px, 2vw, 38px) !important;
-  }
-}
-
-@media (1000px <= width < 1280px) {
-  .cn-server-button--members {
-    display: none;
   }
 }
 
