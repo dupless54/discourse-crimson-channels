@@ -33,7 +33,6 @@ body.mobile-view:not(.admin-interface) {
 
   .topic-list,
   .search-container,
-  .user-main,
   .bookmarks-list,
   .directory-table-container,
   .cn-featured-topics,
@@ -85,16 +84,6 @@ body.mobile-view:not(.admin-interface) {
 
   .search-container {
     padding: 12px;
-  }
-
-  .user-main {
-    .about {
-      padding: 14px !important;
-    }
-
-    .user-navigation {
-      padding-inline: 8px;
-    }
   }
 
   .menu-panel,

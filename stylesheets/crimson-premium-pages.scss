@@ -6,7 +6,6 @@
 body:not(.admin-interface) {
   .topic-list,
   .search-container,
-  .user-main,
   .group-details-container,
   .groups-boxes .group-box,
   .badge-card,
@@ -174,49 +173,6 @@ body:not(.admin-interface) {
         background: var(--cn-hover) !important;
       }
     }
-  }
-
-  .user-main {
-    overflow: hidden;
-
-    .about,
-    .details,
-    .user-navigation,
-    .user-content,
-    .user-preferences {
-      background: transparent !important;
-      border-color: var(--cn-separator) !important;
-      box-shadow: none !important;
-    }
-
-    .about {
-      padding: 20px !important;
-    }
-
-    .user-navigation {
-      border-bottom: 1px solid var(--cn-separator) !important;
-    }
-
-    .nav-pills > li > a,
-    .nav-pills > li > button {
-      border-radius: 9px !important;
-
-      &.active {
-        color: var(--primary) !important;
-        background: var(--cn-active-strong) !important;
-      }
-    }
-  }
-
-  .user-stream .item,
-  .user-stream-item,
-  .user-list-item {
-    border-color: var(--cn-separator) !important;
-  }
-
-  .user-stream .item:is(:hover, :focus-within),
-  .user-stream-item:is(:hover, :focus-within) {
-    background: var(--cn-hover) !important;
   }
 
   .groups-boxes .group-box,
